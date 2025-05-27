@@ -34,12 +34,18 @@ module LaporanItemHelper
         id_target: 'peraturan-items',
         icon: 'fas fa-book-reader', identifier: 'peraturan'
       },
-      { title: 'Inovasi Sasaran Kinerja', href: inovasi_sasaran_kinerja_laporans_path,
-        icon: 'fas fa-book-open',
-        identifier: 'laporan-inovasi-sasaran-kinerja' },
-      { title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
-        icon: 'fas fa-book-open',
-        identifier: 'laporan-sasaran-kemiskinan' },
+      {
+        title: 'Inovasi Sasaran Kinerja', href: inovasi_sasaran_kinerja_laporans_path,
+        icon: 'fas fa-book-open', identifier: 'laporan-inovasi-sasaran-kinerja'
+      },
+      {
+        title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
+        icon: 'fas fa-book-open', identifier: 'laporans/sasaran_penduduk'
+      },
+      {
+        title: 'Sasaran SPBE/PEMDIGI', href: sasaran_spbe_laporans_path,
+        icon: 'fas fa-book-open', identifier: 'laporans/sasaran_spbe'
+      },
       {
         title: 'Cascading Kota', href: hasil_cascading_kota_laporans_path,
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'

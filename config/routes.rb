@@ -672,6 +672,7 @@ Rails.application.routes.draw do
 
   resources :laporans, only: [:index] do
     collection do
+      get :sasaran_spbe
       get :sasaran_penduduk
       get :inovasi_sasaran_kinerja
       get :output_raperda

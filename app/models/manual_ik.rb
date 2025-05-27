@@ -70,4 +70,8 @@ class ManualIk < ApplicationRecord
     spatial
     spbe/pemdigi
   ].freeze
+
+  def data_dan_informasi_spbe
+    [data_dan_informasi]
+  end
 end

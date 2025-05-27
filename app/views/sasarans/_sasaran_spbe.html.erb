@@ -1,0 +1,33 @@
+<tr id="<%= dom_id(sasaran) %>">
+  <td class="text-gray-900 text-wrap border" rowspan="<%= rowspan_sasaran_x(sasaran) %>" width='20px'></td>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran_x(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran_x(sasaran) %>"><%= sasaran.tahun %></td>
+</tr>
+<% sasaran.indikator_sasarans.each do |indikator| %>
+  <tr class="skip">
+    <td class='border-end text-wrap'><%= indikator.indikator_kinerja %></td>
+    <td class='border-end text-wrap'><%= indikator.target %></td>
+    <td class='border-end text-wrap'><%= indikator.satuan %></td>
+    <td class='border-end'>
+      <div class="d-grid gap-3">
+        <% indikator.output_data.each do |output| %>
+          <div class='form-check'>
+            <i class="far fa-check-square icon icon-xs"></i>
+            <span class="fw-bolder"><%= output.capitalize %></span>
+          </div>
+        <% end %>
+      </div>
+    </td>
+    <td class='border-end'>
+      <div class="d-grid gap-3">
+        <ol>
+          <% indikator.data_dan_informasi_spbe.each do |info| %>
+            <li>
+              <span class="fw-bolder"><%= info %></span>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+    </td>
+  </tr>
+<% end %>

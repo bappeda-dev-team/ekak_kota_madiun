@@ -69,5 +69,20 @@ RSpec.feature "Laporans", type: :feature do
         expect(page).to have_content('Penduduk')
       end
     end
+
+    scenario 'user(eselon_4) create sasaran with spbe/pemdigi in manual ik', js: true do
+      find('span.sidebar-text', text: 'Laporan').click
+      click_on('Sasaran SPBE/PEMDIGI')
+      expect(page).to have_title('Sasaran SPBE/PEMDIGI')
+      expect(page).to have_selector('li.breadcrumb-item.active', text: 'Sasaran SPBE/PEMDIGI')
+      within('.card-header') do
+        expect(page).to have_content('Laporan Sasaran SPBE/PEMDIGI')
+        expect(page).to have_content('2025')
+      end
+      within('#sasaran-spbe') do
+        expect(page).to have_content('SasaranTest')
+        expect(page).to have_content('data test informasi test')
+      end
+    end
   end
 end

@@ -26,20 +26,28 @@ RSpec.shared_context 'sasaran_complete' do
 
   def manual_ik_sasaran
     click_on('Buat Manual IK')
-    select2('Anggaran', xpath: '/html/body/main/div[1]/div/table/tbody/tr[1]/td[2]/div[1]/span')
-    fill_in('manual_ik[tujuan_rhk]', with: 'test')
-    fill_in('manual_ik[definisi]', with: 'test')
-    fill_in('manual_ik[key_activities]', with: 'test')
-    fill_in('manual_ik[formula]', with: 'test')
-    select2('Output', xpath: '/html/body/main/div[1]/div/table/tbody/tr[7]/td[2]/div/span')
-    checkbox = find_all('#manual_ik_output_data_')
+    # Perspektif
+    select2('Penerima Layanan', xpath: '/html/body/main/div/div/div/table/tbody/tr[1]/td[2]/div[1]/span')
+    # Tujuan RHK
+    fill_in('manual_ik[tujuan_rhk]', with: 'Tujuannya testing')
+    fill_in('manual_ik[definisi]', with: 'Test manual ik')
+    fill_in('manual_ik[key_activities]', with: 'Test aktifitas')
+    fill_in('manual_ik[formula]', with: '(jumlah test / pass test) * 100')
+    # Jenis indikator kinerja
+    select2('Output', xpath: '/html/body/main/div/div/div/table/tbody/tr[7]/td[2]/div/span')
+    expect(page).not_to have_field('manual_ik[data_dan_informasi]')
+
+    # before spbe don't show data dan informasi
+    checkbox = find_all('.manual-ik-output-data')
     checkbox.each { |aa| aa.set(true) }
+    fill_in('manual_ik[data_dan_informasi]', with: 'data test informasi test')
+
     fill_in('manual_ik[penanggung_jawab]', with: 'test')
     fill_in('manual_ik[penyedia_data]', with: 'test')
     fill_in('manual_ik[sumber_data]', with: 'test')
     fill_in('manual_ik[mulai]', with: 10)
     fill_in('manual_ik[akhir]', with: 20)
-    select2('Bulanan', xpath: '/html/body/main/div[1]/div/table/tbody/tr[13]/td[2]/div/span')
+    select2('Bulanan', xpath: '/html/body/main/div/div/div/table/tbody/tr[14]/td[2]/div/span')
     click_on('Simpan Manual ik')
     click_on('OK')
   end
@@ -50,7 +58,8 @@ RSpec.shared_context 'sasaran_complete' do
     fill_in('Tahapan kerja', with: 'test_tahapan')
     fill_in('Keterangan', with: 'test_tahapan')
     click_on('Simpan Tahapan')
-    click_on('OK')
+    click_on('Ok')
+    sleep 2
   end
 
   def sasaran_complete

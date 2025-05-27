@@ -296,6 +296,17 @@ class LaporansController < ApplicationController
     end
   end
 
+  def sasaran_spbe
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    sasaran_user = @opd.users.includes([:sasarans,
+                                        { sasarans: [:indikator_sasarans, {
+                                          indikator_sasarans: [:manual_ik]
+                                        }] }]).aktif.eselon4.flat_map(&:sasarans)
+    @sasarans = sasaran_user.select do |sasaran|
+      sasaran.tahun == @tahun && sasaran.sasaran_spbe?
+    end
+  end
+
   def daftar_resiko
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
