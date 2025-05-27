@@ -67,5 +67,6 @@ class ManualIk < ApplicationRecord
     kinerja
     penduduk
     spatial
+    spbe/pemdigi
   ].freeze
 end

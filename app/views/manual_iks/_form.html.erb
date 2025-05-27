@@ -141,7 +141,7 @@
               <div class="field">
                 <% ManualIk::OUTPUT_DATA.each do |data| %>
                   <% box_check = form.object.output_data.include?(data) %>
-                  <%= check_box_tag 'manual_ik[output_data][]', data, box_check , class: 'form-check-input' %>
+                  <%= check_box_tag 'manual_ik[output_data][]', data, box_check , class: 'form-check-input manual-ik-output-data' %>
                   <%= form.label :output_data, class: 'form-check-label' do %>
                     <span class="fw-bolder"><%= data.titleize %></span>
                   <% end %>
