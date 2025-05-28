@@ -154,6 +154,7 @@ module Api
 
     def renaksi_opd
       @tahun = params[:tahun]
+      @bulan = params[:bulan]
       @kode_opd = params[:kode_opd]
       @opd = Opd.find_by(kode_unik_opd: @kode_opd)
       @sasaran_opds = @opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }

@@ -59,6 +59,10 @@ class Tahapan < ApplicationRecord
     '-'
   end
 
+  def ada_target_bulan?(bulan)
+    find_target_bulan(bulan).present? && find_target_bulan(bulan) != '-'
+  end
+
   def tahapan_valid?
     jumlah_target.positive?
   rescue NoMethodError

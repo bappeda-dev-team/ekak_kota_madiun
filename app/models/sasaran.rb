@@ -910,4 +910,10 @@ class Sasaran < ApplicationRecord
       ['Bukan sasaran spbe']
     end
   end
+
+  def rencana_aksi_opds_bulanan(bulan: nil)
+    rencana_aksi_opds.select do |renaksi|
+      renaksi.rencana_renaksi.tahapans.any? { |t| t.ada_target_bulan?(bulan) }
+    end
+  end
 end

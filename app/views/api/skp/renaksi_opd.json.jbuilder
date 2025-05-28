@@ -1,6 +1,7 @@
 json.message "Data Renaksi OPD #{@opd} - KAK"
 json.data do
   json.tahun @tahun
+  json.bulan @bulan
   json.kode_opd @kode_opd
   json.opd @opd.nama_opd
   json.sasaran_opds @sasaran_opds do |sasaran|
@@ -13,7 +14,7 @@ json.data do
       json.target indikator_sasaran.target
       json.satuan indikator_sasaran.satuan
     end
-    json.renaksi_opds sasaran.rencana_aksi_opds do |renaksi_opd|
+    json.renaksi_opds sasaran.rencana_aksi_opds_bulanan(bulan: @bulan) do |renaksi_opd|
       json.id renaksi_opd.id
       json.id_sasaran_opd renaksi_opd.id_sasaran_opd
       json.id_sasaran renaksi_opd.id_rencana_renaksi
