@@ -897,8 +897,10 @@ class Sasaran < ApplicationRecord
 
   def sasaran_spbe?
     indikator_sasarans.any? do |ind|
-      ind.manual_ik.output_data.any?('spbe/pemdigi')
+      ind.manual_ik&.output_data&.any?('spbe/pemdigi')
     end
+  rescue NoMethodError
+    false
   end
 
   def data_dan_informasi_spbe
