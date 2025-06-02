@@ -1,28 +1,35 @@
-<div class="card-body" id="filter-rekapitulasi">
-  <div class="cetak d-grid gap-3">
-    <%= link_to cetak_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, kode_opd: @kode_opd),
-                class:"m-3 btn btn-outline-danger",
-                target: "_blank", rel: "noopener" do %>
-      <span class="far fa-file-pdf me-2"></span>
-      Cetak PDF Rekapitulasi Rencana Aksi OPD
-    <% end %>
-  </div>
-  <div class="table-responsive">
+<div data-controller="print" data-print-title-value="RENSTRA">
+  <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
+    <span class="far fa-file-pdf me-2"></span>
+    Cetak PDF
+  </button>
+  <div data-print-target="document" class="w-100" id="cetak">
+    <div class="kop">
+      <div class="kop-judul">
+        <h3>RENCANA AKSI OPD</h3>
+      </div>
+      <div class="kop-opd">
+        <h5><%= @nama_opd %></h5>
+      </div>
+      <div class="kop-tahun">
+        <h5>TAHUN <%= @tahun %></h5>
+      </div>
+    </div>
     <table class="table align-items-center table-bordered counter">
-      <thead class="thead-light">
+      <thead>
         <tr>
-          <th class="border text-center" rowspan="2" scope="col">No</th>
-          <th class="border text-center" rowspan="2" scope="col" style="min-width: 250px;">Aksi/Kegiatan</th>
-          <th class="border text-center" rowspan="2" scope="col" style='min-width: 400px;'>Subkegiatan</th>
-          <th class="border text-center" rowspan="2" scope="col">Anggaran</th>
-          <th class="border text-center" rowspan="2" scope="col">Nama Pemilik</th>
-          <th class="border text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
-          <th class="border text-center" rowspan="2" scope="col" style="min-width: 300px;">Sasaran Strategis Perangkat Daerah</th>
-          <th class="border text-center" rowspan="2" scope="col">Indikator</th>
-          <th class="border text-center" rowspan="2" scope="col">Target</th>
-          <th class="border text-center" rowspan="2" scope="col">Satuan</th>
-          <th class="border text-center" rowspan="2" scope="col">Keterangan</th>
-          <th class="border text-center" rowspan="2" scope="col">Nama OPD</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">No</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col" style="min-width: 250px;">Aksi/Kegiatan</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col" style='min-width: 400px;'>Subkegiatan</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Anggaran</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Nama Pemilik</th>
+          <th class="border-start border-end text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col" style="min-width: 300px;">Sasaran Strategis Perangkat Daerah</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Indikator</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Target</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Satuan</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Keterangan</th>
+          <th class="border-start border-end text-center" rowspan="2" scope="col">Nama OPD</th>
         </tr>
         <tr>
           <th class="border text-center">tw1</th>
@@ -93,5 +100,19 @@
         <p class="mt-0"><span class="renaksi-opd-bintang">*</span> terdapat inovasi</p>
       </caption>
     </table>
+    <div class="ttd">
+      <div class="title-ttd">
+        <%= @jabatan_kepala_opd %> <%= @nama_opd %>
+      </div>
+      <div class="nama-kepala-opd">
+        <%= @nama_kepala_opd %>
+      </div>
+      <div class="jabatan-kepala-opd">
+        <%= @pangkat_kepala_opd %>
+      </div>
+      <div class="nip-kepala-opd">
+        NIP <%= @nip_kepala_opd %>
+      </div>
+    </div>
   </div>
 </div>

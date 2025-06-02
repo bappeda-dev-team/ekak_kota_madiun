@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     collection do
       get :cetak
       get :filter_rekapitulasi
+      get :cetak_rekapitulasi
     end
     member do
       patch :toggle_sasarans_is_perintah_walikota
