@@ -468,7 +468,7 @@ input::placeholder {
 table.counter {
   counter-reset: rowNumber;
 
-  tbody {
+  tbody:not(.skip) {
     tr:not(.skip) {
       counter-increment: rowNumber;
 
