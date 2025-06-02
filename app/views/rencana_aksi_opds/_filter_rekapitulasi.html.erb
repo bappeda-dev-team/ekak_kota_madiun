@@ -1,0 +1,45 @@
+<div class="card-body" id="filter-rekapitulasi">
+  <div class="cetak d-grid gap-3">
+    <%= link_to cetak_rencana_aksi_opds_path(tahun: @tahun, kode_opd: @kode_opd),
+                class:"m-3 btn btn-outline-danger",
+                target: "_blank", rel: "noopener" do %>
+      <span class="far fa-file-pdf me-2"></span>
+      Cetak PDF Rencana Aksi OPD
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th class="border text-center" rowspan="2" scope="col">No</th>
+          <th class="border text-center" rowspan="2" scope="col" style="min-width: 300px;">Rencana Kinerja</th>
+          <th class="border text-center" rowspan="2" scope="col">Indikator Rencana Kinerja</th>
+          <th class="border text-center" rowspan="2" scope="col">Target</th>
+          <th class="border text-center" rowspan="2" scope="col">Satuan</th>
+          <th class="border text-center" rowspan="2" scope="col"></th>
+          <th class="border text-center" rowspan="2" scope="col" style="min-width: 250px;">Aksi/Kegiatan</th>
+          <th class="border text-center" rowspan="2" scope="col">Subkegiatan</th>
+          <th class="border text-center" rowspan="2" scope="col">Anggaran</th>
+          <th class="border text-center" rowspan="2" scope="col">Nama Pemilik</th>
+          <th class="border text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
+          <th class="border text-center" rowspan="2" scope="col">Keterangan</th>
+          <th class="border text-center" rowspan="2" scope="col" style="min-width: 300px;"></th>
+        </tr>
+        <tr>
+          <th class="border text-center">tw1</th>
+          <th class="border text-center">tw2</th>
+          <th class="border text-center">tw3</th>
+          <th class="border text-center">tw4</th>
+        </tr>
+      </thead>
+      <% @sasaran_opds.each.with_index(1) do |sasaran, i| %>
+        <%= render partial: 'rencana_aksi_opds/row_rencana_aksi_opd', locals: { sasaran: sasaran, i: i } %>
+      <% end %>
+      <caption class="bottom">
+        <p class="mb-0"><span class="renaksi-opd-bintang-merah">*</span> perintah walikota</p>
+        <p class="mb-0"><span class="renaksi-opd-bintang-biru">*</span> terkait program unggulan walikota</p>
+        <p class="mt-0"><span class="renaksi-opd-bintang">*</span> terdapat inovasi</p>
+      </caption>
+    </table>
+  </div>
+</div>

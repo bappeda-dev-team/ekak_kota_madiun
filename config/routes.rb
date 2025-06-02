@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :rencana_aksi_opds do
     collection do
       get :cetak
+      get :filter_rekapitulasi
     end
     member do
       patch :toggle_sasarans_is_perintah_walikota
@@ -672,6 +673,7 @@ Rails.application.routes.draw do
 
   resources :laporans, only: [:index] do
     collection do
+      get :rekapitulasi_rencana_aksi_opd
       get :sasaran_spbe
       get :sasaran_penduduk
       get :inovasi_sasaran_kinerja

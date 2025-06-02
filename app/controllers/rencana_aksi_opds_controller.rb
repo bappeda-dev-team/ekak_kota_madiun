@@ -132,6 +132,15 @@ class RencanaAksiOpdsController < ApplicationController
     end
   end
 
+  def filter_rekapitulasi
+    @kode_opd = params[:opd]
+    @tahun = params[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasaran_opds = @opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }
+
+    render partial: 'rencana_aksi_opds/filter_rekapitulasi'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

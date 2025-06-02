@@ -14,6 +14,10 @@ module LaporanItemHelper
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
+        title: 'Laporan Rekapitulasi Rencana Aksi OPD', href: rekapitulasi_rencana_aksi_opd_laporans_path,
+        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_rencana_aksi_opd'
+      },
+      {
         title: 'SPIP', href: spip_index_path,
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },

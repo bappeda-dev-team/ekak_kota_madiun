@@ -397,6 +397,8 @@ class LaporansController < ApplicationController
     end
   end
 
+  def rekapitulasi_rencana_aksi_opd; end
+
   private
 
   def set_program_kegiatans

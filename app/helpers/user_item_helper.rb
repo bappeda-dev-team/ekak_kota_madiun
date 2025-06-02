@@ -41,10 +41,10 @@ module UserItemHelper
 
   def laporan_usulans
     [
-      { title: 'Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan\/musrenbang' },
-      { title: 'Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan\/pokpir' },
-      { title: 'Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan\/mandatori' },
-      { title: 'Inisiatif Walikota', href: laporan_inovasi_usulans_path, identifier: 'usulans\/laporan_inovasi' }
+      { title: 'Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan/musrenbang' },
+      { title: 'Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan/pokpir' },
+      { title: 'Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan/mandatori' },
+      { title: 'Inisiatif Walikota', href: laporan_inovasi_usulans_path, identifier: 'usulans/laporan_inovasi' }
     ]
   end
 end

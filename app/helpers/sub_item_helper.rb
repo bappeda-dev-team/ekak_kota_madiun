@@ -18,12 +18,12 @@ module SubItemHelper
 
   def usulan_items
     [
-      { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
-      { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
-      { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
-      { title: 'Mandatori SPBE', href: spbe_mandatoris_path, identifier: 'spbe_mandatori' },
+      { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbangs' },
+      { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpirs' },
+      { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatoris' },
+      { title: 'Mandatori SPBE', href: spbe_mandatoris_path, identifier: 'mandatoris/spbe' },
       { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasis' },
-      { title: 'Inovasi Masyarakat', href: inovasi_masyarakats_path, identifier: 'masyarakat_inovasi' }
+      { title: 'Inovasi Masyarakat', href: inovasi_masyarakats_path, identifier: 'inovasi_masyarakats' }
     ]
   end
 
