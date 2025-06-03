@@ -48,7 +48,7 @@ class RenaksiOpdFilter
   end
 
   def filter_perintah_walikota
-    return if @params[:filter].blank?
+    return unless @params[:jenis_renaksi] == 'perintah-walikota'
 
     @scope = @scope.select do |ss|
       ss.renaksi_sasaran_walikota.any?

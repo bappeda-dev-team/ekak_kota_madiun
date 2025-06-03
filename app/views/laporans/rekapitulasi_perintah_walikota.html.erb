@@ -9,7 +9,7 @@
                   data: {
                     controller: 'page-ajax',
                     page_ajax_reqtype_value: 'GET',
-                    page_ajax_url_value: filter_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, opd: @kode_opd, filter: 'perintah-walikota')
+                    page_ajax_url_value: filter_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, opd: @kode_opd, jenis_renaksi: 'perintah-walikota')
                   }  do %>
     <div class="card-header">
       <h2 class="fs-5 fw-bold mb-0">Filter</h2>
@@ -23,7 +23,7 @@
                         action: 'ajax:success->filter-render#append'
                       } do |form| %>
           <div class="col">
-            <%= form.hidden_field :filter, value: 'perintah-walikota' %>
+            <%= form.hidden_field :jenis_renaksi, value: 'perintah-walikota' %>
             <%= form.label :opd, class: 'form-label' %>
             <%= form.select :opd, [],
              { include_blank: true },
