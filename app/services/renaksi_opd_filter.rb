@@ -8,6 +8,7 @@ class RenaksiOpdFilter
     filter_by_opd
     filter_by_tahun
     order_and_compact
+    filter_perintah_walikota
     @scope
   end
 
@@ -44,5 +45,13 @@ class RenaksiOpdFilter
              .select { |ss| ss.opd.id != opd_setda.id || ss.nip_asn == opd_setda.nip_kepala }
              .sort_by { |ss| ss.opd.kode_unik_opd }
              .compact_blank
+  end
+
+  def filter_perintah_walikota
+    return if @params[:filter].blank?
+
+    @scope = @scope.select do |ss|
+      ss.renaksi_sasaran_walikota.any?
+    end
   end
 end
