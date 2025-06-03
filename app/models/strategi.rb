@@ -283,11 +283,11 @@ class Strategi < ApplicationRecord
       sasarans.includes(%i[strategi indikator_sasarans])
               .where(nip_asn: opd.nip_kepala)
               .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
-              .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+              .select(&:sasaran_siap_digunakan?)
     else
       sasarans.includes(%i[strategi indikator_sasarans])
               .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
-              .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+              .select(&:sasaran_siap_digunakan?)
     end
   end
 

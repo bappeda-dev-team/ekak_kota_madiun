@@ -513,6 +513,10 @@ class Sasaran < ApplicationRecord
     end
   end
 
+  def sasaran_siap_digunakan?
+    tahapan? && manual_ik? && strategi? && target_sesuai?
+  end
+
   def sasaran_kota
     pohon = strategi.pohon
     # return unless pohon.pohonable_type == 'StrategiKotum'
@@ -915,5 +919,9 @@ class Sasaran < ApplicationRecord
     rencana_aksi_opds.select do |renaksi|
       renaksi.rencana_renaksi.tahapans.any? { |t| t.ada_target_bulan?(bulan) }
     end
+  end
+
+  def renaksi_sasaran_walikota
+    rencana_aksi_opds.select(&:perintah_walikota?)
   end
 end

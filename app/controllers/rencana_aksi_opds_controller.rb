@@ -30,15 +30,18 @@ class RencanaAksiOpdsController < ApplicationController
   end
 
   def cetak_rekapitulasi
-    @tahun = cookies[:tahun]
-    @kode_opd = cookies[:opd]
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @tahun = params[:tahun]
+    strategi = Strategi.where(role: 'eselon_2', tahun: @tahun)
+    renaksi_opd_filter = RenaksiOpdFilter.new(strategi, params)
+    # only get setda
+    # ttd dari setda
+    opd = renaksi_opd_filter.opd_setda
     @nama_opd = opd.nama_opd
     @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
     @nama_kepala_opd = opd.nama_kepala
     @nip_kepala_opd = opd.nip_kepala_fix_plt
     @pangkat_kepala_opd = opd.pangkat_kepala
-    @sasaran_opds = opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }
+    @sasaran_opds = renaksi_opd_filter.results
 
     respond_to do |format|
       format.html do
@@ -151,10 +154,14 @@ class RencanaAksiOpdsController < ApplicationController
   end
 
   def filter_rekapitulasi
+    @filter = params[:filter] || ''
     @kode_opd = params[:opd]
     @tahun = params[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @sasaran_opds = @opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }
+
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    strategi = Strategi.where(role: 'eselon_2', tahun: @tahun)
+    # TODO: test for missing and deleted strategi
+    @sasaran_opds = RenaksiOpdFilter.new(strategi, params).results
 
     render partial: 'rencana_aksi_opds/filter_rekapitulasi'
   end

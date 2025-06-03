@@ -1,10 +1,10 @@
 <div class="card-body" id="filter-rekapitulasi">
   <div class="cetak d-grid gap-3">
-    <%= link_to cetak_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, kode_opd: @kode_opd),
+    <%= link_to cetak_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, kode_opd: @kode_opd, filter: @filter),
                 class:"m-3 btn btn-outline-danger",
                 target: "_blank", rel: "noopener" do %>
       <span class="far fa-file-pdf me-2"></span>
-      Cetak PDF Rekapitulasi Rencana Aksi OPD
+      Cetak PDF Rekapitulasi Rencana Aksi OPD <%= @filter %>
     <% end %>
   </div>
   <div class="table-responsive">
@@ -35,7 +35,7 @@
         <tbody id="<%= dom_id(sasaran) %>">
           <% renaksi_rowspan = sasaran.indikator_sasarans.length %>
           <tr>
-            <td class=""></td>
+            <td class="" rowspan="<%= renaksi_rowspan %>"></td>
             <% if sasaran.rencana_aksi_opds.any? %>
               <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
@@ -48,23 +48,23 @@
               <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
               <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
               <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
-              <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
-              <% if sasaran.indikator_sasarans.any? %>
-                <%= indikator_rencana_aksi_opd(sasaran) %>
-              <% else %>
-                <td class="text-center" colspan="3">
-                  <p class="alert alert-danger">
-                    INDIKATOR SASARAN BELUM TERISI
-                  </p>
-                </td>
-              <% end %>
-              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
-              <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= @opd %></td>
             <% else %>
-              <td class="text-center" colspan="10" rowspan="<%= renaksi_rowspan %>">
+              <td class="text-center" colspan="8" rowspan="<%= renaksi_rowspan %>">
                 -
               </td>
             <% end %>
+            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %> - <%= sasaran.nama_nip_pemilik %></td>
+            <% if sasaran.indikator_sasarans.any? %>
+              <%= indikator_rencana_aksi_opd(sasaran) %>
+            <% else %>
+              <td class="text-center" colspan="3">
+                <p class="alert alert-danger">
+                  INDIKATOR SASARAN BELUM TERISI
+                </p>
+              </td>
+            <% end %>
+            <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
+            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.opd %></td>
           </tr>
           <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
             <%= indikator %>

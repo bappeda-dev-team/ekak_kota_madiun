@@ -28,7 +28,7 @@ module RencanaAksiOpdsHelper
     sasaran.indikator_sasarans.drop(1).map do |indikator_s|
       if indikator_s == sasaran.indikator_sasarans.last
         "
-        <tr class='last indikator-sasaran'>
+        <tr class='last indikator-sasaran skip'>
           <td rowspan='#{rowspan}' class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
           <td rowspan='#{rowspan}' class='text-center'>#{indikator_s.target}</td>
           <td rowspan='#{rowspan}' class='text-center'>#{indikator_s.satuan}</td>
@@ -36,10 +36,10 @@ module RencanaAksiOpdsHelper
       ".html_safe
       else
         "
-        <tr class='indikator-sasaran'>
-          <td class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
-          <td class='text-center'>#{indikator_s.target}</td>
-          <td class='text-center'>#{indikator_s.satuan}</td>
+        <tr class='indikator-sasaran skip'>
+          <td rowspan='#{rowspan}' class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
+          <td rowspan='#{rowspan}' class='text-center'>#{indikator_s.target}</td>
+          <td rowspan='#{rowspan}' class='text-center'>#{indikator_s.satuan}</td>
         </tr>
       ".html_safe
       end

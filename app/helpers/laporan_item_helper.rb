@@ -18,6 +18,10 @@ module LaporanItemHelper
         icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_rencana_aksi_opd'
       },
       {
+        title: 'Laporan Rekapitulasi Rencana Aksi OPD - Perintah Walikota', href: rekapitulasi_perintah_walikota_laporans_path,
+        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_perintah_walikota'
+      },
+      {
         title: 'SPIP', href: spip_index_path,
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },
