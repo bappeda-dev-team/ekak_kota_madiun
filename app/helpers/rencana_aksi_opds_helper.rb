@@ -37,9 +37,9 @@ module RencanaAksiOpdsHelper
       else
         "
         <tr class='indikator-sasaran skip'>
-          <td rowspan='#{rowspan}' class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
-          <td rowspan='#{rowspan}' class='text-center'>#{indikator_s.target}</td>
-          <td rowspan='#{rowspan}' class='text-center'>#{indikator_s.satuan}</td>
+          <td class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
+          <td class='text-center'>#{indikator_s.target}</td>
+          <td class='text-center'>#{indikator_s.satuan}</td>
         </tr>
       ".html_safe
       end
