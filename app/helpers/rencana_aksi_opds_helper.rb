@@ -118,6 +118,15 @@ module RencanaAksiOpdsHelper
     ".html_safe
   end
 
+  def subkegiatan_indikator_renaksi_cetak(renaksi_opd, tahun, kode_opd)
+    subkegiatan = renaksi_opd.subkegiatan_renaksi
+    tahun_n = tahun_fix(tahun)
+    indikator = subkegiatan&.indikator_subkegiatan_tahun(tahun_n, kode_opd)
+    "
+      <td style='min-width: 200px;' class='border border-bottom-0 text-wrap fw-bolder skip'>#{subkegiatan&.nama_subkegiatan}</td>
+    ".html_safe
+  end
+
   def flag_renaksi_buttons(renaksi_opd, tahun, kode_opd, sasaran, index)
     flag_merah = flag_perintah_walikota(renaksi_opd, tahun, kode_opd, sasaran, index)
     [flag_merah]

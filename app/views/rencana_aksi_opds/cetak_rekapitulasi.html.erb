@@ -17,7 +17,7 @@
         <tr>
           <th class="border text-center" rowspan="2" scope="col">No</th>
           <th class="border text-center" rowspan="2" scope="col" style="min-width: 250px;">Aksi/Kegiatan</th>
-          <th class="border text-center" rowspan="2" scope="col" style='min-width: 400px;'>Subkegiatan</th>
+          <th class="border text-center" rowspan="2" scope="col" style='min-width: 200px;'>Subkegiatan</th>
           <th class="border text-center" rowspan="2" scope="col">Anggaran</th>
           <th class="border text-center" rowspan="2" scope="col">Nama Pemilik</th>
           <th class="border text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
@@ -44,7 +44,7 @@
               <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
               <td class="p-0 m-0" rowspan="<%= renaksi_rowspan %>">
-                <%= render 'rencana_aksi_opds/table_subkegiatan_rekapitulasi', renaksi_opd: renaksi_opd, tahun: @tahun, kode_opd: @kode_opd %>
+                <%= render 'rencana_aksi_opds/table_subkegiatan_rekapitulasi_cetak', renaksi_opd: renaksi_opd, tahun: @tahun, kode_opd: @kode_opd %>
               </td>
               <td class="text-gray-900" rowspan="<%= renaksi_rowspan %>"><%= number_to_currency(renaksi_opd&.anggaran_renaksi, unit: "Rp. ", separator: ".") %></td>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.nama_pemilik %></td>
@@ -78,7 +78,7 @@
               <td class=""></td>
               <td class="text-wrap"><%= renaksi_opd.aksi %></td>
               <td class="p-0 m-0">
-                <%= render 'rencana_aksi_opds/table_subkegiatan_rekapitulasi', renaksi_opd: renaksi_opd, tahun: @tahun, kode_opd: @kode_opd %>
+                <%= render 'rencana_aksi_opds/table_subkegiatan_rekapitulasi_cetak', renaksi_opd: renaksi_opd, tahun: @tahun, kode_opd: @kode_opd %>
               </td>
               <td class="text-gray-900"><%= number_to_currency(renaksi_opd&.anggaran_renaksi, unit: "Rp. ", separator: ".") %></td>
               <td class="text-wrap"><%= renaksi_opd.nama_pemilik %></td>
