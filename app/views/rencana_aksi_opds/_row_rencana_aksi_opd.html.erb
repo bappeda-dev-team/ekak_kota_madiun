@@ -1,7 +1,7 @@
 <tbody id="<%= dom_id(sasaran) %>">
   <tr>
     <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= i %></td>
-    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %> - <%= sasaran.nama_nip_pemilik %></td>
     <% if sasaran.indikator_sasarans.any? %>
       <%= indikator_rencana_aksi_opd(sasaran) %>
     <% else %>

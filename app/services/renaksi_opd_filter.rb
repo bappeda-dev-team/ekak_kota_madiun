@@ -1,6 +1,6 @@
 class RenaksiOpdFilter
   def initialize(scope = Strategi.where(role: 'eselon_2'), params = {})
-    @scope = scope
+    @scope = scope.includes(:opd)
     @params = params
   end
 
@@ -34,15 +34,14 @@ class RenaksiOpdFilter
     return if @params[:opd].blank? || kode_kota?
 
     kode_opd = @params[:opd]
-    opd = Opd.find_by(kode_unik_opd: kode_opd)
+    opd_id = Opd.find_by(kode_unik_opd: kode_opd).id
 
-    @scope = @scope.select { |st| st.opd_id == opd.id.to_s }
+    @scope = @scope.where(opd_id: opd_id)
   end
 
   def order_and_compact
     @scope = @scope
              .select(&:opd)
-             .select { |ss| ss.opd.id != opd_setda.id || ss.nip_asn == opd_setda.nip_kepala }
              .sort_by { |ss| ss.opd.kode_unik_opd }
              .compact_blank
   end
