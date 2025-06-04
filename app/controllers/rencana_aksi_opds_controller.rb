@@ -31,6 +31,7 @@ class RencanaAksiOpdsController < ApplicationController
 
   def cetak_rekapitulasi
     @tahun = params[:tahun]
+    @jenis_renaksi = params[:jenis_renaksi]
     strategi = Strategi.where(role: 'eselon_2', tahun: @tahun)
     renaksi_opd_filter = RenaksiOpdFilter.new(strategi, params)
     # only get setda
@@ -154,7 +155,7 @@ class RencanaAksiOpdsController < ApplicationController
   end
 
   def filter_rekapitulasi
-    @filter = params[:filter] || ''
+    @jenis_renaksi = params[:jenis_renaksi] || ''
     @kode_opd = params[:opd]
     @tahun = params[:tahun]
 
