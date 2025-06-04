@@ -42,7 +42,7 @@ class RenaksiOpdFilter
   def order_and_compact
     @scope = @scope
              .select(&:opd)
-             .sort_by { |ss| ss.opd.kode_unik_opd }
+             .sort_by { |ss| ss.strategi.opd.kode_unik_opd }
              .compact_blank
   end
 

@@ -280,12 +280,12 @@ class Strategi < ApplicationRecord
 
   def sasaran_pohon_kinerja(tahun: nil)
     if opd_id == "145"
-      sasarans.includes(%i[strategi indikator_sasarans opd user])
+      sasarans.includes(%i[strategi indikator_sasarans opd user rencana_aksi_opds])
               .where(nip_asn: opd.nip_kepala)
               .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
               .select(&:sasaran_siap_digunakan?)
     else
-      sasarans.includes(%i[strategi indikator_sasarans opd user])
+      sasarans.includes(%i[strategi indikator_sasarans opd user rencana_aksi_opds])
               .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
               .select(&:sasaran_siap_digunakan?)
     end

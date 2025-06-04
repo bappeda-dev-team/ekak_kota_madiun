@@ -64,7 +64,7 @@
               </td>
             <% end %>
             <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
-            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.opd %></td>
+            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.strategi.opd %></td>
           </tr>
           <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
             <%= indikator %>
