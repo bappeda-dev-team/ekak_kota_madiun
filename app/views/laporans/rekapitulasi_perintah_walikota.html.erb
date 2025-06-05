@@ -22,7 +22,11 @@
                           controller: 'filter-render',
                           filter_render_target_id_value: 'filter-renaksi-results',
                           filter_render_text_value: 'memuat data...',
-                          action: 'filter-render#loading ajax:success->filter-render#append filter-render#getRender:prevent'
+                          filter_render_field_disabled_value: 'false',
+                          action: 'filter-render#loading
+                                   filter-render#disableField
+                                   ajax:success->filter-render#append
+                                   ajax:complete->filter-render#disableField'
                         } do |form| %>
             <div class="col">
               <%= form.hidden_field :jenis_renaksi, value: 'perintah-walikota' %>
@@ -31,6 +35,7 @@
                { include_blank: true },
                data: {
                  placeholder: 'Opd',
+                 filter_render_target: 'field',
                  controller: 'dropdown',
                  dropdown_jenis_value: 'extra',
                  dropdown_url_value: '/opds/filter_selected.json',
@@ -44,6 +49,7 @@
                { include_blank: true },
                data: {
                  placeholder: 'Tahun',
+                 filter_render_target: 'field',
                  controller: 'dropdown',
                  dropdown_jenis_value: 'extra',
                  dropdown_url_value: '/tahuns.json',

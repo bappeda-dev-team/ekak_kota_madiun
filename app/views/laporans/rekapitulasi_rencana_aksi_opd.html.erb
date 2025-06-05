@@ -22,7 +22,10 @@
                           controller: 'filter-render',
                           filter_render_target_id_value: 'filter-renaksi-results',
                           filter_render_text_value: 'memuat data...',
-                          action: 'filter-render#loading ajax:success->filter-render#append filter-render#getRender:prevent'
+                          action: 'filter-render#loading
+                                   filter-render#disableField
+                                   ajax:success->filter-render#append
+                                   ajax:complete->filter-render#disableField'
                         } do |form| %>
             <div class="col">
               <%= form.label :opd, class: 'form-label' %>

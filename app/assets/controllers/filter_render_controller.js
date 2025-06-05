@@ -1,20 +1,21 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["results"];
+  static targets = ["results", "field"];
   static values = {
     targetId: String,
-    text: String
-  }
+    text: String,
+    fieldDisabled: Boolean,
+  };
 
   append(event) {
     const [_data, _status, xhr] = event.detail;
     // alert(status)
     if (this.hasTargetIdValue) {
-      const target = document.getElementById(this.targetIdValue)
+      const target = document.getElementById(this.targetIdValue);
       target.innerHTML = xhr.response;
     } else {
-      const target = this.resultsTarget.innerHTML = xhr.response;
+      const target = (this.resultsTarget.innerHTML = xhr.response);
       target.innerHTML = xhr.response;
     }
   }
@@ -56,6 +57,16 @@ export default class extends Controller {
     element.innerHTML = this.loaderView();
   }
 
+  disableField() {
+    const disable = !this.fieldDisabledValue;
+
+    this.fieldTargets.forEach((field) => {
+      field.disabled = disable;
+    });
+
+    this.fieldDisabledValue = disable;
+  }
+
   loaderView() {
     return `
       <div class="loader text-center">
@@ -77,10 +88,10 @@ export default class extends Controller {
         const target = "render-results";
         const element = document.getElementById(target);
         const data = await response.json();
-        const html = data.html_content
+        const html = data.html_content;
         element.innerHTML = html; // Update results
       } else {
-        this.error()
+        this.error();
       }
     } catch (error) {
       console.error("Error fetching results:", error);
