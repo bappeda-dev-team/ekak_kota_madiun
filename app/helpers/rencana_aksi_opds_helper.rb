@@ -123,7 +123,7 @@ module RencanaAksiOpdsHelper
     tahun_n = tahun_fix(tahun)
     indikator = subkegiatan&.indikator_subkegiatan_tahun(tahun_n, kode_opd)
     "
-      <td style='min-width: 200px;' class='border border-bottom-0 text-wrap fw-bolder skip'>#{subkegiatan&.nama_subkegiatan}</td>
+      #{subkegiatan&.nama_subkegiatan}
     ".html_safe
   end
 

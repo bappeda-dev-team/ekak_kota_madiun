@@ -119,4 +119,8 @@ class RencanaAksiOpd < ApplicationRecord
     rencana_renaksi.is_perintah_walikota = false
     rencana_renaksi.save
   end
+
+  def indikators_rencana_renaksi
+    rencana_renaksi.indikator_sasarans
+  end
 end
