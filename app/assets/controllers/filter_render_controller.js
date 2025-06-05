@@ -3,7 +3,8 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["results"];
   static values = {
-    targetId: String
+    targetId: String,
+    text: String
   }
 
   append(event) {
@@ -48,6 +49,22 @@ export default class extends Controller {
 
     // Fetch new filtered results
     this.loadResults(url.pathname + "?" + params.toString());
+  }
+
+  loading() {
+    const element = document.getElementById(this.targetIdValue);
+    element.innerHTML = this.loaderView();
+  }
+
+  loaderView() {
+    return `
+      <div class="loader text-center">
+        <div class="lds-roller">
+          <div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div>
+        </div>
+        <p>${this.textValue}</p>
+      </div>`;
   }
 
   async loadResults(url) {

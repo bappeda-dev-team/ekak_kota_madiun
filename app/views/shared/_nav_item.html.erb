@@ -1,5 +1,8 @@
 <li class="nav-item" >
-  <%= active_link_to(item[:href], active: :exact, id: item[:identifier]) do %>
+  <%= active_link_to(item[:href],
+                     id: item[:identifier],
+                     active: %r{\A/#{Regexp.escape(item[:identifier])}(\?|$)},
+                     ) do %>
     <span class="nav-link d-flex justify-content-between align-items-center <%= is_active_link?(item[:href], :exact) ? '' : 'collapsed' %>"
           aria-expanded="<%= is_active_link?(item[:href], :exact) %>"
           data-bs-toggle="collapse"
@@ -26,7 +29,12 @@
         <% if sub_item[:multi] %>
           <%= render partial: 'shared/nav_item', locals: { item: sub_item, child: true } %>
         <% else %>
-          <%= active_link_to(sub_item[:href], wrap_tag: :li, wrap_class: 'nav-item', class: "nav-link #{'ms-3' if local_assigns[:child]}", id: sub_item[:identifier], active: /\b#{Regexp.escape(sub_item[:identifier].to_s)}\b/) do %>
+          <%= active_link_to(sub_item[:href],
+                             wrap_tag: :li, wrap_class: 'nav-item',
+                             class: "nav-link #{'ms-3' if local_assigns[:child]}",
+                             id: sub_item[:identifier],
+                             active: %r{\A/#{Regexp.escape(sub_item[:identifier])}(\?|$)}
+                             ) do %>
             <span>
               <span class="sidebar-text"><%= sub_item[:title] %></span>
             </span>

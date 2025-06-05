@@ -1,10 +1,11 @@
-<div class="card-body" id="filter-rekapitulasi">
+<%= render 'shared/card_layout_subtitle', title: "Rekapitulasi Rencana Aksi OPD #{@jenis_renaksi.titleize}",
+           sub_title: @opd, sub_title_2: @tahun do %>
   <div class="cetak d-grid gap-3">
     <%= link_to cetak_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, opd: @kode_opd, jenis_renaksi: @jenis_renaksi),
                 class:"m-3 btn btn-outline-danger",
                 target: "_blank", rel: "noopener" do %>
       <span class="far fa-file-pdf me-2"></span>
-      Cetak PDF Rekapitulasi Rencana Aksi OPD <%= @jenis_renaksi %>
+      Cetak PDF Rekapitulasi Rencana Aksi OPD <%= @jenis_renaksi.upcase %>
     <% end %>
   </div>
   <div class="table-responsive">
@@ -94,4 +95,4 @@
       </caption>
     </table>
   </div>
-</div>
+<% end %>
