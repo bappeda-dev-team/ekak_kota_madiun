@@ -54,7 +54,32 @@ export default class extends Controller {
 
   loading() {
     const element = document.getElementById(this.targetIdValue);
-    element.innerHTML = this.loaderView();
+
+    // Create a new loader div
+    const loader = document.createElement('div');
+    loader.className = 'loader-overlay';
+    loader.innerHTML = this.loaderView();
+
+    // Append loader to the existing element
+    element.appendChild(loader);
+  }
+
+  loaderView() {
+    return `
+    <div class="loader-content text-center">
+      <div class="lds-roller">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <p>${this.textValue}</p>
+    </div>
+  `;
+  }
+
+  removeLoader() {
+    const element = document.getElementById(this.targetIdValue);
+    const loader = element.querySelector('.loader-overlay');
+    if (loader) loader.remove();
   }
 
   toggleDisableField() {
@@ -68,16 +93,6 @@ export default class extends Controller {
     this.fieldDisabledValue = disable;
   }
 
-  loaderView() {
-    return `
-      <div class="loader text-center">
-        <div class="lds-roller">
-          <div></div><div></div><div></div><div></div>
-          <div></div><div></div><div></div><div></div>
-        </div>
-        <p>${this.textValue}</p>
-      </div>`;
-  }
 
   async loadResults(url) {
     try {

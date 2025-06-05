@@ -27,7 +27,8 @@
                           action: 'filter-render#loading
                                    ajax:beforeSend->filter-render#toggleDisableField
                                    ajax:success->filter-render#append
-                                   ajax:complete->filter-render#toggleDisableField'
+                                   ajax:complete->filter-render#toggleDisableField
+                                   ajax:complete->filter-render#removeLoader'
                         } do |form| %>
             <div class="col">
               <%= form.hidden_field :jenis_renaksi, value: 'perintah-walikota' %>
