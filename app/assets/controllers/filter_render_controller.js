@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["results", "field"];
+  static targets = ["results"];
   static values = {
     targetId: String,
     text: String,
@@ -57,10 +57,11 @@ export default class extends Controller {
     element.innerHTML = this.loaderView();
   }
 
-  disableField() {
+  toggleDisableField() {
     const disable = !this.fieldDisabledValue;
+    const fieldElements = this.element.querySelectorAll('input, select, textarea')
 
-    this.fieldTargets.forEach((field) => {
+    fieldElements.forEach((field) => {
       field.disabled = disable;
     });
 

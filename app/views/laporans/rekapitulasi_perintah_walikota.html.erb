@@ -16,7 +16,8 @@
         <h2 class="fs-5 fw-bold mb-0">Filter</h2>
         <hr />
         <div class="filter-form row w-100">
-          <%= form_with url: filter_rekapitulasi_rencana_aksi_opds_path, local: false,
+          <%= form_with url: filter_rekapitulasi_rencana_aksi_opds_path,
+                        local: false,
                         method: :get,
                         data: {
                           controller: 'filter-render',
@@ -24,9 +25,9 @@
                           filter_render_text_value: 'memuat data...',
                           filter_render_field_disabled_value: 'false',
                           action: 'filter-render#loading
-                                   filter-render#disableField
+                                   ajax:beforeSend->filter-render#toggleDisableField
                                    ajax:success->filter-render#append
-                                   ajax:complete->filter-render#disableField'
+                                   ajax:complete->filter-render#toggleDisableField'
                         } do |form| %>
             <div class="col">
               <%= form.hidden_field :jenis_renaksi, value: 'perintah-walikota' %>
@@ -35,7 +36,6 @@
                { include_blank: true },
                data: {
                  placeholder: 'Opd',
-                 filter_render_target: 'field',
                  controller: 'dropdown',
                  dropdown_jenis_value: 'extra',
                  dropdown_url_value: '/opds/filter_selected.json',
@@ -49,7 +49,6 @@
                { include_blank: true },
                data: {
                  placeholder: 'Tahun',
-                 filter_render_target: 'field',
                  controller: 'dropdown',
                  dropdown_jenis_value: 'extra',
                  dropdown_url_value: '/tahuns.json',
@@ -57,7 +56,10 @@
                }  %>
             </div>
             <div class="col-auto mt-4">
-              <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary w-100' %>
+              <%= button_tag class: "btn btn-primary w-100",
+                             data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+                <span>Filter</span>
+              <% end %>
             </div>
           <% end %>
         </div>

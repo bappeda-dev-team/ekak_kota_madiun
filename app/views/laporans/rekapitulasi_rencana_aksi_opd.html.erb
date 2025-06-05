@@ -23,9 +23,9 @@
                           filter_render_target_id_value: 'filter-renaksi-results',
                           filter_render_text_value: 'memuat data...',
                           action: 'filter-render#loading
-                                   filter-render#disableField
+                                   ajax:beforeSend->filter-render#toggleDisableField
                                    ajax:success->filter-render#append
-                                   ajax:complete->filter-render#disableField'
+                                   ajax:complete->filter-render#toggleDisableField'
                         } do |form| %>
             <div class="col">
               <%= form.label :opd, class: 'form-label' %>
@@ -53,7 +53,10 @@
                }  %>
             </div>
             <div class="col-auto mt-4">
-              <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary w-100' %>
+              <%= button_tag class: "btn btn-primary w-100",
+                             data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+                <span>Filter</span>
+              <% end %>
             </div>
           <% end %>
         </div>
