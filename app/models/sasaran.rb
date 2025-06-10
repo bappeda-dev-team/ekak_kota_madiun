@@ -615,6 +615,8 @@ class Sasaran < ApplicationRecord
 
   def nama_nip_pemilik
     user.nama_nip_kurung_small
+  rescue NoMethodError
+    'NAMA NIP KOSONG'
   end
 
   def clone_dari
