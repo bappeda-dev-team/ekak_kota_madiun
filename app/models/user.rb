@@ -416,14 +416,20 @@ class User < ApplicationRecord
 
   def nama_nip
     "#{nama} - #{nik}"
+  rescue NoMethodError
+    'NAMA NIP KOSONG'
   end
 
   def nama_nip_kurung
     "#{nama} ( #{nik} )"
+  rescue NoMethodError
+    'NAMA NIP KOSONG'
   end
 
   def nama_nip_kurung_small
     "#{nama} (#{nik})"
+  rescue NoMethodError
+    'NAMA NIP KOSONG'
   end
 
   def nip
