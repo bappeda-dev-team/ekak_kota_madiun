@@ -45,19 +45,6 @@
               <td class="border"></td>
               <td colspan="5" class="border"><%= s_kota.sasaran %></td>
             </tr>
-            <% s_kota.indikator_sasarans.where(tahun: @tahun).each do |indikator| %>
-              <tr>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"><%= indikator.indikator %></td>
-                <td class="border"><%= indikator.satuan %></td>
-                <td class="border"><%= indikator.target %></td>
-                <td class="border"><%= indikator.satuan %></td>
-              </tr>
-            <% end %>
           <% end %>
         <% end %>
       <% end %>
