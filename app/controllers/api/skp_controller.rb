@@ -26,6 +26,7 @@ module Api
       @id_sasaran = params[:id_sasaran]
       @nip = params[:nip]
       @tahun = params[:tahun]
+      @bulan = params[:bulan]
       @user = User.find_by(nik: @nip)
       @eselon = @user.role_asn
       @sasaran = @user.sasarans.find_by(id_rencana: @id_sasaran)

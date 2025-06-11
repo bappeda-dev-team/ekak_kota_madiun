@@ -173,6 +173,15 @@ class Tahapan < ApplicationRecord
     anggarans.includes(:rekening)
   end
 
+  def aksis_bulan(bulan: '')
+    bulan = bulan.to_i
+    if bulan.positive? && bulan <= 12
+      aksis.where(bulan: bulan.to_i)
+    else
+      aksis
+    end
+  end
+
   private
 
   # def double_aksi_bulan?(bulan)

@@ -38,7 +38,7 @@ if @status_rencana_aksi
       json.tahapan_rtp renaksi.tahapan_with_rtp_tag
       json.anggaran_tahapan renaksi.anggaran_tahapan
       json.created_at renaksi.created_at
-      json.aksis renaksi.aksis do |aksi|
+      json.aksis renaksi.aksis_bulan(bulan: @bulan) do |aksi|
         json.id_aksi aksi.id
         json.id_tahapan aksi.id_rencana_aksi
         json.bulan aksi.bulan
