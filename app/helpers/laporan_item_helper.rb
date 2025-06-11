@@ -27,7 +27,7 @@ module LaporanItemHelper
       },
       {
         title: 'Manajemen Risiko', href: daftar_resiko_laporans_path,
-        icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
+        icon: 'fas fa-chart-line', identifier: 'laporans/daftar_resiko'
       },
       {
         title: 'SPBE', href: spbe_laporans_path,
