@@ -394,20 +394,24 @@ class UsersController < ApplicationController
   end
 
   def import
-    return redirect_to request.referer, error: 'File belum dipilih' if params[:file].nil?
+    file = params[:file]
 
-    redirect_to request.referer, warning: 'Upload File CSV' unless params[:file].content_type == 'text/csv'
+    return redirect_to request.referer, error: 'File belum dipilih' if file.nil?
 
-    imported_users = CsvImportService.new.import_user(params[:file])
-
-    jumlah_berhasil = imported_users[:jumlah_berhasil]
-    jumlah_gagal = imported_users[:jumlah_gagal]
-
-    if jumlah_berhasil.positive?
-      redirect_to request.referer, success: "Import #{jumlah_berhasil} data, berhasil."
-    else
-      redirect_to request.referer, error: "Tejadi kesalahan pada #{jumlah_gagal} data, data tidak sesuai"
+    unless file.content_type == 'text/csv'
+      return redirect_to request.referer, warning: 'Upload file CSV dengan format yang benar'
     end
+
+    # Simpan file ke tmp directory
+    filename = "import_#{Time.now.to_i}_#{file.original_filename}"
+    file_path = Rails.root.join('tmp', filename)
+
+    File.binwrite(file_path, file.read)
+
+    # Enqueue ke Sidekiq job
+    ImportUserJob.perform_later(file_path.to_s)
+
+    redirect_to request.referer, success: 'Import sedang diproses. Anda akan diberi notifikasi jika sudah selesai.'
   end
 
   private
