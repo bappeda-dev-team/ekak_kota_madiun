@@ -83,9 +83,9 @@
             <tr class="renaksi-opd">
               <td class=""></td>
               <td class="text-wrap"><%= renaksi_opd.aksi %></td>
-              <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi.first %></td>
-              <td class="text-wrap text-center"><%= renaksi_opd&.indikators_rencana_renaksi.first&.target %></td>
-              <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi.first&.satuan %></td>
+              <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi&.first %></td>
+              <td class="text-wrap text-center"><%= renaksi_opd&.indikators_rencana_renaksi&.first&.target %></td>
+              <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi&.first&.satuan %></td>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>">
                 <%= subkegiatan_indikator_renaksi_cetak(renaksi_opd, @tahun, @kode_opd) %>
               </td>

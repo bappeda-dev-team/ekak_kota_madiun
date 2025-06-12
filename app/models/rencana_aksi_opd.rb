@@ -38,15 +38,15 @@ class RencanaAksiOpd < ApplicationRecord
   end
 
   def perintah_walikota?
-    rencana_renaksi.is_perintah_walikota
+    rencana_renaksi&.is_perintah_walikota
   end
 
   def inovasi?
-    rencana_renaksi.punya_inovasi?
+    rencana_renaksi&.punya_inovasi?
   end
 
   def program_unggulan?
-    rencana_renaksi.termasuk_program_unggulan?
+    rencana_renaksi&.termasuk_program_unggulan?
   end
 
   def aksi
@@ -75,33 +75,33 @@ class RencanaAksiOpd < ApplicationRecord
   end
 
   def nama_pemilik
-    rencana_renaksi.nama_nip_pemilik
+    rencana_renaksi&.nama_nip_pemilik
   end
 
   def nama_pemilik_saja
-    rencana_renaksi.nama_pemilik
+    rencana_renaksi&.nama_pemilik
   end
 
   def nip_pemilik_saja
-    rencana_renaksi.nip_pemilik
+    rencana_renaksi&.nip_pemilik
   end
 
   def jabatan_pemilik
-    rencana_renaksi.jabatan_pemilik
+    rencana_renaksi&.jabatan_pemilik
   end
 
   def anggaran_renaksi
-    rencana_renaksi.total_anggaran
+    rencana_renaksi&.total_anggaran
   rescue NoMethodError
     0
   end
 
   def subkegiatan_renaksi
-    rencana_renaksi.program_kegiatan
+    rencana_renaksi&.program_kegiatan
   end
 
   def update_tw_pelaksanaan
-    target_setahun = rencana_renaksi.total_target_aksi_bulan
+    target_setahun = rencana_renaksi&.total_target_aksi_bulan
     tw1 = target_setahun.values_at(1, 2, 3).compact_blank.sum
     tw2 = target_setahun.values_at(4, 5, 6).compact_blank.sum
     tw3 = target_setahun.values_at(7, 8, 9).compact_blank.sum
@@ -121,6 +121,6 @@ class RencanaAksiOpd < ApplicationRecord
   end
 
   def indikators_rencana_renaksi
-    rencana_renaksi.indikator_sasarans
+    rencana_renaksi&.indikator_sasarans
   end
 end

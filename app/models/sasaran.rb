@@ -919,7 +919,7 @@ class Sasaran < ApplicationRecord
 
   def rencana_aksi_opds_bulanan(bulan: nil)
     rencana_aksi_opds.select do |renaksi|
-      renaksi.rencana_renaksi.tahapans.any? { |t| t.ada_target_bulan?(bulan) }
+      renaksi&.rencana_renaksi&.tahapans&.any? { |t| t.ada_target_bulan?(bulan) }
     end
   end
 
