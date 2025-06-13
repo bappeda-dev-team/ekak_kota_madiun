@@ -622,7 +622,7 @@ class SasaransController < ApplicationController
     @tahun = params[:tahun]
     @kode_opd = params[:kode_opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @sasarans = @opd.users.eselon4.flat_map do |us|
+    @sasarans = @opd.users_jabatans.eselon4.flat_map do |us|
       us.sasarans.includes(%i[strategi indikator_sasarans])
         .where(tahun: @tahun)
         .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")

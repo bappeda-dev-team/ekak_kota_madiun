@@ -530,6 +530,19 @@ class Opd < ApplicationRecord
       .map(&:user)
   end
 
+  def users_from_jabatan_eselon_4
+    user_eselon4 = users.eselon4
+    user_jabatan_es4 = user_jabatan.select { |us| us.has_role?(:eselon_4) }
+    user_eselon4 + user_jabatan_es4
+  end
+
+  def users_jabatans
+    user_eselon4_ids = users.pluck(:id)
+    user_jabatan_es4_ids = user_jabatan.map(&:id)
+    ids = (user_eselon4_ids + user_jabatan_es4_ids).uniq
+    User.where(id: ids)
+  end
+
   def opd_setda?
     kode_unik_opd == '4.01.0.00.0.00.01.0000'
   end
