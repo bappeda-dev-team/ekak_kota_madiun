@@ -43,8 +43,8 @@
           <% renaksi_rowspan = sasaran.indikator_sasarans.length %>
           <tr>
             <td class="" rowspan="<%= renaksi_rowspan %>"></td>
-            <% if sasaran.rencana_aksi_opds.any? %>
-              <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
+            <% if sasaran.rencana_aksi_opds_filter(@jenis_renaksi).any? %>
+              <% renaksi_opd = sasaran.rencana_aksi_opds_filter(@jenis_renaksi).first %>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
               <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi.first %></td>
               <td class="text-wrap text-center"><%= renaksi_opd&.indikators_rencana_renaksi.first&.target %></td>
@@ -79,7 +79,7 @@
           <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
             <%= indikator %>
           <% end %>
-          <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
+          <% sasaran.rencana_aksi_opds_filter(@jenis_renaksi).drop(1).each do |renaksi_opd| %>
             <tr class="renaksi-opd">
               <td class=""></td>
               <td class="text-wrap"><%= renaksi_opd.aksi %></td>

@@ -926,4 +926,12 @@ class Sasaran < ApplicationRecord
   def renaksi_sasaran_walikota
     rencana_aksi_opds.select(&:perintah_walikota?)
   end
+
+  def rencana_aksi_opds_filter(jenis_renaksi)
+    if jenis_renaksi == 'perintah-walikota'
+      renaksi_sasaran_walikota
+    else
+      rencana_aksi_opds
+    end
+  end
 end
