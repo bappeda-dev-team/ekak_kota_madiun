@@ -14,11 +14,13 @@ module LaporanItemHelper
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
-        title: 'Laporan Rekapitulasi Rencana Aksi OPD', href: rekapitulasi_rencana_aksi_opd_laporans_path,
-        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_rencana_aksi_opd'
+        title: 'Rencana Aksi OPD', href: '#',
+        multi: true, collections: rekap_rencana_aksis_opd,
+        id_target: 'rekap-renaksi-opd',
+        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_rencana_aksi_opd/'
       },
       {
-        title: 'Laporan Rekapitulasi Rencana Aksi OPD - Perintah Walikota', href: rekapitulasi_perintah_walikota_laporans_path,
+        title: 'Perintah Walikota', href: rekapitulasi_perintah_walikota_laporans_path,
         icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_perintah_walikota'
       },
       {
@@ -157,6 +159,19 @@ module LaporanItemHelper
       {
         title: 'Identifikasi Strategis', href: identifikasi_strategis_manrisks_path,
         icon: 'fas fa-file-alt', identifier: 'identifikasi_strategis_manrisk'
+      }
+    ]
+  end
+
+  def rekap_rencana_aksis_opd
+    [
+      {
+        title: 'Data', href: data_rekapitulasi_rencana_aksi_opd_laporans_path,
+        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_rencana_aksi_opd/data'
+      },
+      {
+        title: 'Jumlah', href: jumlah_rekapitulasi_rencana_aksi_opd_laporans_path,
+        icon: 'fas fa-file-alt', identifier: 'laporans/rekapitulasi_rencana_aksi_opd/jumlah'
       }
     ]
   end

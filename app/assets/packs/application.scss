@@ -805,3 +805,8 @@ tr.warning td {
     height: 100%;
   }
 }
+
+.tanda-kosong {
+  @extend .bg-danger;
+  @extend .text-white;
+}

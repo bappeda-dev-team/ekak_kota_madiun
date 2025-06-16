@@ -163,8 +163,14 @@ class RencanaAksiOpdsController < ApplicationController
     strategi = Strategi.where(role: 'eselon_2', tahun: @tahun)
     # TODO: test for missing and deleted strategi
     @sasaran_opds = RenaksiOpdFilter.new(strategi, params).results
-
     render partial: 'rencana_aksi_opds/filter_rekapitulasi'
+  end
+
+  def jumlah_rekapitulasi
+    @tahun = params[:tahun]
+    @renaksi_opd = RencanaAksiOpd.where(tahun: @tahun).group_by(&:opd)
+                                 .sort_by { |opd, _| opd.kode_unik_opd }
+    render partial: 'rencana_aksi_opds/jumlah_rekapitulasi'
   end
 
   private
