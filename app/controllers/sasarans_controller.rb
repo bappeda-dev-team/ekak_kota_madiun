@@ -628,10 +628,15 @@ class SasaransController < ApplicationController
     #     .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
     #     .select { |ss| select_sasaran_valid(ss) }
     # end
-    @sasarans = @opd.strategis.eselon4_bytahun(@tahun).flat_map do |str|
-      str.sasarans.includes(%i[indikator_sasarans])
-         .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
-    end.select(&:es4_siaptarik?)
+    strategis_ids = @opd.strategis.eselon4_bytahun(@tahun).pluck(:id)
+
+    @sasarans = Sasaran
+                .includes(:indikator_sasarans)
+                .joins(:tahapans)
+                .where(tahun: @tahun, strategi_id: strategis_ids)
+                .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
+                .distinct
+                .select(&:manrisk_diverifikasi?)
 
     return unless params[:item]
 
