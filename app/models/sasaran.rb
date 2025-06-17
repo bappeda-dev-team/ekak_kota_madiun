@@ -505,6 +505,10 @@ class Sasaran < ApplicationRecord
     indikator_sasarans.any? && manual_ik?
   end
 
+  def es4_siaptarik?
+    strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?
+  end
+
   def siap_ditarik?
     if wajib_manrisk
       strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?

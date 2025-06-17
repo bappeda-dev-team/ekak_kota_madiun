@@ -622,12 +622,16 @@ class SasaransController < ApplicationController
     @tahun = params[:tahun]
     @kode_opd = params[:kode_opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @sasarans = @opd.users_jabatans.eselon4.flat_map do |us|
-      us.sasarans.includes(%i[strategi indikator_sasarans])
-        .where(tahun: @tahun)
-        .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
-        .select { |ss| select_sasaran_valid(ss) }
-    end
+    # @sasarans = @opd.users_jabatans.eselon4.flat_map do |us|
+    #   us.sasarans.includes(%i[strategi indikator_sasarans])
+    #     .where(tahun: @tahun)
+    #     .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
+    #     .select { |ss| select_sasaran_valid(ss) }
+    # end
+    @sasarans = @opd.strategis.eselon4_bytahun(@tahun).flat_map do |str|
+      str.sasarans.includes(%i[indikator_sasarans])
+         .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
+    end.select(&:es4_siaptarik?)
 
     return unless params[:item]
 
@@ -676,10 +680,6 @@ class SasaransController < ApplicationController
   end
 
   private
-
-  def select_sasaran_valid(ss)
-    ss.siap_ditarik? && ss.strategi&.role == 'eselon_4'
-  end
 
   def errors_content(sasaran)
     render_to_string(partial: 'error',

@@ -55,6 +55,7 @@ class Strategi < ApplicationRecord
   scope :by_periode, lambda { |periode|
                        where(tahun: periode)
                      }
+  scope :eselon4_bytahun, ->(tahun) { where(role: 'eselon_4', tahun: tahun) }
 
   store :metadata, accessors: %w[keterangan updated_by updated_at deleted_at deleted_by prev_role]
 
