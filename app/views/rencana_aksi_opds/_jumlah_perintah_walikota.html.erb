@@ -16,14 +16,14 @@
           <tr>
             <td class=""></td>
             <td class="text-wrap"><%= opd %></td>
-            <td class="text-center <%= jumlah_perintah.positive? ? '' : 'tanda-kosong' %>"><%= jumlah_perintah %></td>
+            <td class="text-center <%= jumlah_perintah[:perintah_walikota].positive? ? '' : 'tanda-kosong' %>"><%= jumlah_perintah[:perintah_walikota] %></td>
           </tr>
         <% end %>
       </tbody>
       <tfoot>
         <tr class="skip">
           <td colspan="2">Total:</td>
-          <td class="text-center"><%= @total %>
+          <td class="text-center"><%= @total[:perintah_walikota] %>
         </tr>
       </tfoot>
     </table>

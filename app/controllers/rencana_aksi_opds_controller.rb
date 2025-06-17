@@ -168,21 +168,29 @@ class RencanaAksiOpdsController < ApplicationController
 
   def jumlah_rekapitulasi
     @tahun = params[:tahun]
-    renaksi_opd = RencanaAksiOpd.where(tahun: @tahun)
-    @renaksi_opd = renaksi_opd.group_by(&:opd)
-                              .transform_values(&:size)
-                              .sort_by { |opd, _| opd.kode_unik_opd }
-    @total = renaksi_opd.size
+
+    @renaksi_opd = Opd.with_user.includes(:rencana_aksi_opds)
+                      .map { |opd| opd.map_total_renaksi_opd(@tahun) }
+                      .sort_by { |opd, _| opd.kode_unik_opd }
+                      .to_h
+    @total = {
+      total: @renaksi_opd.values.sum { |v| v[:total] },
+      perintah_walikota: @renaksi_opd.values.sum { |v| v[:perintah_walikota] },
+      program_unggulan: @renaksi_opd.values.sum { |v| v[:program_unggulan] },
+      inovasi: @renaksi_opd.values.sum { |v| v[:inovasi] }
+    }
     render partial: 'rencana_aksi_opds/jumlah_rekapitulasi'
   end
 
   def jumlah_perintah_walikota
     @tahun = params[:tahun]
-    renaksi_opd = RencanaAksiOpd.where(tahun: @tahun)
-    @renaksi_opd = renaksi_opd.group_by(&:opd)
-                              .transform_values { |val| val.select(&:perintah_walikota?).size }
-                              .sort_by { |opd, _| opd.kode_unik_opd }
-    @total = renaksi_opd.select(&:perintah_walikota?).size
+    @renaksi_opd = Opd.with_user.includes(:rencana_aksi_opds)
+                      .map { |opd| opd.map_total_renaksi_opd(@tahun) }
+                      .sort_by { |opd, _| opd.kode_unik_opd }
+                      .to_h
+    @total = {
+      perintah_walikota: @renaksi_opd.values.sum { |v| v[:perintah_walikota] }
+    }
     render partial: 'rencana_aksi_opds/jumlah_perintah_walikota'
   end
 

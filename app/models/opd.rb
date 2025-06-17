@@ -48,6 +48,7 @@ class Opd < ApplicationRecord
     end
   end
   belongs_to :lembaga
+  has_many :rencana_aksi_opds, primary_key: :kode_unik_opd, foreign_key: :kode_opd
   has_many :sasaran_opds, foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   # has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
@@ -566,5 +567,19 @@ class Opd < ApplicationRecord
       '4.01.0.00.0.00.01.0006',
       '4.01.0.00.0.00.01.0007'
     ]
+  end
+
+  def map_total_renaksi_opd(tahun)
+    renaksi_opd = rencana_aksi_opds.includes([:rencana_renaksi,
+                                              { rencana_renaksi: [:usulans] }]).select do |rn|
+      rn.tahun == tahun
+    end
+    total = renaksi_opd.size
+    perintah_walikota = renaksi_opd.count(&:perintah_walikota?)
+    program_unggulan = renaksi_opd.count(&:program_unggulan?)
+    inovasi = renaksi_opd.count(&:inovasi?)
+    [self,
+     { total: total, perintah_walikota: perintah_walikota, program_unggulan: program_unggulan,
+       inovasi: inovasi }]
   end
 end
