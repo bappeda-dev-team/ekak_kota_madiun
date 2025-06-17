@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       get :cetak_rekapitulasi
       get :jumlah_rekapitulasi
       get :jumlah_perintah_walikota
+      get :cetak_rekap_jumlah
+      get :cetak_jumlah_perintah_walikota
     end
     member do
       patch :toggle_sasarans_is_perintah_walikota

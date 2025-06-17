@@ -1,6 +1,12 @@
 <%= render 'shared/card_layout_subtitle', title: "Jumlah Perintah Walikota",
            sub_title: 'Kota Madiun', sub_title_2: @tahun do %>
   <div class="cetak d-grid gap-3 put-it-here">
+    <%= link_to cetak_jumlah_perintah_walikota_rencana_aksi_opds_path(tahun: @tahun),
+                class:"m-3 btn btn-outline-danger",
+                target: "_blank", rel: "noopener" do %>
+      <span class="far fa-file-pdf me-2"></span>
+      Cetak PDF Laporan Jumlah Perintah Walikota
+    <% end %>
   </div>
   <div class="table-responsive">
     <table class="table align-items-center table-bordered counter">
@@ -23,7 +29,7 @@
       <tfoot>
         <tr class="skip">
           <td colspan="2">Total:</td>
-          <td class="text-center"><%= @total[:perintah_walikota] %>
+          <td class="text-center"><%= @total[:perintah_walikota] %></td>
         </tr>
       </tfoot>
     </table>

@@ -1,0 +1,68 @@
+<div data-controller="print" data-print-title-value="REKAP JUMLAH RENAKSI OPD">
+  <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
+    <span class="far fa-file-pdf me-2"></span>
+    Cetak PDF
+  </button>
+  <div data-print-target="document" class="w-100" id="cetak">
+    <div class="kop">
+      <div class="kop-judul">
+        <h3>REKAPITULASI JUMLAH RENCANA AKSI PERANGKAT DAERAH</h3>
+      </div>
+      <div class="kop-tahun">
+        <h5>TAHUN <%= @tahun %></h5>
+      </div>
+    </div>
+    <table class="table align-items-center table-bordered counter">
+      <thead class="thead-light">
+        <tr>
+          <th class="text-center" rowspan="2">No</th>
+          <th class="text-center" rowspan="2" style="min-width: 250px;">Nama OPD</th>
+          <th class="text-center" rowspan="2">Jumlah Renaksi OPD</th>
+          <th class="text-center" colspan="3">Jumlah Renaksi</th>
+        </tr>
+        <tr>
+          <th class="text-center">Perintah Walikota</th>
+          <th class="text-center">Program Unggulan Walikota</th>
+          <th class="text-center">Inovasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @renaksi_opd.each do |opd, jumlah_renaksi| %>
+          <tr>
+            <td class=""></td>
+            <td class="text-wrap"><%= opd %></td>
+            <td class="text-center <%= jumlah_renaksi[:total].positive? ? '' : 'tanda-kosong' %>"><%= jumlah_renaksi[:total] %></td>
+            <td class="text-center <%= jumlah_renaksi[:perintah_walikota].positive? ? '' : 'tanda-kosong' %>"><%= jumlah_renaksi[:perintah_walikota] %></td>
+            <td class="text-center <%= jumlah_renaksi[:program_unggulan].positive? ? '' : 'tanda-kosong' %>"><%= jumlah_renaksi[:program_unggulan] %></td>
+            <td class="text-center <%= jumlah_renaksi[:inovasi].positive? ? '' : 'tanda-kosong' %>"><%= jumlah_renaksi[:inovasi] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr class="skip">
+          <td colspan="2">Total:</td>
+          <td class="text-center"><%= @total[:total] %></td>
+          <td class="text-center"><%= @total[:perintah_walikota] %></td>
+          <td class="text-center"><%= @total[:program_unggulan] %></td>
+          <td class="text-center"><%= @total[:inovasi] %></td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="ttd-wrapper">
+      <div class="ttd">
+        <div class="title-ttd">
+          <%= @jabatan_kepala_opd %> <%= @nama_opd %>
+        </div>
+        <div class="nama-kepala-opd">
+          <%= @nama_kepala_opd %>
+        </div>
+        <div class="jabatan-kepala-opd">
+          <%= @pangkat_kepala_opd %>
+        </div>
+        <div class="nip-kepala-opd">
+          NIP <%= @nip_kepala_opd %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

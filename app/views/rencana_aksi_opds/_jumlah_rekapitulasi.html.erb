@@ -1,6 +1,12 @@
 <%= render 'shared/card_layout_subtitle', title: "Jumlah Rencana Aksi OPD",
            sub_title: 'Kota Madiun', sub_title_2: @tahun do %>
   <div class="cetak d-grid gap-3 put-it-here">
+    <%= link_to cetak_rekap_jumlah_rencana_aksi_opds_path(tahun: @tahun),
+                class:"m-3 btn btn-outline-danger",
+                target: "_blank", rel: "noopener" do %>
+      <span class="far fa-file-pdf me-2"></span>
+      Cetak PDF Laporan Jumlah Rencana Aksi OPD
+    <% end %>
   </div>
   <div class="table-responsive">
     <table class="table align-items-center table-bordered counter">
@@ -32,10 +38,10 @@
       <tfoot>
         <tr class="skip">
           <td colspan="2">Total:</td>
-          <td class="text-center"><%= @total[:total] %>
-          <td class="text-center"><%= @total[:perintah_walikota] %>
-          <td class="text-center"><%= @total[:program_unggulan] %>
-          <td class="text-center"><%= @total[:inovasi] %>
+          <td class="text-center"><%= @total[:total] %></td>
+          <td class="text-center"><%= @total[:perintah_walikota] %></td>
+          <td class="text-center"><%= @total[:program_unggulan] %></td>
+          <td class="text-center"><%= @total[:inovasi] %></td>
         </tr>
       </tfoot>
     </table>

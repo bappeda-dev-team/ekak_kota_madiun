@@ -194,6 +194,57 @@ class RencanaAksiOpdsController < ApplicationController
     render partial: 'rencana_aksi_opds/jumlah_perintah_walikota'
   end
 
+  def cetak_rekap_jumlah
+    @tahun = params[:tahun]
+    @renaksi_opd = Opd.with_user.includes(:rencana_aksi_opds)
+                      .map { |opd| opd.map_total_renaksi_opd(@tahun) }
+                      .sort_by { |opd, _| opd.kode_unik_opd }
+                      .to_h
+    @total = {
+      total: @renaksi_opd.values.sum { |v| v[:total] },
+      perintah_walikota: @renaksi_opd.values.sum { |v| v[:perintah_walikota] },
+      program_unggulan: @renaksi_opd.values.sum { |v| v[:program_unggulan] },
+      inovasi: @renaksi_opd.values.sum { |v| v[:inovasi] }
+    }
+
+    opd = Opd.find(145)
+    @nama_opd = opd.nama_opd
+    @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
+    @nama_kepala_opd = opd.nama_kepala
+    @nip_kepala_opd = opd.nip_kepala_fix_plt
+    @pangkat_kepala_opd = opd.pangkat_kepala
+
+    respond_to do |format|
+      format.html do
+        render template: 'rencana_aksi_opds/cetak_rekap_jumlah', layout: 'print.html.erb'
+      end
+    end
+  end
+
+  def cetak_jumlah_perintah_walikota
+    @tahun = params[:tahun]
+    @renaksi_opd = Opd.with_user.includes(:rencana_aksi_opds)
+                      .map { |opd| opd.map_total_renaksi_opd(@tahun) }
+                      .sort_by { |opd, _| opd.kode_unik_opd }
+                      .to_h
+    @total = {
+      perintah_walikota: @renaksi_opd.values.sum { |v| v[:perintah_walikota] }
+    }
+
+    opd = Opd.find(145)
+    @nama_opd = opd.nama_opd
+    @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
+    @nama_kepala_opd = opd.nama_kepala
+    @nip_kepala_opd = opd.nip_kepala_fix_plt
+    @pangkat_kepala_opd = opd.pangkat_kepala
+
+    respond_to do |format|
+      format.html do
+        render template: 'rencana_aksi_opds/cetak_jumlah_perintah_walikota', layout: 'print.html.erb'
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
