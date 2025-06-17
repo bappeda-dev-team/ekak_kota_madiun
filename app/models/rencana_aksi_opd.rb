@@ -28,7 +28,7 @@ class RencanaAksiOpd < ApplicationRecord
   default_scope { order(:id) }
   has_one :rencana_renaksi, class_name: 'Sasaran', primary_key: :id_rencana_renaksi, foreign_key: :id_rencana
   belongs_to :sasaran
-  belongs_to :opd, primary_key: :kode_opd, foreign_key: :kode_unik_opd
+  belongs_to :opd, primary_key: :kode_unik_opd, foreign_key: :kode_opd
 
   def id_sasaran_opd
     sasaran.id_rencana

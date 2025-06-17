@@ -82,11 +82,11 @@ class RencanaAksiOpdsController < ApplicationController
     @tahun = rencana_aksi_opd_params[:tahun]
     @kode_opd = rencana_aksi_opd_params[:kode_opd]
     @rencana_aksi_opd = RencanaAksiOpd.new(rencana_aksi_opd_params)
-    @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
+    @sasaran = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
 
     if @rencana_aksi_opd.save && @rencana_aksi_opd.update_tw_pelaksanaan
       render json: { resText: 'Renaksi OPD ditambahkan',
-                     html_content: html_content({ sasaran: @sasaran_opd, i: @i },
+                     html_content: html_content({ sasaran: @sasaran, i: @i },
                                                 partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
         .to_json,
              status: :ok
@@ -104,11 +104,11 @@ class RencanaAksiOpdsController < ApplicationController
     @i = params[:rencana_aksi_opd][:i]
     @tahun = rencana_aksi_opd_params[:tahun]
     @kode_opd = rencana_aksi_opd_params[:kode_opd]
-    @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
+    @sasaran = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
 
     if @rencana_aksi_opd.update(rencana_aksi_opd_params) && @rencana_aksi_opd.update_tw_pelaksanaan
       render json: { resText: 'Sinkronisasi berhasil',
-                     html_content: html_content({ sasaran: @sasaran_opd, i: @i },
+                     html_content: html_content({ sasaran: @sasaran, i: @i },
                                                 partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
         .to_json,
              status: :ok
