@@ -6,27 +6,26 @@
     <table class="table align-items-center table-bordered counter">
       <thead class="thead-light">
         <tr>
-          <th class="border text-center" rowspan="2">No</th>
-          <th class="border text-center" rowspan="2" style="min-width: 250px;">Nama OPD</th>
-          <th class="border text-center" colspan="2">Jumlah</th>
-        </tr>
-        <tr>
-          <th class="border text-center">Renaksi OPD</th>
-          <th class="border text-center">Perintah Walikota</th>
+          <th class="border text-center">No</th>
+          <th class="border text-center" style="min-width: 250px;">Nama OPD</th>
+          <th class="border text-center">Jumlah Renaksi OPD</th>
         </tr>
       </thead>
       <tbody>
-        <% @renaksi_opd.each do |opd, renaksis| %>
-          <% jumlah_renaksi = renaksis.size %>
-          <% jumlah_perintah_walikota =  renaksis.select { |rn| rn.perintah_walikota? }.size %>
+        <% @renaksi_opd.each do |opd, jumlah_renaksi| %>
           <tr>
             <td class=""></td>
             <td class="text-wrap"><%= opd %></td>
             <td class="text-center <%= jumlah_renaksi.positive? ? '' : 'tanda-kosong' %>"><%= jumlah_renaksi %></td>
-            <td class="text-center <%= jumlah_perintah_walikota.positive? ? '' : 'tanda-kosong' %>"><%= jumlah_perintah_walikota %></td>
           </tr>
         <% end %>
       </tbody>
+      <tfoot>
+        <tr class="skip">
+          <td colspan="2">Total:</td>
+          <td class="text-center"><%= @total %>
+        </tr>
+      </tfoot>
     </table>
   </div>
 <% end %>

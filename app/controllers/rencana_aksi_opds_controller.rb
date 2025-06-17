@@ -168,16 +168,21 @@ class RencanaAksiOpdsController < ApplicationController
 
   def jumlah_rekapitulasi
     @tahun = params[:tahun]
-    @renaksi_opd = RencanaAksiOpd.where(tahun: @tahun).group_by(&:opd)
-                                 .sort_by { |opd, _| opd.kode_unik_opd }
+    renaksi_opd = RencanaAksiOpd.where(tahun: @tahun)
+    @renaksi_opd = renaksi_opd.group_by(&:opd)
+                              .transform_values(&:size)
+                              .sort_by { |opd, _| opd.kode_unik_opd }
+    @total = renaksi_opd.size
     render partial: 'rencana_aksi_opds/jumlah_rekapitulasi'
   end
 
   def jumlah_perintah_walikota
     @tahun = params[:tahun]
-    @renaksi_opd = RencanaAksiOpd.where(tahun: @tahun).group_by(&:opd)
-                                 .transform_values { |val| val.select(&:perintah_walikota?).size }
-                                 .sort_by { |opd, _| opd.kode_unik_opd }
+    renaksi_opd = RencanaAksiOpd.where(tahun: @tahun)
+    @renaksi_opd = renaksi_opd.group_by(&:opd)
+                              .transform_values { |val| val.select(&:perintah_walikota?).size }
+                              .sort_by { |opd, _| opd.kode_unik_opd }
+    @total = renaksi_opd.select(&:perintah_walikota?).size
     render partial: 'rencana_aksi_opds/jumlah_perintah_walikota'
   end
 
