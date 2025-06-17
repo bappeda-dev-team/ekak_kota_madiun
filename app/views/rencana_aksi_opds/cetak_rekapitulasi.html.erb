@@ -20,7 +20,7 @@
           <th class="border text-center" rowspan="2" scope="col">Indikator</th>
           <th class="border text-center" rowspan="2" scope="col">Target</th>
           <th class="border text-center" rowspan="2" scope="col">Satuan</th>
-          <th class="border text-center" rowspan="2" scope="col" style='min-width: 200px;'>Subkegiatan</th>
+          <th class="border text-center" rowspan="2" scope="col" style='min-width: 400px;'>Subkegiatan</th>
           <th class="border text-center" rowspan="2" scope="col">Anggaran</th>
           <th class="border text-center" rowspan="2" scope="col">Nama Pemilik</th>
           <th class="border text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
@@ -46,9 +46,9 @@
             <% if sasaran.rencana_aksi_opds_filter(@jenis_renaksi).any? %>
               <% renaksi_opd = sasaran.rencana_aksi_opds_filter(@jenis_renaksi).first %>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
-              <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi.first %></td>
-              <td class="text-wrap text-center"><%= renaksi_opd&.indikators_rencana_renaksi.first&.target %></td>
-              <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi.first&.satuan %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.indikators_rencana_renaksi.first %></td>
+              <td class="text-wrap text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.indikators_rencana_renaksi.first&.target %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.indikators_rencana_renaksi.first&.satuan %></td>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>">
                 <%= subkegiatan_indikator_renaksi_cetak(renaksi_opd, @tahun, @kode_opd) %>
               </td>
@@ -59,7 +59,7 @@
               <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
               <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
             <% else %>
-              <td class="text-center" colspan="8" rowspan="<%= renaksi_rowspan %>">
+              <td class="text-center" colspan="11" rowspan="<%= renaksi_rowspan %>">
                 -
               </td>
             <% end %>
@@ -74,7 +74,7 @@
               </td>
             <% end %>
             <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
-            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.opd %></td>
+            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.strategi.opd %></td>
           </tr>
           <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
             <%= indikator %>
@@ -86,7 +86,7 @@
               <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi&.first %></td>
               <td class="text-wrap text-center"><%= renaksi_opd&.indikators_rencana_renaksi&.first&.target %></td>
               <td class="text-wrap"><%= renaksi_opd&.indikators_rencana_renaksi&.first&.satuan %></td>
-              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>">
+              <td class="text-wrap">
                 <%= subkegiatan_indikator_renaksi_cetak(renaksi_opd, @tahun, @kode_opd) %>
               </td>
               <td class="text-gray-900"><%= number_to_currency(renaksi_opd&.anggaran_renaksi, unit: "Rp. ", separator: ".") %></td>
