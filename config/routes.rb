@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get :filter_rekapitulasi
       get :cetak_rekapitulasi
       get :jumlah_rekapitulasi
+      get :jumlah_perintah_walikota
     end
     member do
       patch :toggle_sasarans_is_perintah_walikota
@@ -676,6 +677,10 @@ Rails.application.routes.draw do
   resources :laporans, only: [:index] do
     collection do
       namespace :rekapitulasi_rencana_aksi_opd do
+        get :data
+        get :jumlah
+      end
+      namespace :rekapitulasi_perintah_walikota do
         get :data
         get :jumlah
       end

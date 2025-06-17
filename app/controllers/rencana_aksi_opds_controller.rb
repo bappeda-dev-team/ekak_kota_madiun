@@ -173,6 +173,14 @@ class RencanaAksiOpdsController < ApplicationController
     render partial: 'rencana_aksi_opds/jumlah_rekapitulasi'
   end
 
+  def jumlah_perintah_walikota
+    @tahun = params[:tahun]
+    @renaksi_opd = RencanaAksiOpd.where(tahun: @tahun).group_by(&:opd)
+                                 .transform_values { |val| val.select(&:perintah_walikota?).size }
+                                 .sort_by { |opd, _| opd.kode_unik_opd }
+    render partial: 'rencana_aksi_opds/jumlah_perintah_walikota'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

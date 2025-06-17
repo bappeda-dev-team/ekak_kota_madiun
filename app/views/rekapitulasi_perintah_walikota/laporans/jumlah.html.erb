@@ -1,0 +1,27 @@
+<%= content_for :html_title, "Jumlah Rekapitulasi Perintah Walikota" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Laporan</li>
+  <li class="breadcrumb-item">Rekapitulasi Perintah Walikota</li>
+  <li class="breadcrumb-item active" aria-current="page">Jumlah</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= content_tag :div,
+                  class: 'd-grid gap-3',
+                  data: {
+                    controller: 'page-ajax',
+                    page_ajax_reqtype_value: 'GET',
+                    page_ajax_url_value: jumlah_perintah_walikota_rencana_aksi_opds_path(tahun: @tahun)
+                  }  do %>
+
+    <div class="card" data-page-ajax-target="results" id="filter-renaksi-results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5>Jumlah Perintah Walikota</h5>
+          </div>
+        </div>
+      </div>
+      <%= render(LoaderComponent.new())%>
+    </div>
+  <% end %>
+<% end %>

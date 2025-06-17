@@ -1,0 +1,25 @@
+<%= render 'shared/card_layout_subtitle', title: "Jumlah Perintah Walikota",
+           sub_title: 'Kota Madiun', sub_title_2: @tahun do %>
+  <div class="cetak d-grid gap-3 put-it-here">
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-bordered counter">
+      <thead class="thead-light">
+        <tr>
+          <th class="border text-center">No</th>
+          <th class="border text-center" style="min-width: 250px;">Nama OPD</th>
+          <th class="border text-center">Jumlah Perintah Walikota</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @renaksi_opd.each do |opd, jumlah_perintah| %>
+          <tr>
+            <td class=""></td>
+            <td class="text-wrap"><%= opd %></td>
+            <td class="text-center <%= jumlah_perintah.positive? ? '' : 'tanda-kosong' %>"><%= jumlah_perintah %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

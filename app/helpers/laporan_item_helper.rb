@@ -20,8 +20,10 @@ module LaporanItemHelper
         icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_rencana_aksi_opd/'
       },
       {
-        title: 'Perintah Walikota', href: rekapitulasi_perintah_walikota_laporans_path,
-        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_perintah_walikota'
+        title: 'Perintah Walikota', href: '#',
+        multi: true, collections: rekap_perintah_walikota,
+        id_target: 'rekap-perintah-walikota-opd',
+        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_perintah_walikota/'
       },
       {
         title: 'SPIP', href: spip_index_path,
@@ -172,6 +174,19 @@ module LaporanItemHelper
       {
         title: 'Jumlah', href: jumlah_rekapitulasi_rencana_aksi_opd_laporans_path,
         icon: 'fas fa-file-alt', identifier: 'laporans/rekapitulasi_rencana_aksi_opd/jumlah'
+      }
+    ]
+  end
+
+  def rekap_perintah_walikota
+    [
+      {
+        title: 'Data', href: data_rekapitulasi_perintah_walikota_laporans_path,
+        icon: 'fas fa-stream', identifier: 'laporans/rekapitulasi_perintah_walikota/data'
+      },
+      {
+        title: 'Jumlah', href: jumlah_rekapitulasi_perintah_walikota_laporans_path,
+        icon: 'fas fa-file-alt', identifier: 'laporans/rekapitulasi_perintah_walikota/jumlah'
       }
     ]
   end
