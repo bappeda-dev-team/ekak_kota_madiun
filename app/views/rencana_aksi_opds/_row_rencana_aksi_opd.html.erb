@@ -1,9 +1,10 @@
 <tbody id="<%= dom_id(sasaran) %>">
+  <% renaksi_size = sasaran.rencana_aksi_opds.size %>
   <tr>
-    <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= i %></td>
-    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %> - <%= sasaran.nama_nip_pemilik %></td>
+    <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran, renaksi_size) %>"><%= i %></td>
+    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran, renaksi_size) %>"><%= sasaran.sasaran_kinerja %> - <%= sasaran.nama_nip_pemilik %></td>
     <% if sasaran.indikator_sasarans.any? %>
-      <%= indikator_rencana_aksi_opd(sasaran) %>
+      <%= indikator_rencana_aksi_opd(sasaran, renaksi_size) %>
     <% else %>
       <td class="text-center" colspan="3">
         <p class="alert alert-danger">
@@ -11,7 +12,7 @@
         </p>
       </td>
     <% end %>
-    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>">
+    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran, renaksi_size) %>">
       <div class="d-grid gap-2">
         <%= render ModalButtonComponent.new(path: new_rencana_aksi_opd_path(tahun: @tahun,
                                                                             kode_opd: @kode_opd,
@@ -47,7 +48,7 @@
       </td>
     <% end %>
   </tr>
-  <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
+  <% row_indikator_rencana_aksi_opd(sasaran, renaksi_size).each do |indikator| %>
     <%= indikator %>
   <% end %>
   <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>

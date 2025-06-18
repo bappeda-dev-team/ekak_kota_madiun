@@ -3,6 +3,7 @@ module RencanaAksiOpdsHelper
     return 1 if sasaran.nil?
 
     indikator_row = sasaran.indikator_sasarans.empty? ? 1 : sasaran.indikator_sasarans.length # 4
+    renaksi_row = 1 if renaksi_row.zero? # 3
     rowspan_rumit = indikator_row + renaksi_row - 1
 
     sasaran.indikator_sasarans.empty? ? 1 : rowspan_rumit
@@ -12,7 +13,7 @@ module RencanaAksiOpdsHelper
     indikators = sasaran&.indikator_sasarans
     indikator = indikators&.first
     rowspans = if indikators.size == 1
-                 rowspan
+                 rowspan.zero? ? 1 : rowspan
                else
                  1
                end
@@ -23,8 +24,8 @@ module RencanaAksiOpdsHelper
     ".html_safe
   end
 
-  def row_indikator_rencana_aksi_opd(sasaran, rowspan)
-    # rowspan = sasaran.rencana_aksi_opds.empty? ? 1 : sasaran.rencana_aksi_opds.size
+  def row_indikator_rencana_aksi_opd(sasaran, rowsize)
+    rowspan = rowsize.zero? ? 1 : rowsize
     sasaran.indikator_sasarans.drop(1).map do |indikator_s|
       if indikator_s == sasaran.indikator_sasarans.last
         "
