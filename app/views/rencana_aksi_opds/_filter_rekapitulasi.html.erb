@@ -1,4 +1,4 @@
-<%= render 'shared/card_layout_subtitle', title: "Rekapitulasi Rencana Aksi OPD #{@jenis_renaksi.titleize}",
+<%= render 'shared/card_layout_subtitle', title: "Rekapitulasi Rencana Aksi OPD #{@jenis_renaksi.titleize} #{@bulan_title} #{@triwulan_title}",
            sub_title: @opd, sub_title_2: @tahun do %>
   <div class="cetak d-grid gap-3">
     <%= link_to cetak_rekapitulasi_rencana_aksi_opds_path(tahun: @tahun, opd: @kode_opd, jenis_renaksi: @jenis_renaksi),

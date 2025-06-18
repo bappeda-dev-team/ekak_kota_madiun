@@ -157,6 +157,10 @@ class RencanaAksiOpdsController < ApplicationController
     @jenis_renaksi = params[:jenis_renaksi] || ''
     @kode_opd = params[:opd]
     @tahun = params[:tahun]
+    @bulan = params[:bulan]
+    @triwulan = params[:triwulan]
+    @bulan_title = @bulan.blank? ? '' : "- Bulan #{@bulan}"
+    @triwulan_title = @triwulan.blank? ? '' : "- Triwulan #{@triwulan}"
 
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
     # TODO: test for missing and deleted strategi

@@ -7,6 +7,8 @@ class RenaksiOpdFilter
   def results
     filter_by_opd
     filter_by_tahun
+    filter_by_tw
+    filter_by_bulan
     filter_perintah_walikota
     order_and_compact
     @scope
@@ -37,19 +39,30 @@ class RenaksiOpdFilter
     @scope = @scope.where(kode_opd: kode_opd)
   end
 
-  def filter_perintah_walikota
-    return unless @params[:jenis_renaksi] == 'perintah-walikota'
+  def filter_by_tw
+    return if @params[:triwulan].blank?
 
-    @scope = @scope.select(&:perintah_walikota?)
+    map_triwulan = {
+      'I' => 'tw1',
+      'II' => 'tw2',
+      'III' => 'tw3',
+      'IV' => 'tw4'
+    }
+    triwulan = @params[:triwulan]
+    @scope = @scope.where("#{map_triwulan[triwulan]} != '0'")
   end
 
   def filter_by_bulan
     return if @params[:bulan].blank?
 
     bulan = @params[:bulan]
-    @scope = @scope.flat_map do |ss|
-      ss.rencana_aksi_opds_bulanan(bulan: bulan)
-    end
+    @scope = @scope.select { |rn| rn.target_bulanan_aktif?(bulan) }
+  end
+
+  def filter_perintah_walikota
+    return unless @params[:jenis_renaksi] == 'perintah-walikota'
+
+    @scope = @scope.select(&:perintah_walikota?)
   end
 
   def order_and_compact

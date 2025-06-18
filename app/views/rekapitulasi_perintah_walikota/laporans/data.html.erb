@@ -44,25 +44,23 @@
                }  %>
             </div>
             <div class="col">
-              <%= form.label :triwulan, class: 'form-label' %>
-              <%= form.select :triwulan, ['I', 'II', 'III', 'IV'],
-               { include_blank: true },
-               data: {
-                 placeholder: 'Triwulan',
-                 controller: 'dropdown',
-                 dropdown_jenis_value: 'chain',
-                 dropdown_selected_value: @tahun
-               }  %>
-            </div>
-            <div class="col">
               <%= form.label :bulan, class: 'form-label' %>
               <%= form.select :bulan, (1..12),
                { include_blank: true },
                data: {
                  placeholder: 'Bulan',
                  controller: 'dropdown',
-                 dropdown_jenis_value: 'chain',
-                 dropdown_selected_value: @tahun
+                 dropdown_selected_value: @bulan
+               }  %>
+            </div>
+            <div class="col">
+              <%= form.label :triwulan, class: 'form-label' %>
+              <%= form.select :triwulan, ['I', 'II', 'III', 'IV'],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Triwulan',
+                 controller: 'dropdown',
+                 dropdown_selected_value: @triwulan
                }  %>
             </div>
             <div class="col">
