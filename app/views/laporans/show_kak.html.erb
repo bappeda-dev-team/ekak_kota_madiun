@@ -19,9 +19,7 @@
       </div>
     </div>
   </div>
-  <% @sasarans.each do |sas_dh|  %>
-    <%= render 'sasarans/dasar_hukum_dan_gambaran_umum', sasaran: sas_dh %>
-  <% end %>
+  <%= render partial: 'sasarans/dasar_hukum_dan_gambaran_umum', collection: @sasarans, as: :sasaran %>
 </div>
 <div class="card border-2 shadow mb-3 penerima-manfaat">
   <div class="card-header">
@@ -64,9 +62,7 @@
       </div>
     </div>
   </div>
-  <% @sasarans.each do |strategi| %>
-    <%= render 'sasarans/tahapan_pelaksanaan', sasaran: strategi %>
-  <% end %>
+  <%= render partial: 'sasarans/tahapan_pelaksanaan', collection: @sasarans, as: :sasaran %>
 </div>
 <div class="card border-2 shadow mb-3 kurun_waktu">
   <div class="card-header">

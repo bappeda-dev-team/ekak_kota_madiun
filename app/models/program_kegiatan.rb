@@ -506,7 +506,8 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def sasarans_subkegiatan(tahun)
-    sasarans.joins(:user).includes(%i[indikator_sasarans user])
+    sasarans.joins(:user)
+            .includes(%i[indikator_sasarans permasalahans rincian tahapans usulans dasar_hukums latar_belakangs])
             .where(tahun: tahun, keterangan: nil)
             .order(nip_asn: :asc)
   end
