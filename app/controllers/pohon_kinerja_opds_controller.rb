@@ -25,6 +25,7 @@ class PohonKinerjaOpdsController < ApplicationController
 
     # TODO: extract to ajax
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun_asli = tahun_bener
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
@@ -58,6 +59,7 @@ class PohonKinerjaOpdsController < ApplicationController
     return if @tahun.nil?
 
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun_asli = tahun_bener
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
