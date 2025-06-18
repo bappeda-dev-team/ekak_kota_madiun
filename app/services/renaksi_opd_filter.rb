@@ -1,14 +1,14 @@
 class RenaksiOpdFilter
-  def initialize(scope = Strategi.where(role: 'eselon_2'), params = {})
-    @scope = scope.includes(:opd)
+  def initialize(params = {})
+    @scope = RencanaAksiOpd.includes(:sasaran, :rencana_renaksi)
     @params = params
   end
 
   def results
     filter_by_opd
     filter_by_tahun
-    order_and_compact
     filter_perintah_walikota
+    order_and_compact
     @scope
   end
 
@@ -27,30 +27,33 @@ class RenaksiOpdFilter
     return if @params[:tahun].blank?
 
     tahun = @params[:tahun]
-    @scope = @scope.flat_map { |st| st&.sasaran_pohon_kinerja(tahun: tahun) }
+    @scope = @scope.where(tahun: tahun)
   end
 
   def filter_by_opd
     return if @params[:opd].blank? || kode_kota?
 
     kode_opd = @params[:opd]
-    opd_id = Opd.find_by(kode_unik_opd: kode_opd).id
-
-    @scope = @scope.where(opd_id: opd_id)
-  end
-
-  def order_and_compact
-    @scope = @scope
-             .select(&:opd)
-             .sort_by { |ss| ss.strategi.opd.kode_unik_opd }
-             .compact_blank
+    @scope = @scope.where(kode_opd: kode_opd)
   end
 
   def filter_perintah_walikota
     return unless @params[:jenis_renaksi] == 'perintah-walikota'
 
-    @scope = @scope.select do |ss|
-      ss.renaksi_sasaran_walikota.any?
+    @scope = @scope.select(&:perintah_walikota?)
+  end
+
+  def filter_by_bulan
+    return if @params[:bulan].blank?
+
+    bulan = @params[:bulan]
+    @scope = @scope.flat_map do |ss|
+      ss.rencana_aksi_opds_bulanan(bulan: bulan)
     end
+  end
+
+  def order_and_compact
+    @scope = @scope
+             .group_by(&:sasaran)
   end
 end

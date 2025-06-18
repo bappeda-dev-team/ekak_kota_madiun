@@ -32,8 +32,7 @@ class RencanaAksiOpdsController < ApplicationController
   def cetak_rekapitulasi
     @tahun = params[:tahun]
     @jenis_renaksi = params[:jenis_renaksi]
-    strategi = Strategi.where(role: 'eselon_2', tahun: @tahun)
-    renaksi_opd_filter = RenaksiOpdFilter.new(strategi, params)
+    renaksi_opd_filter = RenaksiOpdFilter.new(params)
     # only get setda
     # ttd dari setda
     opd = renaksi_opd_filter.opd_setda
@@ -160,9 +159,8 @@ class RencanaAksiOpdsController < ApplicationController
     @tahun = params[:tahun]
 
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
-    strategi = Strategi.where(role: 'eselon_2', tahun: @tahun)
     # TODO: test for missing and deleted strategi
-    @sasaran_opds = RenaksiOpdFilter.new(strategi, params).results
+    @sasaran_opds = RenaksiOpdFilter.new(params).results
     render partial: 'rencana_aksi_opds/filter_rekapitulasi'
   end
 
