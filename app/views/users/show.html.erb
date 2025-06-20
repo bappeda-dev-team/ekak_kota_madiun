@@ -10,18 +10,18 @@
           <h2 class="fs-5 fw-bold mb-0">Profil User</h2>
         </div>
         <div class="col text-end">
-        <%= link_to edit_profile_user_path(@user),
-          remote: true,
-          data: { 
-            controller: 'form-modal', 
-            action: 'ajax:complete->form-modal#success:prevent',
-            bs_toggle: 'modal',
-            bs_target: '#form-modal'
-          }, 
-          class: "btn btn-sm btn-info" do %>
-        <i class="fas fa-pencil-alt me-2"></i>
-        <span>Edit Profile</span>
-        <% end %>
+          <%= link_to edit_profile_user_path(@user),
+                      remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: "btn btn-sm btn-info" do %>
+            <i class="fas fa-pencil-alt me-2"></i>
+            <span>Edit Profile</span>
+          <% end %>
         </div>
       </div>
     </div>
@@ -30,33 +30,48 @@
         <li class="list-group-item px-0">
           <div class="row align-items-center">
             <div class="d-flex align-items-center">
-              <h5><%= current_user.nama %></h5>
+              <h5><%= @user.nama %></h5>
+            </div>
+            <hr />
+            <div class="d-flex align-items-center pb-3">
+              <%= link_to update_password_user_path(@user),
+                          remote: true,
+                          data: {
+                            controller: 'form-modal',
+                            action: 'ajax:complete->form-modal#success:prevent',
+                            bs_toggle: 'modal',
+                            bs_target: '#form-modal'
+                          },
+                          class: "btn btn-sm btn-secondary" do %>
+                <i class="fa fa-cog me-2"></i>
+                <span>Update Password</span>
+              <% end %>
             </div>
             <hr/>
             <div class="d-flex align-items-center">
               <div class="bg-danger dot rounded-circle me-1"></div>
               <small>Instansi :</small>
-              <strong><%= current_user.opd.nil? ? '---' : current_user.lembaga %></strong>
+              <strong><%= @user.opd.nil? ? '---' : @user.lembaga %></strong>
             </div>
             <div class="d-flex align-items-center">
               <div class="bg-secondary dot rounded-circle me-1"></div>
               <small>OPD :</small>
-              <strong><%= current_user.opd.nil? ? '---' : current_user.nama_opd_terakhir %></strong>
+              <strong><%= @user.opd.nil? ? '---' : @user.nama_opd_terakhir %></strong>
             </div>
             <div class="d-flex align-items-center">
               <div class="bg-success dot rounded-circle me-1"></div>
               <small>NIP :</small>
-              <strong><%= current_user.nik %></strong>
+              <strong><%= @user.nik %></strong>
             </div>
             <hr/>
             <div class="d-flex justify-content-between">
               <div class="d-flex align-items-center">
                 <div class="bg-success dot rounded-circle me-1"></div>
                 <small>Jabatan :</small>
-                <% if current_user.jabatan_users.any? %>
-                  <strong><%= current_user.jabatan_users.last.details %></strong>
+                <% if @user.jabatan_users.any? %>
+                  <strong><%= @user.jabatan_users.last.details %></strong>
                 <% else %>
-                  <strong><%= current_user.jabatan %></strong>
+                  <strong><%= @user.jabatan %></strong>
                 <% end %>
               </div>
             </div>
@@ -64,27 +79,27 @@
           <div class="d-flex align-items-center">
             <div class="bg-primary dot rounded-circle me-1"></div>
             <small>Update Terakhir :</small>
-            <small><%= current_user.updated_at %></small>
+            <small><%= @user.updated_at %></small>
           </div>
           <hr/>
           <div class="d-flex align-items-center">
             <div class="bg-primary dot rounded-circle me-1"></div>
             <small>Email :</small>
-            <small><%= current_user.email %></small>
+            <small><%= @user.email %></small>
           </div>
           <div class="d-flex align-items-center">
             <div class="bg-info dot rounded-circle me-1"></div>
-            <small>Peran :</small>
-            <small><%= current_user.roles.pluck :name %></small>
+            <small>Roles :</small>
+            <small><%= @user.roles.pluck :name %></small>
           </div>
           <div class="d-flex align-items-center">
             <div class="bg-info dot rounded-circle me-1"></div>
             <small>Bidang :</small>
-            <small><%= current_user.nama_bidang %></small>
+            <small><%= @user.nama_bidang %></small>
           </div>
-        </div>
-      </li>
-    </ul>
+    </div>
+        </li>
+      </ul>
   </div>
-</div>
+  </div>
 <% end %>

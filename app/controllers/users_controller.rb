@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit edit_profile update destroy edit_detail update_detail anggaran_sasaran]
+  before_action :set_user, only: %i[edit edit_profile update destroy edit_detail update_detail anggaran_sasaran]
 
   layout false, only: %i[new edit edit_profile]
   # GET /users or /users.json
@@ -54,7 +54,9 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @user = current_user
+  end
 
   # GET /users/new
   def new
