@@ -2,10 +2,16 @@
            sub_title: @opd, sub_title_2: @tahun do %>
   <div class="cetak d-grid gap-3">
     <%= link_to cetak_rekap_pokin_operational_rekaps_path(tahun: @tahun, kode_opd: @kode_opd),
-                class:"m-3 btn btn-outline-danger",
+                class:"btn btn-outline-danger",
                 target: "_blank", rel: "noopener" do %>
       <span class="far fa-file-pdf me-2"></span>
       Cetak PDF Rekap Pohon Kinerja Operational
+    <% end %>
+    <%= link_to cetak_rekap_pokin_operational_rekaps_path(tahun: @tahun, kode_opd: @kode_opd, format: :xlsx),
+                class:"btn btn-outline-success",
+                target: "_blank", rel: "noopener" do %>
+      <span class="far fa-file-excel me-2"></span>
+      Cetak Excel Rekap Pohon Kinerja Operational
     <% end %>
   </div>
   <div class="table-responsive">

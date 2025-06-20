@@ -73,9 +73,14 @@ class RekapsController < ApplicationController
       [pokin, rekins] if rekins.present?
     end.compact_blank!
 
+    @filename = "REKAP_POKIN_OPERATIONAL_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
+
     respond_to do |format|
       format.html do
         render template: 'rekaps/cetak_rekap_pokin_operational', layout: 'print.html.erb'
+      end
+      format.xlsx do
+        render xlsx: "cetak_rekap_pokin_operational", filename: @filename, disposition: 'attachment'
       end
     end
   end

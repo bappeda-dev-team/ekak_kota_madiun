@@ -1,0 +1,11 @@
+wb = xlsx_package.workbook
+s = wb.styles
+wb.add_worksheet(name: "POKIN_OPERATIONAL") do |sheet|
+  sheet.add_row ['No', "POHON KINERJA OPERATIONAL", "", "REKIN", "NAMA PEMILIK REKIN"]
+  @pokin_operationals.each.with_index(1) do |(pokin, rekins), i|
+    sheet.add_row [i.to_s, pokin.to_s]
+    rekins.each.with_index(1) do |rekin, no|
+      sheet.add_row ["", "", "#{i}.#{no}", rekin.to_s, rekin.nama_nip_pemilik]
+    end
+  end
+end
