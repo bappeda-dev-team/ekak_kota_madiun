@@ -48,6 +48,38 @@ class RekapsController < ApplicationController
 
   def jumlah; end
 
+  def filter_rekap_pokin_operational
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @pokin_operationals = @opd.strategis.eselon4_bytahun(@tahun)
+
+    @pokin_operationals = @pokin_operationals.map do |pokin|
+      rekins = pokin.sasarans.where(tahun: @tahun)
+      [pokin, rekins] if rekins.present?
+    end.compact_blank!
+
+    render partial: 'rekaps/filter_rekap_pokin_operational'
+  end
+
+  def cetak_rekap_pokin_operational
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @pokin_operationals = @opd.strategis.eselon4_bytahun(@tahun)
+
+    @pokin_operationals = @pokin_operationals.map do |pokin|
+      rekins = pokin.sasarans.where(tahun: @tahun)
+      [pokin, rekins] if rekins.present?
+    end.compact_blank!
+
+    respond_to do |format|
+      format.html do
+        render template: 'rekaps/cetak_rekap_pokin_operational', layout: 'print.html.erb'
+      end
+    end
+  end
+
   private
 
   def set_tahun

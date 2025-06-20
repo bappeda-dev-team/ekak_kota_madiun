@@ -676,6 +676,13 @@ Rails.application.routes.draw do
   end
   # get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
 
+  resources :rekaps do
+    collection do
+      get :filter_rekap_pokin_operational
+      get :cetak_rekap_pokin_operational
+    end
+  end
+
   resources :laporans, only: [:index] do
     collection do
       namespace :rekapitulasi_rencana_aksi_opd do
@@ -686,6 +693,7 @@ Rails.application.routes.draw do
         get :data
         get :jumlah
       end
+      get :rekap_pokin_operational
       get :rekapitulasi_perintah_walikota
       get :sasaran_spbe
       get :sasaran_penduduk

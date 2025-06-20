@@ -1,0 +1,79 @@
+<%= content_for :html_title, "Rekap Pokin Operational" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Rekap Pokin Operational</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= content_tag :div,
+                  class: 'd-grid gap-3',
+                  data: {
+                    controller: 'page-ajax',
+                    page_ajax_reqtype_value: 'GET',
+                    page_ajax_url_value: filter_rekap_pokin_operational_rekaps_path(tahun: @tahun, kode_opd: @kode_opd)
+                  }  do %>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <h2 class="fs-5 fw-bold mb-0">Filter</h2>
+        <hr />
+        <div class="filter-form row w-100">
+          <%= form_with url: filter_rekap_pokin_operational_rekaps_path, local: false,
+                        method: :get,
+                        data: {
+                          controller: 'filter-render',
+                          filter_render_target_id_value: 'filter-pokin-results',
+                          filter_render_text_value: 'memuat data...',
+                          action: 'filter-render#loading
+                                   ajax:beforeSend->filter-render#toggleDisableField
+                                   ajax:success->filter-render#append
+                                   ajax:complete->filter-render#toggleDisableField
+                                   ajax:complete->filter-render#removeLoader'
+                        } do |form| %>
+            <div class="col">
+              <%= form.hidden_field :jenis_renaksi, value: 'perintah-walikota' %>
+              <%= form.label :opd, class: 'form-label' %>
+              <%= form.select :opd, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Opd',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/opds/filter_selected.json',
+                 dropdown_selected_value: @kode_opd,
+                 dropdown_scope_value: 'all'
+               }  %>
+            </div>
+            <div class="col">
+              <%= form.label :tahun, class: 'form-label' %>
+              <%= form.select :tahun, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Tahun',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/tahuns.json',
+                 dropdown_selected_value: @tahun
+               }  %>
+            </div>
+            <div class="col-auto mt-4">
+              <%= button_tag class: "btn btn-primary w-100",
+                             data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+                <span>Filter</span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-page-ajax-target="results" id="filter-pokin-results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5>Rekap Pohon Kinerja Operational</h5>
+          </div>
+        </div>
+      </div>
+      <%= render(LoaderComponent.new())%>
+    </div>
+  <% end %>
+<% end %>

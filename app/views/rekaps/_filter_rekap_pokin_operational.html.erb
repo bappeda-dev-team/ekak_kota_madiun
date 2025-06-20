@@ -1,0 +1,38 @@
+<%= render 'shared/card_layout_subtitle', title: "Rekap Pohon Kinerja Operational #{@opd} Tahun #{@tahun}",
+           sub_title: @opd, sub_title_2: @tahun do %>
+  <div class="cetak d-grid gap-3">
+    <%= link_to cetak_rekap_pokin_operational_rekaps_path(tahun: @tahun, kode_opd: @kode_opd),
+                class:"m-3 btn btn-outline-danger",
+                target: "_blank", rel: "noopener" do %>
+      <span class="far fa-file-pdf me-2"></span>
+      Cetak PDF Rekap Pohon Kinerja Operational
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-bordered counter">
+      <thead class="thead-light">
+        <tr>
+          <th class="border text-center" scope="col">No</th>
+          <th class="border text-center" scope="col">Pohon Kinerja Operational</th>
+          <th class="border text-center" scope="col">Rekin</th>
+          <th class="border text-center" scope="col">Nama Pemilik Rekin</th>
+        </tr>
+      </thead>
+      <% @pokin_operationals.each do |pokin, rekins| %>
+        <tbody id="<%= dom_id(pokin) %>">
+          <% rowspan = rekins.length + 1 %>
+          <tr>
+            <td class="" rowspan="<%= rowspan %>"></td>
+            <td class="text-wrap" rowspan="<%= rowspan %>"><%= pokin %></td>
+          </tr>
+          <% rekins.each do |rekin| %>
+            <tr class="renaksi-opd skip">
+              <td class="text-wrap"><%= rekin %></td>
+              <td class="text-wrap"><%= rekin.nama_nip_pemilik %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+<% end %>

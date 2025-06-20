@@ -67,6 +67,10 @@ module LaporanItemHelper
         icon: 'fas fa-puzzle-piece', identifier: 'hasil_crosscutting'
       },
       {
+        title: 'Rekap Pokin Operational', href: rekap_pokin_operational_laporans_path,
+        icon: 'fas fa-puzzle-piece', identifier: 'laporans/pokin_operational'
+      },
+      {
         title: 'Tim Kerja', href: tim_kerja_laporans_path,
         icon: 'fas fa-user-friends', identifier: 'tim_kerja'
       },

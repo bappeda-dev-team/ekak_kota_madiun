@@ -401,6 +401,8 @@ class LaporansController < ApplicationController
 
   def rekapitulasi_perintah_walikota; end
 
+  def rekap_pokin_operational; end
+
   private
 
   def set_program_kegiatans
