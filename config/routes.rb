@@ -551,6 +551,7 @@ Rails.application.routes.draw do
       get :renaksi_opd_list
     end
     member do
+      patch :pilih_bpmn_spbe
       get :tambah_bpmn
       get :edit_inovasi
       get :edit_output

@@ -74,6 +74,7 @@ class Sasaran < ApplicationRecord
   has_many :genders
   has_many :reviews, -> { where(reviewable_type: 'Sasaran') }, foreign_key: :reviewable_id, primary_key: :id
   belongs_to :strategi, -> { where.not(role: 'deleted') }, optional: true
+  belongs_to :bpmn_spbe
   # has_one :strategi
   # has_many :manual_iks, through: :indikator_sasarans
 

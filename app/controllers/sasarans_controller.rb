@@ -692,6 +692,28 @@ class SasaransController < ApplicationController
     render partial: 'form_bpmn_spbe', locals: { sasaran: @sasaran }
   end
 
+  def pilih_bpmn_spbe
+    @sasaran = Sasaran.find(params[:id])
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    if params[:sasaran][:bpmn_spbe_id] == 'new'
+      bpmn = BpmnSpbe.create(params.require(:new_bpmn_spbe).permit(:nama_bpmn, :tahun, :kode_opd))
+      success = @sasaran.update(bpmn_spbe_id: bpmn.id)
+    else
+      success = @sasaran.update(bpmn_spbe_id: params[:sasaran][:bpmn_spbe_id])
+    end
+
+    if success
+      render json: {
+        resText: 'BPMN SPBE berhasil diperbarui',
+        html_content: html_content({ sasaran: @sasaran }, partial: 'sasarans/sasaran_bpmn')
+      }.to_json, status: :ok
+    else
+      render json: { resText: 'Gagal memperbarui BPMN SPBE' }.to_json, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def errors_content(sasaran)

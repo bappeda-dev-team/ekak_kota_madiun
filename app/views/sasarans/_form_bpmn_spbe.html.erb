@@ -1,9 +1,9 @@
 <div class="form-group">
-  <p class="form-label">Operational</p>
+  <p class="form-label">Pohon Kinerja Operational</p>
   <p class="form-control disabled"><%= sasaran.strategi.to_s %></p>
 </div>
 
-<%= form_with model: sasaran, local: false,
+<%= form_with model: sasaran, url: pilih_bpmn_spbe_sasaran_path, local: false,
               data: {
                 controller: 'form-ajax',
                 form_ajax_target_param: dom_id(sasaran),
@@ -22,13 +22,43 @@
     </div>
   <% end %>
 
-  <div class="hidden-field">
-    <%= form.hidden_field :tahun %>
-    <%= form.hidden_field :kode_opd %>
-  </div>
-
   <div class="field">
     <p class="form-label">Sasaran Kinerja</p>
     <p class="form-control disabled"><%= sasaran %></p>
+  </div>
+
+  <div class="field" data-controller="bpmn-selector">
+    <p class="form-label">Pilih BPMN SPBE Terkait</p>
+
+    <% BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun).each do |bpmn| %>
+      <div class="form-check">
+        <%= radio_button_tag 'sasaran[bpmn_spbe_id]', bpmn.id, @sasaran.bpmn_spbe_id == bpmn.id,
+                             class: 'form-check-input',
+                             id: "bpmn_#{bpmn.id}",
+                             data: { 'bpmn-selector-target': 'radio', action: 'bpmn-selector#toggleNewFields' } %>
+        <%= label_tag "bpmn_#{bpmn.id}", bpmn.nama_bpmn, class: 'form-check-label' %>
+      </div>
+    <% end %>
+
+    <hr />
+    <div class="form-check mt-3">
+      <%= radio_button_tag 'sasaran[bpmn_spbe_id]', 'new', @sasaran.bpmn_spbe_id.nil?,
+                           class: 'form-check-input',
+                           id: "bpmn_new",
+                           data: { 'bpmn-selector-target': 'radio', action: 'bpmn-selector#toggleNewFields' } %>
+      <%= label_tag "bpmn_new", "Tambah BPMN SPBE Baru", class: 'form-check-label' %>
+    </div>
+
+    <div data-bpmn-selector-target="newFields" class="mt-2" style="<%= @sasaran.bpmn_spbe_id.nil? ? '' : 'display:none;' %>">
+      <div class="form-group">
+        <%= label_tag 'new_bpmn_nama', 'Nama BPMN SPBE' %>
+        <%= text_field_tag 'new_bpmn_spbe[nama_bpmn]', nil, class: 'form-control' %>
+      </div>
+      <%= hidden_field_tag 'new_bpmn_spbe[tahun]', @tahun %>
+      <%= hidden_field_tag 'new_bpmn_spbe[kode_opd]', @kode_opd %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= form.submit "Simpan" %>
   </div>
 <% end %>

@@ -11,4 +11,9 @@
 #  updated_at :datetime         not null
 #
 class BpmnSpbe < ApplicationRecord
+  has_many :sasarans
+
+  def to_s
+    nama_bpmn
+  end
 end

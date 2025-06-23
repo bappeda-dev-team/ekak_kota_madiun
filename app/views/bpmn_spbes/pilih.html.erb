@@ -17,6 +17,7 @@
             <th class="border text-center" scope="col">Pohon Kinerja Operational</th>
             <th class="border text-center" scope="col">Rekin</th>
             <th class="border text-center" scope="col">Nama Pemilik Rekin</th>
+            <th class="border text-center" scope="col">BPMN SPBE</th>
             <th class="border text-center" scope="col">Action</th>
           </tr>
         </thead>
@@ -27,17 +28,7 @@
               <td class="" rowspan="<%= rowspan %>"></td>
               <td class="text-wrap" rowspan="<%= rowspan %>"><%= pokin %></td>
             </tr>
-            <% rekins.each do |rekin| %>
-              <tr class="renaksi-opd skip">
-                <td class="text-wrap"><%= rekin %></td>
-                <td class="text-wrap"><%= rekin.nama_nip_pemilik %></td>
-                <td class="p-3">
-                  <div class="d-grid gap-3">
-                    <%= render ModalButtonComponent.new(path: tambah_bpmn_sasaran_path(rekin, tahun: @tahun, kode_opd: @kode_opd), title: 'Pilih BPMN') %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
+            <%= render partial: 'sasarans/sasaran_bpmn', collection: rekins, as: :sasaran %>
           </tbody>
         <% end %>
       </table>
