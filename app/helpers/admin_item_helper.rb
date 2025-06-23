@@ -50,8 +50,10 @@ module AdminItemHelper
         icon: 'fas fa-book-open', identifier: 'indikators'
       },
       {
-        title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
-        icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
+        title: 'SPBE', href: "#",
+        multi: true, collections: spbe_opd_items,
+        id_target: "list-spbe-opd",
+        icon: 'fas fa-tablet-alt', identifier: 'spbes'
       },
       {
         title: 'Pagu Perencanaan', href: daftar_renstra_program_kegiatans_path,
@@ -124,6 +126,19 @@ module AdminItemHelper
       },
       {
         title: 'Subkegiatan', href: subkegiatan_renja_opd_indikators_path, identifier: 'subkegiatan_renja_opd'
+      }
+    ]
+  end
+
+  def spbe_opd_items
+    [
+      {
+        title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
+        icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
+      },
+      {
+        title: 'BPMN SPBE', href: pilih_bpmn_spbes_path,
+        icon: 'fas fa-tablet-alt', identifier: 'bpmn_spbes/pilih'
       }
     ]
   end

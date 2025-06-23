@@ -1,0 +1,34 @@
+<div class="form-group">
+  <p class="form-label">Operational</p>
+  <p class="form-control disabled"><%= sasaran.strategi.to_s %></p>
+</div>
+
+<%= form_with model: sasaran, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(sasaran),
+                form_ajax_type_param: '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              } do |form| %>
+  <% if sasaran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rencana_aksi_opd.errors.count, "error") %> prohibited this rencana_aksi_opd from being saved:</h2>
+
+      <ul>
+        <% rencana_aksi_opd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="hidden-field">
+    <%= form.hidden_field :tahun %>
+    <%= form.hidden_field :kode_opd %>
+  </div>
+
+  <div class="field">
+    <p class="form-label">Sasaran Kinerja</p>
+    <p class="form-control disabled"><%= sasaran %></p>
+  </div>
+<% end %>

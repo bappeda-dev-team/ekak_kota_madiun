@@ -8,6 +8,11 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :bpmn_spbes do
+    collection do
+      get :pilih
+    end
+  end
   resources :rencana_aksi_opds do
     collection do
       get :cetak
@@ -546,6 +551,7 @@ Rails.application.routes.draw do
       get :renaksi_opd_list
     end
     member do
+      get :tambah_bpmn
       get :edit_inovasi
       get :edit_output
       get :data_detail

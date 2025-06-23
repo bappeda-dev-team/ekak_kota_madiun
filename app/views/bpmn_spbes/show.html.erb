@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama bpmn:</strong>
+  <%= @bpmn_spbe.nama_bpmn %>
+</p>
+
+<p>
+  <strong>Kode opd:</strong>
+  <%= @bpmn_spbe.kode_opd %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @bpmn_spbe.tahun %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @bpmn_spbe.keterangan %>
+</p>
+
+<%= link_to 'Edit', edit_bpmn_spbe_path(@bpmn_spbe) %> |
+<%= link_to 'Back', bpmn_spbes_path %>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Bpmn Spbes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama bpmn</th>
+      <th>Kode opd</th>
+      <th>Tahun</th>
+      <th>Keterangan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bpmn_spbes.each do |bpmn_spbe| %>
+      <tr>
+        <td><%= bpmn_spbe.nama_bpmn %></td>
+        <td><%= bpmn_spbe.kode_opd %></td>
+        <td><%= bpmn_spbe.tahun %></td>
+        <td><%= bpmn_spbe.keterangan %></td>
+        <td><%= link_to 'Show', bpmn_spbe %></td>
+        <td><%= link_to 'Edit', edit_bpmn_spbe_path(bpmn_spbe) %></td>
+        <td><%= link_to 'Destroy', bpmn_spbe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Bpmn Spbe', new_bpmn_spbe_path %>

@@ -1,0 +1,37 @@
+<%= form_with(model: bpmn_spbe) do |form| %>
+  <% if bpmn_spbe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bpmn_spbe.errors.count, "error") %> prohibited this bpmn_spbe from being saved:</h2>
+
+      <ul>
+        <% bpmn_spbe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_bpmn %>
+    <%= form.text_field :nama_bpmn %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_opd %>
+    <%= form.text_field :kode_opd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

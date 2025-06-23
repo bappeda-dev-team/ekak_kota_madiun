@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -736,6 +737,40 @@ CREATE SEQUENCE public.background_migrations_id_seq
 --
 
 ALTER SEQUENCE public.background_migrations_id_seq OWNED BY public.background_migrations.id;
+
+
+--
+-- Name: bpmn_spbes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bpmn_spbes (
+    id bigint NOT NULL,
+    nama_bpmn character varying,
+    kode_opd character varying,
+    tahun character varying,
+    keterangan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bpmn_spbes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bpmn_spbes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bpmn_spbes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bpmn_spbes_id_seq OWNED BY public.bpmn_spbes.id;
 
 
 --
@@ -3446,7 +3481,8 @@ CREATE TABLE public.sasarans (
     keterangan character varying,
     metadata jsonb,
     jenis_layanan character varying,
-    is_perintah_walikota boolean DEFAULT false
+    is_perintah_walikota boolean DEFAULT false,
+    bpmn_spbe_id bigint
 );
 
 
@@ -4637,6 +4673,13 @@ ALTER TABLE ONLY public.background_migrations ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: bpmn_spbes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bpmn_spbes ALTER COLUMN id SET DEFAULT nextval('public.bpmn_spbes_id_seq'::regclass);
+
+
+--
 -- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5444,6 +5487,14 @@ ALTER TABLE ONLY public.background_migration_jobs
 
 ALTER TABLE ONLY public.background_migrations
     ADD CONSTRAINT background_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bpmn_spbes bpmn_spbes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bpmn_spbes
+    ADD CONSTRAINT bpmn_spbes_pkey PRIMARY KEY (id);
 
 
 --
@@ -6802,6 +6853,13 @@ CREATE UNIQUE INDEX index_sasaran_opds_on_id_sasaran ON public.sasaran_opds USIN
 
 
 --
+-- Name: index_sasarans_on_bpmn_spbe_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sasarans_on_bpmn_spbe_id ON public.sasarans USING btree (bpmn_spbe_id);
+
+
+--
 -- Name: index_sasarans_on_id_rencana; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7134,6 +7192,14 @@ ALTER TABLE ONLY public.tujuan_kota
 
 ALTER TABLE ONLY public.sasarans
     ADD CONSTRAINT fk_rails_5880531b5c FOREIGN KEY (nip_asn) REFERENCES public.users(nik);
+
+
+--
+-- Name: sasarans fk_rails_59cd985020; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasarans
+    ADD CONSTRAINT fk_rails_59cd985020 FOREIGN KEY (bpmn_spbe_id) REFERENCES public.bpmn_spbes(id);
 
 
 --
@@ -7705,6 +7771,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250515052748'),
 ('20250519075232'),
 ('20250522062956'),
-('20250527075336');
+('20250527075336'),
+('20250623041724'),
+('20250623045126');
 
 

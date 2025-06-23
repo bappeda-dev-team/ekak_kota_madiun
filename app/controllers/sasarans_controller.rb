@@ -684,6 +684,14 @@ class SasaransController < ApplicationController
     end
   end
 
+  def tambah_bpmn
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @sasaran = Sasaran.find(params[:id])
+
+    render partial: 'form_bpmn_spbe', locals: { sasaran: @sasaran }
+  end
+
   private
 
   def errors_content(sasaran)

@@ -27,6 +27,7 @@
 #  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  bpmn_spbe_id           :bigint
 #  opd_id                 :bigint
 #  program_kegiatan_id    :bigint
 #  sasaran_atasan_id      :string
@@ -35,10 +36,12 @@
 #
 # Indexes
 #
-#  index_sasarans_on_id_rencana  (id_rencana) UNIQUE
+#  index_sasarans_on_bpmn_spbe_id  (bpmn_spbe_id)
+#  index_sasarans_on_id_rencana    (id_rencana) UNIQUE
 #
 # Foreign Keys
 #
+#  fk_rails_...  (bpmn_spbe_id => bpmn_spbes.id)
 #  fk_rails_...  (nip_asn => users.nik)
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
