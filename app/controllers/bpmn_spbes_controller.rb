@@ -17,6 +17,20 @@ class BpmnSpbesController < ApplicationController
     end.compact_blank!
   end
 
+  def filter_rekap
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+
+    @bpmn_spbes = BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun)
+    @bpmn_spbes = @bpmn_spbes.map do |bpmn|
+      rekins = bpmn.sasarans.includes(:user).where(tahun: @tahun)
+      [bpmn, rekins] if rekins.present?
+    end.compact_blank!
+
+    render partial: 'bpmn_spbes/filter_rekap'
+  end
+
   # GET /bpmn_spbes/1 or /bpmn_spbes/1.json
   def show; end
 

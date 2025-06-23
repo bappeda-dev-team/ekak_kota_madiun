@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :bpmn_spbes do
     collection do
       get :pilih
+      get :filter_rekap
     end
   end
   resources :rencana_aksi_opds do
@@ -700,6 +701,7 @@ Rails.application.routes.draw do
         get :data
         get :jumlah
       end
+      get :rekap_bpmn_spbe
       get :rekap_pokin_operational
       get :rekapitulasi_perintah_walikota
       get :sasaran_spbe

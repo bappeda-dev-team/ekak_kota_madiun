@@ -1,0 +1,32 @@
+<%= render 'shared/card_layout_subtitle', title: "Rekap BPMN SPBE",
+           sub_title: @opd, sub_title_2: @tahun do %>
+  <div class="cetak d-grid gap-3">
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-bordered counter">
+      <thead class="thead-light">
+        <tr>
+          <th class="border text-center" scope="col">No</th>
+          <th class="border text-center" scope="col">BPMN SPBE</th>
+          <th class="border text-center" scope="col">Rekin</th>
+          <th class="border text-center" scope="col">Nama Pemilik Rekin</th>
+        </tr>
+      </thead>
+      <% @bpmn_spbes.each do |bpmn, rekins| %>
+        <tbody id="<%= dom_id(bpmn) %>">
+          <% rowspan = rekins.length + 1 %>
+          <tr>
+            <td class="" rowspan="<%= rowspan %>"></td>
+            <td class="text-wrap" rowspan="<%= rowspan %>"><%= bpmn %></td>
+          </tr>
+          <% rekins.each do |rekin| %>
+            <tr class="renaksi-opd skip">
+              <td class="text-wrap"><%= rekin %></td>
+              <td class="text-wrap"><%= rekin.nama_nip_pemilik %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+<% end %>

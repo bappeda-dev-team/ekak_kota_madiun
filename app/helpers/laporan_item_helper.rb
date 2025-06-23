@@ -34,8 +34,10 @@ module LaporanItemHelper
         icon: 'fas fa-chart-line', identifier: 'laporans/daftar_resiko'
       },
       {
-        title: 'SPBE', href: spbe_laporans_path,
-        icon: 'fas fa-tablet-alt', identifier: 'laporans/spbe'
+        title: 'SPBE', href: '#',
+        multi: true, collections: rekap_laporan_spbe,
+        id_target: 'rekap-laporan-spbe',
+        icon: 'fas fa-tablet-alt', identifier: 'laporans/spbe/'
       },
       { title: 'Gender', href: laporan_gap_genders_path,
         icon: 'fas fa-people-carry',
@@ -191,6 +193,19 @@ module LaporanItemHelper
       {
         title: 'Jumlah', href: jumlah_rekapitulasi_perintah_walikota_laporans_path,
         icon: 'fas fa-file-alt', identifier: 'laporans/rekapitulasi_perintah_walikota/jumlah'
+      }
+    ]
+  end
+
+  def rekap_laporan_spbe
+    [
+      {
+        title: 'SPBE', href: spbe_laporans_path,
+        icon: 'fas fa-tablet-alt', identifier: 'laporans/spbe'
+      },
+      {
+        title: 'BPMN SPBE', href: rekap_bpmn_spbe_laporans_path,
+        icon: 'fas fa-tablet-alt', identifier: 'laporans/rekap_bpmn_spbe'
       }
     ]
   end

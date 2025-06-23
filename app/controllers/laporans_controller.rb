@@ -403,6 +403,8 @@ class LaporansController < ApplicationController
 
   def rekap_pokin_operational; end
 
+  def rekap_bpmn_spbe; end
+
   private
 
   def set_program_kegiatans
