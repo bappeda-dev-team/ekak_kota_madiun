@@ -54,7 +54,8 @@ class ManrisksController < ApplicationController
   def set_periode_pemda
     @tahun = cookies[:tahun]
     @pemda = cookies[:lembaga]
-    @periode = Periode.find_tahun(@tahun)
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
   end
