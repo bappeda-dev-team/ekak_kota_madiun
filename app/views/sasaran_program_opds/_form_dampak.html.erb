@@ -8,6 +8,16 @@
                   form_ajax_target_param: dom_id(sasaran),
                   action: 'ajax:complete->form-ajax#processAjax'
                 } do |form| %>
+    <% if sasaran.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(sasaran.errors.count, "error") %> prohibited this sasaran from being saved:</h2>
+        <ul>
+          <% sasaran.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class="field">
       <%= form.label :sasaran_kinerja, { class: "form-label" } %>
       <%= form.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
