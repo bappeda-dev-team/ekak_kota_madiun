@@ -61,13 +61,13 @@
         <%= label_tag 'dapat_digunakan_pd_lain', 'Apakah BPMN bisa digunakan untuk Perangkat Daerah Lainnya?' %><br>
 
         <div class="form-check form-check-inline">
-          <%= radio_button_tag 'bpmn_spbe[dapat_digunakan_pd_lain]', 'true', @sasaran.bpmn_spbe&.dapat_digunakan_pd_lain == true,
+          <%= radio_button_tag 'new_bpmn_spbe[dapat_digunakan_pd_lain]', 'true', @sasaran.bpmn_spbe&.dapat_digunakan_pd_lain == true,
                                class: 'form-check-input', id: 'bpmn_dapat_digunakan_ya' %>
           <%= label_tag 'bpmn_dapat_digunakan_ya', 'Ya', class: 'form-check-label' %>
         </div>
 
         <div class="form-check form-check-inline">
-          <%= radio_button_tag 'bpmn_spbe[dapat_digunakan_pd_lain]', 'false', @sasaran.bpmn_spbe&.dapat_digunakan_pd_lain == false,
+          <%= radio_button_tag 'new_bpmn_spbe[dapat_digunakan_pd_lain]', 'false', @sasaran.bpmn_spbe&.dapat_digunakan_pd_lain == false,
                                class: 'form-check-input', id: 'bpmn_dapat_digunakan_tidak' %>
           <%= label_tag 'bpmn_dapat_digunakan_tidak', 'Tidak', class: 'form-check-label' %>
         </div>
