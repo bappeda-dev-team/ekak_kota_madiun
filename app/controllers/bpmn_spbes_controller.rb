@@ -29,7 +29,11 @@ class BpmnSpbesController < ApplicationController
                                    true)
                   end
     @bpmn_spbes = @bpmn_spbes.map do |bpmn|
-      rekins = bpmn.sasarans.includes(:user).where(tahun: @tahun)
+      rekins = if @kode_opd == '0.00.0.00.0.00.00.0000'
+                 bpmn.sasarans.includes(:user).where(tahun: @tahun)
+               else
+                 bpmn.sasarans.includes(:user).where(tahun: @tahun, user: { kode_opd: @opd.kode_opd })
+               end
       [bpmn, rekins] if rekins.present?
     end.compact_blank!
 
