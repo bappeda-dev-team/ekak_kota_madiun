@@ -20,9 +20,13 @@ class BpmnSpbesController < ApplicationController
   def filter_rekap
     @tahun = params[:tahun]
     @kode_opd = params[:kode_opd]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
-    @bpmn_spbes = BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun)
+    @bpmn_spbes = if @kode_opd == '0.00.0.00.0.00.00.0000'
+                    BpmnSpbe.where(tahun: @tahun)
+                  else
+                    BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun)
+                  end
     @bpmn_spbes = @bpmn_spbes.map do |bpmn|
       rekins = bpmn.sasarans.includes(:user).where(tahun: @tahun)
       [bpmn, rekins] if rekins.present?

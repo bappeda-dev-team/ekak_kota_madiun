@@ -13,6 +13,7 @@
 #
 class BpmnSpbe < ApplicationRecord
   has_many :sasarans
+  has_one :opd, foreign_key: :kode_unik_opd, primary_key: :kode_opd
 
   def to_s
     nama_bpmn
