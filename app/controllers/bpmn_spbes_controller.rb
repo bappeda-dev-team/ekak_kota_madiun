@@ -1,6 +1,7 @@
 class BpmnSpbesController < ApplicationController
   before_action :set_bpmn_spbe, only: %i[show edit update destroy]
   before_action :set_tahun_opd, only: %i[index pilih]
+  layout false, only: %i[new edit]
 
   # GET /bpmn_spbes or /bpmn_spbes.json
   def index
@@ -49,7 +50,9 @@ class BpmnSpbesController < ApplicationController
   end
 
   # GET /bpmn_spbes/1/edit
-  def edit; end
+  def edit
+    @sasaran = Sasaran.find(params[:sasaran_id])
+  end
 
   # POST /bpmn_spbes or /bpmn_spbes.json
   def create
@@ -68,14 +71,17 @@ class BpmnSpbesController < ApplicationController
 
   # PATCH/PUT /bpmn_spbes/1 or /bpmn_spbes/1.json
   def update
-    respond_to do |format|
-      if @bpmn_spbe.update(bpmn_spbe_params)
-        format.html { redirect_to bpmn_spbe_url(@bpmn_spbe), notice: "Bpmn spbe was successfully updated." }
-        format.json { render :show, status: :ok, location: @bpmn_spbe }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bpmn_spbe.errors, status: :unprocessable_entity }
-      end
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    if @bpmn_spbe.update(bpmn_spbe_params)
+      render json: {
+        resText: 'BPMN SPBE berhasil diperbarui',
+        html_content: html_content({ sasaran: @sasaran }, partial: 'sasarans/sasaran_bpmn')
+      }.to_json, status: :ok
+    else
+      render json: { resText: 'Gagal memperbarui BPMN SPBE' }.to_json, status: :unprocessable_entity
     end
   end
 
@@ -103,6 +109,6 @@ class BpmnSpbesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def bpmn_spbe_params
-    params.require(:bpmn_spbe).permit(:nama_bpmn, :kode_opd, :tahun, :keterangan)
+    params.require(:bpmn_spbe).permit(:nama_bpmn, :kode_opd, :tahun, :keterangan, :dapat_digunakan_pd_lain)
   end
 end

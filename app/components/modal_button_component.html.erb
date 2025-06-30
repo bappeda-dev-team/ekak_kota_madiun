@@ -5,8 +5,6 @@
               form_modal_location_param: 'form-modal-body',
               bs_target: '#form-modal',
               bs_toggle: 'modal' } do %>
-  <% if @icon %>
-    <span class="fas fa-edit me-2"></span>
-  <% end %>
+  <%= content_tag :span, '', class: btn_icon %>
   <span><%= @title %></span>
 <% end %>
