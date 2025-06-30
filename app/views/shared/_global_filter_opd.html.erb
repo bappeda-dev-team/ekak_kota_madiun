@@ -7,6 +7,7 @@
   <div class="input-group input-group-merge">
     <%= form.select :kode_opd,  dropdown_opd, {include_blank: true},
      { class: "form-control", required: true,
+       id: 'global-filter-opd',
        data: {
          placeholder: "Perangkat Daerah",
          controller: "dropdown",

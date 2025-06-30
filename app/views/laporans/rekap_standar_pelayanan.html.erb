@@ -32,6 +32,7 @@
               <%= form.label :opd, class: 'form-label' %>
               <%= form.select :kode_opd, [],
                { include_blank: true },
+               id: 'filter-opd-rekap',
                data: {
                  placeholder: 'Opd',
                  controller: 'dropdown',

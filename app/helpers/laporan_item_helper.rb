@@ -35,7 +35,7 @@ module LaporanItemHelper
       },
       {
         title: 'Rekap Standar Pelayanan', href: rekap_standar_pelayanan_laporans_path,
-        icon: 'fas fa-book-open', identifier: 'laporan-rekap-standar-pelayanan'
+        icon: 'fas fa-book-open', identifier: 'laporans/rekap_standar_pelayanan'
       },
       {
         title: 'SPBE', href: '#',
