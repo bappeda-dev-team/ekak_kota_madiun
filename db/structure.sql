@@ -750,7 +750,8 @@ CREATE TABLE public.bpmn_spbes (
     tahun character varying,
     keterangan character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    dapat_digunakan_pd_lain boolean DEFAULT false
 );
 
 
@@ -7773,6 +7774,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250522062956'),
 ('20250527075336'),
 ('20250623041724'),
-('20250623045126');
+('20250623045126'),
+('20250630020002');
 
 

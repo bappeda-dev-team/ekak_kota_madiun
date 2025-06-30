@@ -31,17 +31,20 @@
     <p class="form-label">Pilih BPMN SPBE Terkait</p>
 
     <% BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun).each do |bpmn| %>
-      <div class="form-check">
+      <div class="form-check mb-2">
         <%= radio_button_tag 'sasaran[bpmn_spbe_id]', bpmn.id, @sasaran.bpmn_spbe_id == bpmn.id,
                              class: 'form-check-input',
                              id: "bpmn_#{bpmn.id}",
                              data: { 'bpmn-selector-target': 'radio', action: 'bpmn-selector#toggleNewFields' } %>
         <%= label_tag "bpmn_#{bpmn.id}", bpmn.nama_bpmn, class: 'form-check-label' %>
+        <p class="ms-3">
+          Dapat digunakan OPD lain: <strong><%= bpmn.dapat_digunakan_pd_lain ? 'Ya' : 'Tidak' %></strong>
+        </p>
       </div>
     <% end %>
 
-    <hr />
-    <div class="form-check mt-3">
+    <p class="form-label mt-5">Buat BPMN SPBE Baru</p>
+    <div class="form-check mt-2">
       <%= radio_button_tag 'sasaran[bpmn_spbe_id]', 'new', @sasaran.bpmn_spbe_id.nil?,
                            class: 'form-check-input',
                            id: "bpmn_new",
@@ -54,9 +57,26 @@
         <%= label_tag 'new_bpmn_nama', 'Nama BPMN SPBE' %>
         <%= text_field_tag 'new_bpmn_spbe[nama_bpmn]', nil, class: 'form-control' %>
       </div>
+      <div class="form-group">
+        <%= label_tag 'dapat_digunakan_pd_lain', 'Apakah BPMN bisa digunakan untuk Perangkat Daerah Lainnya?' %><br>
+
+        <div class="form-check form-check-inline">
+          <%= radio_button_tag 'bpmn_spbe[dapat_digunakan_pd_lain]', 'true', @sasaran.bpmn_spbe&.dapat_digunakan_pd_lain == true,
+                               class: 'form-check-input', id: 'bpmn_dapat_digunakan_ya' %>
+          <%= label_tag 'bpmn_dapat_digunakan_ya', 'Ya', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <%= radio_button_tag 'bpmn_spbe[dapat_digunakan_pd_lain]', 'false', @sasaran.bpmn_spbe&.dapat_digunakan_pd_lain == false,
+                               class: 'form-check-input', id: 'bpmn_dapat_digunakan_tidak' %>
+          <%= label_tag 'bpmn_dapat_digunakan_tidak', 'Tidak', class: 'form-check-label' %>
+        </div>
+      </div>
       <%= hidden_field_tag 'new_bpmn_spbe[tahun]', @tahun %>
       <%= hidden_field_tag 'new_bpmn_spbe[kode_opd]', @kode_opd %>
     </div>
+
+
   </div>
   <div class="actions">
     <%= form.submit "Simpan" %>

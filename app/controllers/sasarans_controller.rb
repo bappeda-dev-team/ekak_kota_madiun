@@ -698,7 +698,8 @@ class SasaransController < ApplicationController
     @kode_opd = cookies[:opd]
 
     if params[:sasaran][:bpmn_spbe_id] == 'new'
-      bpmn = BpmnSpbe.create(params.require(:new_bpmn_spbe).permit(:nama_bpmn, :tahun, :kode_opd))
+      bpmn = BpmnSpbe.create(params.require(:new_bpmn_spbe).permit(:nama_bpmn, :tahun, :kode_opd,
+                                                                   :dapat_digunakan_pd_lain))
       success = @sasaran.update(bpmn_spbe_id: bpmn.id)
     else
       success = @sasaran.update(bpmn_spbe_id: params[:sasaran][:bpmn_spbe_id])
