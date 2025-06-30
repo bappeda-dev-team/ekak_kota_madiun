@@ -23,9 +23,10 @@ class BpmnSpbesController < ApplicationController
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
     @bpmn_spbes = if @kode_opd == '0.00.0.00.0.00.00.0000'
-                    BpmnSpbe.where(tahun: @tahun)
+                    BpmnSpbe.where("tahun = ? OR dapat_digunakan_pd_lain = ?", @tahun, true)
                   else
-                    BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun)
+                    BpmnSpbe.where("tahun = ? AND (kode_opd = ? OR dapat_digunakan_pd_lain = ?)", @tahun, @kode_opd,
+                                   true)
                   end
     @bpmn_spbes = @bpmn_spbes.map do |bpmn|
       rekins = bpmn.sasarans.includes(:user).where(tahun: @tahun)

@@ -30,7 +30,7 @@
   <div class="field" data-controller="bpmn-selector">
     <p class="form-label">Pilih BPMN SPBE Terkait</p>
 
-    <% BpmnSpbe.where(kode_opd: @kode_opd, tahun: @tahun).each do |bpmn| %>
+    <% BpmnSpbe.where("tahun = ? AND (kode_opd = ? OR dapat_digunakan_pd_lain = ?)", @tahun, @kode_opd, true).each do |bpmn| %>
       <div class="form-check mb-2">
         <%= radio_button_tag 'sasaran[bpmn_spbe_id]', bpmn.id, @sasaran.bpmn_spbe_id == bpmn.id,
                              class: 'form-check-input',
