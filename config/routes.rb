@@ -544,6 +544,7 @@ Rails.application.routes.draw do
 
   resources :sasarans, path: "rencana_kinerja" do
     collection do
+      get :filter_rekap_standar_pelayanan
       get :list_sasaran
       get :anggaran, path: "rincian_anggaran"
       get :sasaran_admin
@@ -701,6 +702,7 @@ Rails.application.routes.draw do
         get :data
         get :jumlah
       end
+      get :rekap_standar_pelayanan
       get :rekap_bpmn_spbe
       get :rekap_pokin_operational
       get :rekapitulasi_perintah_walikota

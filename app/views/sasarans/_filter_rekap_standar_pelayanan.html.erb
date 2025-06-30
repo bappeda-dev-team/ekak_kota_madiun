@@ -1,0 +1,35 @@
+<%= render 'shared/card_layout_subtitle', title: "Rekap Standar Pelayanan",
+           sub_title: @opd, sub_title_2: @tahun do %>
+  <div class="cetak d-grid gap-3">
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-bordered counter">
+      <thead class="thead-light">
+        <tr>
+          <th class="border text-center" scope="col">No</th>
+          <th class="border text-center" scope="col">Rekin</th>
+          <th class="border text-center" scope="col">Jenis Layanan</th>
+          <th class="border text-center" scope="col">Model Layanan</th>
+          <th class="border text-center" scope="col">Penjelasan Layanan</th>
+          <th class="border text-center" scope="col">Penerima Manfaat</th>
+          <th class="border text-center" scope="col">Data Terpilah</th>
+          <th class="border text-center" scope="col">Lokasi Pelaksanaan</th>
+        </tr>
+      </thead>
+      <% @sasarans.each do |sasaran| %>
+        <tbody id="<%= dom_id(sasaran) %>">
+          <tr>
+            <td class=""></td>
+            <td class="text-wrap"><%= sasaran %></td>
+            <td class="text-wrap"><%= sasaran.jenis_layanan %></td>
+            <td class="text-wrap text-center"><%= sasaran.rincian&.model_layanan %></td>
+            <td class="text-wrap"><%= sasaran.rincian&.jalur_layanan %></td>
+            <td class="text-wrap"><%= sasaran.penerima_manfaat %></td>
+            <td class="text-wrap"><%= sasaran.rincian&.data_terpilah %></td>
+            <td class="text-wrap"><%= sasaran.rincian&.lokasi_pelaksanaan %></td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+<% end %>

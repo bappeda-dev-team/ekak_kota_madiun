@@ -715,6 +715,27 @@ class SasaransController < ApplicationController
     end
   end
 
+  def filter_rekap_standar_pelayanan
+    @kode_opd = params[:kode_opd]
+    @tahun = params[:tahun]
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+
+    sasaran_user = if @kode_opd == '0.00.0.00.0.00.00.0000'
+                     User.includes([:sasarans,
+                                    { sasarans: [:rincian] }])
+                         .aktif.eselon4.flat_map(&:sasarans)
+                   else
+                     @opd.users.includes([:sasarans,
+                                          { sasarans: [:rincian] }])
+                         .aktif.eselon4.flat_map(&:sasarans)
+                   end
+    @sasarans = sasaran_user.select do |sasaran|
+      sasaran.tahun == @tahun && sasaran.rincian.present?
+    end.compact_blank!
+
+    render partial: 'sasarans/filter_rekap_standar_pelayanan'
+  end
+
   private
 
   def errors_content(sasaran)

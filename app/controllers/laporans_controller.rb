@@ -405,6 +405,8 @@ class LaporansController < ApplicationController
 
   def rekap_bpmn_spbe; end
 
+  def rekap_standar_pelayanan; end
+
   private
 
   def set_program_kegiatans
