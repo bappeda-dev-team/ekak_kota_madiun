@@ -55,7 +55,7 @@ class RekapsController < ApplicationController
     @pokin_operationals = @opd.strategis.eselon4_bytahun(@tahun)
 
     @pokin_operationals = @pokin_operationals.map do |pokin|
-      rekins = pokin.sasarans.where(tahun: @tahun)
+      rekins = pokin.sasarans.dengan_nip.where(tahun: @tahun)
       [pokin, rekins] if rekins.present?
     end.compact_blank!
 
@@ -69,7 +69,7 @@ class RekapsController < ApplicationController
     @pokin_operationals = @opd.strategis.eselon4_bytahun(@tahun)
 
     @pokin_operationals = @pokin_operationals.map do |pokin|
-      rekins = pokin.sasarans.where(tahun: @tahun)
+      rekins = pokin.sasarans.dengan_nip.where(tahun: @tahun)
       [pokin, rekins] if rekins.present?
     end.compact_blank!
 
