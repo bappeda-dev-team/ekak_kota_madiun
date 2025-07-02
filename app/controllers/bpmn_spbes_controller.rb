@@ -13,7 +13,7 @@ class BpmnSpbesController < ApplicationController
     @pokin_operationals = @opd.strategis.eselon4_bytahun(@tahun)
 
     @pokin_operationals = @pokin_operationals.map do |pokin|
-      rekins = pokin.sasarans.includes(:user).where(tahun: @tahun)
+      rekins = pokin.sasarans.dengan_nip.includes(:user).where(tahun: @tahun)
       [pokin, rekins] if rekins.present?
     end.compact_blank!
   end
@@ -31,9 +31,9 @@ class BpmnSpbesController < ApplicationController
                   end
     @bpmn_spbes = @bpmn_spbes.map do |bpmn|
       rekins = if @kode_opd == '0.00.0.00.0.00.00.0000'
-                 bpmn.sasarans.includes(:user).where(tahun: @tahun)
+                 bpmn.sasarans.dengan_nip.includes(:user).where(tahun: @tahun)
                else
-                 bpmn.sasarans.includes(:user).where(tahun: @tahun, user: { kode_opd: @opd.kode_opd })
+                 bpmn.sasarans.dengan_nip.includes(:user).where(tahun: @tahun, user: { kode_opd: @opd.kode_opd })
                end
       [bpmn, rekins] if rekins.present?
     end.compact_blank!
