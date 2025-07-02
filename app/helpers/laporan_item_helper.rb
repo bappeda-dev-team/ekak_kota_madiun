@@ -74,7 +74,7 @@ module LaporanItemHelper
       },
       {
         title: 'Rekap Pokin Operational', href: rekap_pokin_operational_laporans_path,
-        icon: 'fas fa-puzzle-piece', identifier: 'laporans/pokin_operational'
+        icon: 'fas fa-puzzle-piece', identifier: 'laporans/rekap_pokin_operational'
       },
       {
         title: 'Tim Kerja', href: tim_kerja_laporans_path,
