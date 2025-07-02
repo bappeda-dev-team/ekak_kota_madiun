@@ -38,6 +38,10 @@ class SasaranKotum < ApplicationRecord
     tematik.indikators
   end
 
+  def indikator_sasarans
+    indikators
+  end
+
   def to_s
     sasaran
   end
