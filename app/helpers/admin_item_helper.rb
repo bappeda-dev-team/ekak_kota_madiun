@@ -3,11 +3,11 @@ module AdminItemHelper
     items = [
       {
         title: 'Sasaran Kota / RAD', href: laporan_sasaran_kota_path,
-        icon: 'fas fa-bullseye', identifier: 'sasaran_kota_laporan'
+        icon: 'fas fa-bullseye', identifier: 'sasaran_kota/laporan'
       },
       {
         title: 'Strategi Arah Kebijakan', href: opd_strategi_arah_kebijakans_path,
-        icon: 'fas fa-city', identifier: 'strategi_kebijakan'
+        icon: 'fas fa-city', identifier: 'strategi_arah_kebijakan/opd'
       },
       {
         title: 'Master Usulan', href: "#",
@@ -33,11 +33,11 @@ module AdminItemHelper
       },
       {
         title: 'Pohon Kinerja', href: pohon_kinerja_opds_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja_opds'
       },
       {
         title: 'Pohon Cascading', href: cascading_pohon_kinerja_opds_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja_opds/cascading'
       },
       {
         title: 'Info OPD', href: info_opds_path,
@@ -57,15 +57,15 @@ module AdminItemHelper
       },
       {
         title: 'Pagu Perencanaan', href: daftar_renstra_program_kegiatans_path,
-        icon: 'fas fa-chart-line', identifier: 'daftar_renstra'
+        icon: 'fas fa-chart-line', identifier: 'program_kegiatans/daftar_renstra'
       },
       {
         title: 'Pagu SIPKD', href: daftar_pagu_program_kegiatans_path,
-        icon: 'fas fa-chart-line', identifier: 'daftar_pagu'
+        icon: 'fas fa-chart-line', identifier: 'program_kegiatans/daftar_pagu'
       },
       {
         title: 'Master Program Kegiatan Subkegiatan OPD', href: admin_sub_kegiatan_path,
-        icon: 'fas fa-folder-open', identifier: 'master_program_kegiatan_subkegiatan_opd'
+        icon: 'fas fa-folder-open', identifier: 'admin_sub_kegiatan'
       }
     ]
     return items if guest?
@@ -79,7 +79,7 @@ module AdminItemHelper
       },
       {
         title: 'Daftar ASN', href: adminusers_path,
-        icon: 'fas fa-user', identifier: 'admin_user'
+        icon: 'fas fa-user', identifier: 'adminusers'
       },
       {
         title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
@@ -90,11 +90,11 @@ module AdminItemHelper
 
   def anggaran_admin_items
     [
-      { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
-      { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
-      { title: 'SBK', href: anggaran_sbks_path, identifier: 'anggaran_sbk' },
+      { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_sshes' },
+      { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbus' },
+      { title: 'SBK', href: anggaran_sbks_path, identifier: 'anggaran_sbks' },
       { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' },
-      { title: 'ASB', href: anggaran_asbs_path, identifier: 'anggaran_asb' }
+      { title: 'ASB', href: anggaran_asbs_path, identifier: 'anggaran_asbs' }
     ]
   end
 
@@ -104,9 +104,9 @@ module AdminItemHelper
         title: 'Renja', href: renja_opd_indikators_path,
         multi: true, collections: indikator_renja_items,
         id_target: 'renja-indikator',
-        identifier: 'renja'
+        identifier: 'indikators/renja_opd'
       },
-      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'iku_opd' }
+      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'indikators/iku_opd' }
     ]
   end
 
