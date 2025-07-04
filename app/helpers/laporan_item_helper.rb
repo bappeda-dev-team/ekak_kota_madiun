@@ -45,7 +45,7 @@ module LaporanItemHelper
       },
       { title: 'Gender', href: laporan_gap_genders_path,
         icon: 'fas fa-people-carry',
-        identifier: 'genders/laporan_gap' },
+        identifier: 'laporans/laporan_gap' },
       {
         title: 'Rancangan Peraturan', href: "#",
         multi: true, collections: peraturan_items,
@@ -54,7 +54,7 @@ module LaporanItemHelper
       },
       {
         title: 'Inovasi Sasaran Kinerja', href: inovasi_sasaran_kinerja_laporans_path,
-        icon: 'fas fa-book-open', identifier: 'laporan-inovasi-sasaran-kinerja'
+        icon: 'fas fa-book-open', identifier: 'laporans/inovasi_sasaran_kinerja'
       },
       {
         title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
@@ -62,15 +62,15 @@ module LaporanItemHelper
       },
       {
         title: 'Cascading Kota', href: hasil_cascading_kota_laporans_path,
-        icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'
+        icon: 'fas fa-people-arrows', identifier: 'laporans/hasil_cascading_kota'
       },
       {
         title: 'Cascading Opd', href: hasil_cascading_laporans_path,
-        icon: 'fas fa-people-arrows', identifier: 'hasil_cascading'
+        icon: 'fas fa-people-arrows', identifier: 'laporans/hasil_cascading'
       },
       {
         title: 'Crosscutting Opd', href: hasil_crosscutting_laporans_path,
-        icon: 'fas fa-puzzle-piece', identifier: 'hasil_crosscutting'
+        icon: 'fas fa-puzzle-piece', identifier: 'laporans/hasil_crosscutting'
       },
       {
         title: 'Rekap Pokin Operational', href: rekap_pokin_operational_laporans_path,
@@ -78,19 +78,19 @@ module LaporanItemHelper
       },
       {
         title: 'Tim Kerja', href: tim_kerja_laporans_path,
-        icon: 'fas fa-user-friends', identifier: 'tim_kerja'
+        icon: 'fas fa-user-friends', identifier: 'laporans/tim_kerja'
       },
       {
         title: 'Rencana Kinerja (KAK)', href: laporan_kak_laporans_path,
-        icon: 'fas fa-bullseye', identifier: 'laporan_kak'
+        icon: 'fas fa-bullseye', identifier: 'laporans/laporan_kak'
       },
       {
         title: 'Rincian Belanja', href: laporan_rka_laporans_path,
-        icon: 'fas fa-money-check', identifier: 'laporan_rka'
+        icon: 'fas fa-money-check', identifier: 'laporans/laporan_rka'
       },
       {
         title: 'Sasaran Program OPD', href: sasaran_program_opd_laporans_path,
-        icon: 'fas fa-folder-open', identifier: 'laporan_sasaran_program_opd'
+        icon: 'fas fa-folder-open', identifier: 'laporans/sasaran_program_opd'
       },
       {
         title: 'Renstra', href: "#",

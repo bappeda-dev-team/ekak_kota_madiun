@@ -47,9 +47,18 @@ class KakQueries
   end
 
   def pk_sasarans
-    sasarans_eselon4.group_by(&:program_kegiatan)
-                    .sort_by { |pk, _| pk.nil? ? [] : pk.values_at(:kode_sub_giat) }
-                    .to_h
+    pk_sasarans_grouped_by_program_kegiatan
+      .sort_by { |pk, _| pk&.kode_sub_giat.to_s }
+      .to_h
+  end
+
+  def pk_sasarans_grouped_by_program_kegiatan
+    sasarans_eselon4
+      .group_by { |s| s.program_kegiatan&.kode_sub_giat }
+      .each_with_object({}) do |(_, sasarans), result|
+        pk = sasarans.first.program_kegiatan
+        result[pk] = sasarans
+      end
   end
 
   def sasarans_program_kegiatans
