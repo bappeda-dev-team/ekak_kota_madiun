@@ -23,6 +23,20 @@
     <%= form.text_field :nama_bpmn, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :dapat_digunakan_pd_lain, 'Apakah BPMN bisa digunakan untuk Perangkat Daerah Lainnya?' %><br>
+
+    <div class="form-check form-check-inline">
+      <%= form.radio_button :dapat_digunakan_pd_lain, true, class: 'form-check-input', id: 'bpmn_dapat_digunakan_ya' %>
+      <%= form.label :dapat_digunakan_pd_lain, 'Ya', class: 'form-check-label', for: 'bpmn_dapat_digunakan_ya' %>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <%= form.radio_button :dapat_digunakan_pd_lain, false, class: 'form-check-input', id: 'bpmn_dapat_digunakan_tidak' %>
+      <%= form.label :dapat_digunakan_pd_lain, 'Tidak', class: 'form-check-label', for: 'bpmn_dapat_digunakan_tidak' %>
+    </div>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
