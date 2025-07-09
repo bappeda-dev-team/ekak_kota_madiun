@@ -103,7 +103,7 @@ class RencanaAksiOpd < ApplicationRecord
 
   def target_bulanan_aktif?(bulan)
     target_setahun = rencana_renaksi&.total_target_aksi_bulan
-    target_setahun.values_at(bulan.to_i).any?
+    target_setahun&.values_at(bulan.to_i)&.any?
   end
 
   def update_tw_pelaksanaan
