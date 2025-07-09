@@ -62,7 +62,7 @@ class SasaranProgramOpdsController < ApplicationController
     @filename = "LAPORAN_DAFTAR_RESIKO_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
     pdf = DaftarResikoPdf.new(opd: @opd, tahun: @tahun_bener, program_kegiatans: @program_kegiatans)
     respond_to do |format|
-      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment) }
+      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline) }
       format.xlsx do
         render xlsx: "cetak_daftar_resiko", filename: @filename, disposition: 'attachment'
       end
