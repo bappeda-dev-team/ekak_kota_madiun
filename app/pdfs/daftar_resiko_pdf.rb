@@ -2,7 +2,7 @@ class DaftarResikoPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
   def initialize(opd: '', tahun: '', program_kegiatans: '')
-    super(page_layout: :landscape, page_size: "A3")
+    super(page_layout: :landscape, page_size: "A2")
     @opd = opd
     @tahun = tahun
     @nama_opd = @opd.nama_opd
@@ -31,7 +31,7 @@ class DaftarResikoPdf < Prawn::Document
 
   def ttd
     start_new_page if (cursor - 111).negative?
-    bounding_box([bounds.width - 500, cursor - 10], width: bounds.width - 500) do
+    bounding_box([bounds.width - 660, cursor - 10], width: bounds.width - 500) do
       text "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}", size: 8, align: :center
       move_down 5
       text "<strong>#{@opd.jabatan_kepala_tanpa_opd}</strong>", size: 8, align: :center,
@@ -57,30 +57,31 @@ class DaftarResikoPdf < Prawn::Document
   end
 
   def subheader_tabel
-    [[{ content: "No", width: 20, align: :center },
-      { content: "SASARAN", width: 150 },
-      { content: "INDIKATOR", width: 100, align: :center },
+    [[{ content: "No", width: 40, align: :center },
+      { content: "SASARAN", width: 250, align: :center },
+      { content: "INDIKATOR", width: 200, align: :center },
       { content: "T", width: 30, align: :center },
-      { content: "S", width: 50, align: :center },
-      { content: "PAGU", width: 85, align: :center },
-      { content: "RISIKO", width: 75, align: :center },
-      { content: "KEMUNGKINAN", width: 70 },
-      { content: "DAMPAK", width: 75, align: :center },
+      { content: "S", width: 70, align: :center },
+      { content: "PAGU", width: 90, align: :center },
+      { content: "RISIKO", width: 100, align: :center },
+      { content: "KEMUNGKINAN", width: 70, align: :center },
+      { content: "DAMPAK", width: 150, align: :center },
       { content: "SKALA DAMPAK", width: 50, align: :center },
       { content: "SKALA / PETA RISIKO", width: 75, align: :center },
-      { content: "PIHAK YANG TERKENA", width: 100, align: :center }]]
+      { content: "PIHAK YANG TERKENA", width: 100, align: :center },
+      { content: "RTP", width: 110, align: :center }]]
   end
 
   def subkegiatan
     tabel_subkegiatan = [header_tabel]
     @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
       tabel_subkegiatan << [{ content: i.to_s, valign: :top },
-                            { content: pk.nama_subkegiatan, valign: :top, width: 200 }, sasarans(sasarans)]
+                            { content: pk.nama_subkegiatan, valign: :top, width: 250 }, sasarans(sasarans, i)]
     end
     tabel_subkegiatan
   end
 
-  def sasarans(sasarans)
+  def sasarans(sasarans, no_sub)
     sasaran_arr = []
     # warning, not loop indikator
     sasarans.each.with_index(1) do |s, no|
@@ -88,18 +89,19 @@ class DaftarResikoPdf < Prawn::Document
       nilai_skala_dampak = s.rincian&.skala_dampak&.nilai
       peta_resiko = ApplicationController.helpers.peta_resiko(nilai_kemungkinan, nilai_skala_dampak)
       nilai_peta_resiko = ApplicationController.helpers.nilai_peta_resiko(peta_resiko)
-      sasaran_arr << [{ content: no.to_s, align: :center, width: 20 },
-                      { content: s.sasaran_kinerja, align: :left, width: 150 },
-                      { content: s.indikator_sasarans&.first&.indikator_kinerja, width: 100 },
+      sasaran_arr << [{ content: "#{no_sub}.#{no}", align: :center, width: 40 },
+                      { content: s.sasaran_kinerja, align: :left, width: 250 },
+                      { content: s.indikator_sasarans&.first&.indikator_kinerja, width: 200 },
                       { content: s.indikator_sasarans&.first&.target.to_s, width: 30 },
-                      { content: s.indikator_sasarans&.first&.satuan, width: 50 },
-                      { content: "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}", width: 85 },
-                      { content: s.rincian&.resiko || '-', width: 75 },
+                      { content: s.indikator_sasarans&.first&.satuan, width: 70 },
+                      { content: "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}", width: 90 },
+                      { content: s.rincian&.resiko || '-', width: 100 },
                       { content: s.rincian&.kemungkinan&.deskripsi || '-', width: 70, align: :center },
-                      { content: s.rincian&.dampak || '-', width: 75, align: :center },
+                      { content: s.rincian&.dampak || '-', width: 150, align: :center },
                       { content: s.rincian&.skala_dampak&.deskripsi || '-', width: 50, align: :center },
                       { content: "(#{peta_resiko}) #{nilai_peta_resiko}", width: 75, align: :center },
-                      { content: s&.penerima_manfaat || '-', width: 100, align: :center }]
+                      { content: s&.penerima_manfaat || '-', width: 100, align: :center },
+                      { content: s.rtp_sasaran.to_s, width: 110, align: :center }]
     end
     tabel_maker sasaran_arr
   end
@@ -108,7 +110,7 @@ class DaftarResikoPdf < Prawn::Document
     indikators = indikator_sasarans.map do |ind|
       [{ content: ind.indikator_kinerja, width: 75 },
        { content: ind.target.to_s, width: 30 },
-       { content: ind.satuan, width: 30 }]
+       { content: ind.satuan, width: 70 }]
     end
     tabel_maker indikators
   end
