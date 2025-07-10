@@ -1,0 +1,29 @@
+<%= form_with model: bpmn_spbe, url: simpan_catatan_bpmn_spbe_path, local: false,
+              method: :patch,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(bpmn_spbe),
+                form_ajax_type_param: '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              } do |form| %>
+  <% if bpmn_spbe.errors.any? %>
+    <div id="error_explanation">
+      <h2>Terdapat <%= pluralize(bpmn_spbe.errors.count, "error") %>:</h2>
+
+      <ul>
+        <% bpmn_spbe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="fields">
+      <%= form.label :keterangan, "Catatan", class: 'form-label' %>
+      <%= form.text_area :keterangan, class: 'form-control text-bolder' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

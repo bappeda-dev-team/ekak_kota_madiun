@@ -9,6 +9,10 @@ require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
   resources :bpmn_spbes do
+    member do
+      get :tambah_catatan
+      patch :simpan_catatan
+    end
     collection do
       get :pilih
       get :filter_rekap

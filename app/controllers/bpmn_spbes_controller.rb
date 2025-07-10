@@ -1,7 +1,7 @@
 class BpmnSpbesController < ApplicationController
   before_action :set_bpmn_spbe, only: %i[show edit update destroy]
   before_action :set_tahun_opd, only: %i[index pilih]
-  layout false, only: %i[new edit]
+  layout false, only: %i[new edit tambah_catatan]
 
   # GET /bpmn_spbes or /bpmn_spbes.json
   def index
@@ -29,13 +29,13 @@ class BpmnSpbesController < ApplicationController
                     BpmnSpbe.where("tahun = ? AND (kode_opd = ? OR dapat_digunakan_pd_lain = ?)", @tahun, @kode_opd,
                                    true)
                   end
-    @bpmn_spbes = @bpmn_spbes.map do |bpmn|
+    @bpmn_spbes = @bpmn_spbes.filter do |bpmn|
       rekins = if @kode_opd == '0.00.0.00.0.00.00.0000'
                  bpmn.sasarans.dengan_nip.includes(:user).where(tahun: @tahun)
                else
                  bpmn.sasarans.dengan_nip.includes(:user).where(tahun: @tahun, user: { kode_opd: @opd.kode_opd })
                end
-      [bpmn, rekins] if rekins.present?
+      rekins.any?
     end.compact_blank!
 
     render partial: 'bpmn_spbes/filter_rekap'
@@ -52,6 +52,24 @@ class BpmnSpbesController < ApplicationController
   # GET /bpmn_spbes/1/edit
   def edit
     @sasaran = Sasaran.find(params[:sasaran_id])
+  end
+
+  # hanya di rekap laporan spbe
+  def tambah_catatan
+    @bpmn_spbe = BpmnSpbe.find(params[:id])
+    render partial: 'form_tambah_catatan', locals: { bpmn_spbe: @bpmn_spbe }
+  end
+
+  def simpan_catatan
+    @bpmn_spbe = BpmnSpbe.find(params[:id])
+    if @bpmn_spbe.update(bpmn_spbe_params)
+      render json: {
+        resText: 'Catatan berhasil ditambahkan',
+        html_content: html_content({ bpmn_spbe: @bpmn_spbe }, partial: 'bpmn_spbes/row_filter_rekap')
+      }.to_json, status: :ok
+    else
+      render json: { resText: 'Gagal memperbarui BPMN SPBE' }.to_json, status: :unprocessable_entity
+    end
   end
 
   # POST /bpmn_spbes or /bpmn_spbes.json

@@ -10,20 +10,12 @@
           <th class="border text-center" scope="col">BPMN SPBE</th>
           <th class="border text-center" scope="col">OPD Pembuat</th>
           <th class="border text-center" scope="col">Keterangan</th>
+          <th class="border text-center" scope="col">Catatan</th>
         </tr>
       </thead>
-      <% @bpmn_spbes.each do |bpmn, rekins| %>
-        <tbody id="<%= dom_id(bpmn) %>">
-          <tr>
-            <td class=""></td>
-            <td class="text-wrap"><%= bpmn %></td>
-            <td class="text-wrap text-center"><%= bpmn.opd %></td>
-            <td class="text-wrap text-center">
-              Dapat digunakan OPD lain: <strong><%= bpmn.dapat_digunakan_pd_lain ? 'Ya' : 'Tidak' %></strong>
-            </td>
-          </tr>
-        </tbody>
-      <% end %>
+      <tbody>
+        <%= render collection: @bpmn_spbes, partial: 'bpmn_spbes/row_filter_rekap', as: :bpmn_spbe %>
+      </tbody>
     </table>
   </div>
 <% end %>

@@ -1,0 +1,16 @@
+<tr id="<%= dom_id(bpmn_spbe) %>">
+    <td class=""></td>
+    <td class="text-wrap"><%= bpmn_spbe %></td>
+    <td class="text-wrap text-center"><%= bpmn_spbe.opd %></td>
+    <td class="text-wrap text-center">
+        Dapat digunakan OPD lain: <strong><%= bpmn_spbe.dapat_digunakan_pd_lain ? 'Ya' : 'Tidak' %></strong>
+    </td>
+    <td class="text-wrap text-center">
+        <div class="d-grid gap-2">
+            <div class="catatan-bpmn">
+                <%= bpmn_spbe.keterangan %>
+            </div>
+            <%= render(EditButtonComponent.new(path: tambah_catatan_bpmn_spbe_path(bpmn_spbe))) %>
+        </div>
+    </td>
+</tr>
