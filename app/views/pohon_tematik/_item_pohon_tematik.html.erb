@@ -4,7 +4,7 @@
       <h5 class="text-center bg-danger border border-3 border-primary p-2 mb-2"><strong>Non-Aktif</strong></h5>
     <% end %>
     <h5 class="text-center"><strong>Tematik Kota</strong></h5>
-    <% unless guest? %>
+    <% if super_admin? && !guest? %>
       <div class="d-grid gap-3 mt-4">
         <% if pohon.non_aktif? %>
           <%= link_to toggle_is_active_pohon_tematik_path(pohon),
