@@ -265,6 +265,12 @@ class PohonKinerjaPresenter
     ''
   end
 
+  def dari_kota?
+    title_up&.include?('Kota')
+  rescue NoMethodError
+    false
+  end
+
   def pohon_kota_id
     return unless type != 'Pohon'
 
