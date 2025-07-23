@@ -1,6 +1,6 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
 <% show_button = local_assigns.fetch(:show_button, true) %>
-<li>
+<li class="<%= presenter.parent_tematik_aktif?(pohon) ? 'd-none' : '' %>">
   <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
     <%= render partial: 'pohon_kinerja_opds/item_pohon', locals: { pohon: pohon, show_button: show_button } %>
   </div>
