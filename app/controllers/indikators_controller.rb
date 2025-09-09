@@ -219,16 +219,25 @@ class IndikatorsController < ApplicationController
                     .by_periode(@tahun_bener)
     sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
     iku_opd = tujuan_opd + sasaran_opd
+
     @iku_opd = iku_opd
-               .select { |ts| ts.indikators.present? }
-               .sort_by(&:id)
-               .to_h { |ts| [ts, ts.indikators] }
+               .map { |ts| [ts, ts.indikators.shown] }
+               .select { |_, indikators| indikators.present? }
+               .to_h
 
     @title = 'IKU SAKIP OPD'
 
     respond_to do |format|
       format.html do
         render template: 'indikators/cetak_iku_sakip', layout: 'print.html.erb'
+      end
+      format.pdf do
+        render pdf: "#{@title}_#{@nama_opd}",
+               dispotition: 'inline',
+               orientation: 'Landscape',
+               page_size: 'Legal',
+               layout: 'pdf_baru.html.erb',
+               template: 'indikators/cetak_iku_sakip.html.erb'
       end
     end
   end

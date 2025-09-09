@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cetak <%= @title %></title>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <%# <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> %>
+        <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" %>
+        <style type="text/css">
+         table, th, td {
+             border: 1px solid black;
+             border-collapse: collapse;
+         }
+         tfoot.hide {
+             display: none; /* Hide tfoot by default */
+         }
+         caption {
+             caption-side: top;
+             padding: 10px;
+             font-weight: bolder;
+         }
+         caption.bottom {
+             caption-side: bottom;
+             padding: 5px;
+             font-weight: bolder;
+         }
+         .kop {
+             text-align: center;
+             margin-bottom: 20px;
+             align-items: center;
+         }
+         .kop .kop-judul {
+             padding: 5px;
+             font-weight: bolder;
+         }
+         .kop .kop-opd {
+             padding: 5px;
+             font-weight: bolder;
+             text-transform: uppercase;
+         }
+         .kop .kop-tahun {
+             padding: 5px;
+             font-weight: normal;
+         }
+         .border {
+             border: 1px solid ;
+         }
+         .title-one {
+             font-size: 18px ;
+             letter-spacing: 3px ;
+         }
+         .title-two {
+             font-size: 16px ;
+             letter-spacing: 1px ;
+             font-weight: bold ;
+         }
+         .alwaysbreak {
+             page-break-before: always;
+         }
+         .nobreak:before {
+             clear: both;
+         }
+         .nobreak {
+             page-break-inside: avoid;
+         }
+         .table {
+             border: 1px solid black;
+         }
+         .table th {
+             border: 1px solid black;
+         }
+         .table td {
+             border: 1px solid black;
+         }
+         .table tr {
+             page-break-inside: avoid;
+             page-break-after: avoid;
+         }
+         .table .thead-bidang-urusan th {
+             background-color: #d81c45;
+             border-color: #000000;
+         }
+         .table .thead-program th {
+             background-color: #225dc6;
+             border-color: #000000;
+         }
+         .table .thead-kegiatan th {
+             background-color: #2ca58d;
+             border-color: #000000;
+         }
+         .table .thead-subkegiatan th {
+             background-color: #10b981;
+             border-color: #000000;
+         }
+         .ttd-wrapper {
+             text-align: right;
+             width: 100%;
+             margin-top: 5px;
+             padding-right: 40px;
+             display: block;
+         }
+         .ttd {
+             display: inline-block;
+             max-width: 500px;
+             margin: 5px 20px 10px 0px;
+         }
+         .ttd .title-ttd {
+             text-align: center;
+             font-weight: bolder;
+             text-transform: uppercase;
+         }
+         .ttd .nama-kepala-opd {
+             text-align: center;
+             margin-top: 50px;
+             font-weight: bold;
+             text-decoration: underline;
+         }
+         .ttd .jabatan-kepala-opd {
+             text-align: center;
+         }
+         .ttd .nip-kepala-opd {
+             text-align: center;
+             letter-spacing: 1pt;
+         }
+        </style>
+        <style type="text/css" media="print">
+         body {
+             font-size: 8px;
+             -webkit-print-color-adjust: exact;
+             print-color-adjust: exact;
+         }
+         .no-print { display: none; }
+
+         #cetak {
+             padding: 2rem;
+         }
+         .alwaysbreak { page-break-before: always; }
+         .nobreak:before { clear:both; }
+         .nobreak { page-break-inside: avoid; }
+         .break-after {
+             page-break-after: always;
+         }
+         table {
+             border-collapse: collapse;
+             page-break-inside: auto;
+         }
+         table, th, td {
+             border: 1px solid black;
+             border-collapse: collapse;
+         }
+         caption {
+             caption-side: top;
+             padding: 10px;
+             font-weight: bolder;
+         }
+         caption.bottom {
+             caption-side: bottom;
+             padding: 5px;
+             font-weight: bolder;
+         }
+         .table {
+             border: 1px solid black;
+             border-collapse: collapse;
+         }
+         .table tr {
+             border: 1px solid black;
+         }
+         .table td {
+             border: 1px solid black;
+         }
+         .kop {
+             text-align: center;
+             margin-bottom: 20px;
+             align-items: center;
+         }
+         .kop .kop-judul {
+             padding: 5px;
+             font-weight: bolder;
+         }
+         .kop .kop-opd {
+             padding: 5px;
+             font-weight: bolder;
+             text-transform: uppercase;
+         }
+         .kop .kop-tahun {
+             padding: 5px;
+             font-weight: normal;
+         }
+         .border {
+             border: 1px solid ;
+         }
+         .title-one {
+             font-size: 18px ;
+             letter-spacing: 3px ;
+         }
+         .title-two {
+             font-size: 16px ;
+             letter-spacing: 1px ;
+             font-weight: bold ;
+         }
+         .alwaysbreak {
+             page-break-before: always;
+         }
+         .nobreak:before {
+             clear: both;
+         }
+         .nobreak {
+             page-break-inside: avoid;
+         }
+         td, th {
+             page-break-inside: avoid;
+         }
+
+         tr {
+             height: auto !important;
+             min-height: 1em !important;
+         }
+
+         .table tr {
+             page-break-inside: avoid;
+             page-break-after: auto;
+         }
+         .thead-bidang-urusan {
+             print-color-adjust: exact
+             background-color: red;
+             border-color: #000000;
+         }
+         .thead-program {
+             print-color-adjust: exact
+             background-color: #225dc6;
+             border-color: #000000;
+         }
+         .thead-kegiatan {
+             print-color-adjust: exact
+             background-color: #2ca58d;
+             border-color: #000000;
+         }
+         .thead-subkegiatan {
+             print-color-adjust: exact
+             background-color: #10b981;
+             border-color: #000000;
+         }
+         .ttd-wrapper {
+             width: 100%;
+             text-align: right;
+             margin-top: 5px;
+             padding-right: 40px;
+             display: block;
+         }
+         .ttd {
+             display: inline-block;
+             max-width: 500px;
+             margin: 5px 20px 10px 0px;
+             font-size: 8pt;
+         }
+         .ttd .title-ttd {
+             text-align: center;
+             font-weight: bolder;
+             text-transform: uppercase;
+         }
+         .ttd .nama-kepala-opd {
+             margin-top: 50px;
+             text-align: center;
+             font-weight: bold;
+             text-decoration: underline;
+         }
+         .ttd .jabatan-kepala-opd {
+             text-align: center;
+         }
+         .ttd .nip-kepala-opd {
+             text-align: center;
+             letter-spacing: 1pt;
+         }
+        </style>
+    </head>
+    <body class="legal bg-white">
+        <%= yield %>
+    </body>
+</html>

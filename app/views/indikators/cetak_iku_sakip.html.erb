@@ -1,70 +1,62 @@
-<div data-controller="print" data-print-title-value="IKU SAKIP OPD">
-    <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
-        <span class="far fa-file-pdf me-2"></span>
-        Cetak PDF
-    </button>
-    <div data-print-target="document" class="w-100" id="cetak">
-        <div class="kop">
-            <div class="kop-judul">
-                <h3>INDIKATOR KINERJA UTAMA</h3>
-            </div>
-            <div class="kop-opd">
-                <h5><%= @nama_opd %></h5>
-            </div>
-            <div class="kop-tahun">
-                <h5>TAHUN <%= @tahun_bener %></h5>
-            </div>
-        </div>
-        <table class="table align-items-center table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col" width="20px">No.</th>
-                    <th scope="col">Tujuan/Sasaran</th>
-                    <th scope="col">Indikator</th>
-                    <th class="text-center" scope="col">Rumus Perhitungan</th>
-                    <th class="text-center" scope="col">Sumber Data</th>
-                    <th scope="col" width="50px">Target</th>
-                    <th scope="col">Satuan</th>
-                    <th class="text-center" scope="col">Keterangan</th>
+<div class="kop">
+    <div class="kop-judul">
+        <h3>INDIKATOR KINERJA UTAMA</h3>
+    </div>
+    <div class="kop-opd">
+        <h5><%= @nama_opd %></h5>
+    </div>
+    <div class="kop-tahun">
+        <h5>TAHUN <%= @tahun_bener %></h5>
+    </div>
+</div>
+<table class="table align-items-center table-bordered">
+    <thead>
+        <tr>
+            <th scope="col" width="20px">No.</th>
+            <th scope="col">Tujuan/Sasaran</th>
+            <th scope="col">Indikator</th>
+            <th class="text-center" scope="col">Rumus Perhitungan</th>
+            <th class="text-center" scope="col">Sumber Data</th>
+            <th scope="col" width="50px">Target</th>
+            <th scope="col">Satuan</th>
+            <th class="text-center" scope="col">Keterangan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @iku_opd.each.with_index(1) do |(ts, indikators), no_iku| %>
+            <% rowspan = indikators.size %>
+            <% is_tujuan = ts.class.name == 'TujuanOpd' %>
+            <% class_is_hidden = indikators.any?(&:is_hidden) ? 'bg-gray-300' : 'bg-white' %>
+            <% class_is_tujuan = is_tujuan ? 'fw-bolder text-gray-900' : 'text-gray-500' %>
+            <tr>
+                <td rowspan="<%= rowspan %>" width="20px"><%= no_iku %></td>
+                <td rowspan="<%= rowspan %>" class="<%= [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>"><%= ts.to_s %></td>
+
+                <% indikator = indikators.first %>
+                <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan %>
+            </tr>
+
+            <% indikators.drop(1).each do |indikator| %>
+                <tr id="<%= dom_id(indikator) %>" data-controller="row">
+                    <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan  %>
                 </tr>
-            </thead>
-            <tbody>
-                <% @iku_opd.each.with_index(1) do |(ts, indikators), no_iku| %>
-                    <% rowspan = indikators.size %>
-                    <% is_tujuan = ts.class.name == 'TujuanOpd' %>
-                    <% class_is_hidden = indikators.any?(&:is_hidden) ? 'bg-gray-300' : 'bg-white' %>
-                    <% class_is_tujuan = is_tujuan ? 'fw-bolder text-gray-900' : 'text-gray-500' %>
-                    <tr>
-                        <td rowspan="<%= rowspan %>" width="20px"><%= no_iku %></td>
-                        <td rowspan="<%= rowspan %>" class="<%= [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>"><%= ts.to_s %></td>
-
-                        <% indikator = indikators.first %>
-                        <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan %>
-                    </tr>
-
-                    <% indikators.drop(1).each do |indikator| %>
-                        <tr id="<%= dom_id(indikator) %>" data-controller="row">
-                            <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan  %>
-                        </tr>
-                    <% end %>
-                <% end %>
-            </tbody>
-        </table>
-        <div class="ttd-wrapper">
-            <div class="ttd">
-                <div class="title-ttd">
-                    <%= @jabatan_kepala_opd %> <%= @nama_opd %>
-                </div>
-                <div class="nama-kepala-opd">
-                    <%= @nama_kepala_opd %>
-                </div>
-                <div class="jabatan-kepala-opd">
-                    <%= @pangkat_kepala_opd %>
-                </div>
-                <div class="nip-kepala-opd">
-                    NIP <%= @nip_kepala_opd %>
-                </div>
-            </div>
+            <% end %>
+        <% end %>
+    </tbody>
+</table>
+<div class="ttd-wrapper">
+    <div class="ttd">
+        <div class="title-ttd">
+            <%= @jabatan_kepala_opd %> <%= @nama_opd %>
+        </div>
+        <div class="nama-kepala-opd">
+            <%= @nama_kepala_opd %>
+        </div>
+        <div class="jabatan-kepala-opd">
+            <%= @pangkat_kepala_opd %>
+        </div>
+        <div class="nip-kepala-opd">
+            NIP <%= @nip_kepala_opd %>
         </div>
     </div>
 </div>
