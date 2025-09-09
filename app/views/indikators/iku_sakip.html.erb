@@ -6,7 +6,7 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "IKU SAKIP #{@nama_opd} - #{@tahun}" do %>
     <div class="cetak d-grid gap-3">
-      <%= link_to cetak_iku_opd_indikators_path(tahun: @tahun, kode_opd: @kode_opd),
+      <%= link_to cetak_iku_sakip_indikators_path(tahun: @tahun, kode_opd: @kode_opd),
                   class:"m-3 btn btn-outline-danger",
                   target: "_blank", rel: "noopener" do %>
         <span class="far fa-file-pdf me-2"></span>
@@ -18,8 +18,8 @@
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Tujuan/Sasaran</th>
             <th class="border" scope="col">Indikator</th>
-            <th class="border" scope="col">Aksi</th>
             <th class="border text-center" scope="col">Rumus Perhitungan</th>
             <th class="border text-center" scope="col">Sumber Data</th>
             <th class="border" scope="col" width="50px">Target</th>
@@ -28,8 +28,24 @@
           </tr>
         </thead>
         <tbody>
-          <% @iku_opd.each.with_index(1) do |indikator, no_iku| %>
-            <%= render 'row_iku_sakip', indikator: indikator, no_iku: no_iku, tahun: @tahun_bener %>
+          <% @iku_opd.each.with_index(1) do |(ts, indikators), no_iku| %>
+            <% rowspan = indikators.size %>
+            <% is_tujuan = ts.class.name == 'TujuanOpd' %>
+            <% class_is_hidden = indikators.any?(&:is_hidden) ? 'bg-gray-300' : 'bg-white' %>
+            <% class_is_tujuan = is_tujuan ? 'fw-bolder text-gray-900 border' : 'text-gray-500 border' %>
+            <tr id="<%= dom_id(ts) %>">
+              <td rowspan="<%= rowspan %>" class="border" width="20px"><%= no_iku %></td>
+              <td rowspan="<%= rowspan %>" class="<%= [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>"><%= ts.to_s %></td>
+
+              <% indikator = indikators.first %>
+              <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan %>
+            </tr>
+
+            <% indikators.drop(1).each do |indikator| %>
+              <tr id="<%= dom_id(indikator) %>" data-controller="row">
+                <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan  %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

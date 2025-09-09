@@ -131,6 +131,7 @@ Rails.application.routes.draw do
       get :iku_opd
       get :iku_sakip
       get :cetak_iku_opd
+      get :cetak_iku_sakip
       get :lppd_outcome
       get :lppd_output
       get :spm_outcome

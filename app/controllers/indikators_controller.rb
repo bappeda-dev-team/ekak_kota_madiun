@@ -194,7 +194,43 @@ class IndikatorsController < ApplicationController
                     .by_periode(@tahun_bener)
     sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
     iku_opd = tujuan_opd + sasaran_opd
-    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten.sort_by(&:id)
+    @iku_opd = iku_opd
+               .select { |ts| ts.indikators.present? }
+               .sort_by(&:id)
+               .to_h { |ts| [ts, ts.indikators] }
+  end
+
+  def cetak_iku_sakip
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+
+    @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    opd = pokin_opd.opd
+    @nama_opd = opd.nama_opd
+    @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
+    @nama_kepala_opd = opd.nama_kepala
+    @nip_kepala_opd = opd.nip_kepala_fix_plt
+    @pangkat_kepala_opd = opd.pangkat_kepala
+
+    tujuan_opd = opd.tujuan_opds
+                    .by_periode(@tahun_bener)
+    sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
+    iku_opd = tujuan_opd + sasaran_opd
+    @iku_opd = iku_opd
+               .select { |ts| ts.indikators.present? }
+               .sort_by(&:id)
+               .to_h { |ts| [ts, ts.indikators] }
+
+    @title = 'IKU SAKIP OPD'
+
+    respond_to do |format|
+      format.html do
+        render template: 'indikators/cetak_iku_sakip', layout: 'print.html.erb'
+      end
+    end
   end
 
   # TODO: change to IkuOpdQueries

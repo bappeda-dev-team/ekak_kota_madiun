@@ -1,4 +1,4 @@
-<div data-controller="print" data-print-title-value="RENSTRA">
+<div data-controller="print" data-print-title-value="IKU OPD">
   <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
     <span class="far fa-file-pdf me-2"></span>
     Cetak PDF
@@ -20,10 +20,10 @@
         <tr>
           <th scope="col" width="20px">No.</th>
           <th scope="col">Indikator</th>
-          <th scope="col" width="50px">Target</th>
-          <th scope="col">Satuan</th>
           <th class="text-center" scope="col">Rumus Perhitungan</th>
           <th class="text-center" scope="col">Sumber Data</th>
+          <th scope="col" width="50px">Target</th>
+          <th scope="col">Satuan</th>
           <th class="text-center" scope="col">Keterangan</th>
         </tr>
       </thead>
@@ -32,6 +32,8 @@
           <tr>
             <td class="text-gray-900 text-wrap" width='20px' scope="row"><%= no_iku %></td>
             <td class="text-gray-900 text-wrap"><%= indikator || '-' %></td>
+            <td class="text-gray-900 text-wrap"><%= indikator&.rumus_perhitungan || '-' %></td>
+            <td class="text-gray-900 text-wrap"><%= indikator&.sumber_data || '-' %></td>
             <% if indikator.class.name == 'IndikatorSasaran' %>
               <td class="text-gray-900 text-wrap"><%= indikator.target %></td>
               <td class="text-gray-900 text-wrap"><%= indikator.satuan %></td>
@@ -40,8 +42,6 @@
               <td class="text-gray-900 text-wrap"><%= target.target %></td>
               <td class="text-gray-900 text-wrap"><%= target.satuan %></td>
             <% end %>
-            <td class="text-gray-900 text-wrap"><%= indikator&.rumus_perhitungan || '-' %></td>
-            <td class="text-gray-900 text-wrap"><%= indikator&.sumber_data || '-' %></td>
             <td class="text-gray-900 text-wrap"><%= indikator&.keterangan %></td>
           </tr>
         <% end %>

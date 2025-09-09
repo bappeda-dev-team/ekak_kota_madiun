@@ -1,0 +1,15 @@
+<% class_is_hidden = indikator.is_hidden ? 'bg-gray-300' : 'bg-white' %>
+<% class_indikator = [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>
+
+<td class="<%= class_indikator %>"><%= indikator || '-' %></td>
+<td class="<%= class_indikator %>"><%= indikator&.rumus_perhitungan || '-' %></td>
+<td class="<%= class_indikator %>"><%= indikator&.sumber_data || '-' %></td>
+<% if indikator.class.name == 'IndikatorSasaran' %>
+  <td class="<%= class_indikator %>"><%= indikator.target %></td>
+  <td class="<%= class_indikator %>"><%= indikator.satuan %></td>
+<% else %>
+  <% target = indikator.targets.find_by(tahun: tahun) %>
+  <td class="<%= class_indikator %>"><%= target.target %></td>
+  <td class="<%= class_indikator %>"><%= target.satuan %></td>
+<% end %>
+<td class="<%= class_indikator %>"><%= indikator&.keterangan %></td>
