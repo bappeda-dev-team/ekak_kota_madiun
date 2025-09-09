@@ -106,7 +106,8 @@ module AdminItemHelper
         id_target: 'renja-indikator',
         identifier: 'indikators/renja_opd'
       },
-      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'indikators/iku_opd' }
+      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'indikators/iku_opd' },
+      { title: 'IKU SAKIP', href: iku_sakip_indikators_path, identifier: 'indikators/iku_sakip' }
     ]
   end
 

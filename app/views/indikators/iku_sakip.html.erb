@@ -1,0 +1,38 @@
+<%= content_for :html_title, "IKU SAKIP" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Indikator</li>
+  <li class="breadcrumb-item active" aria-current="page">IKU SAKIP</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "IKU SAKIP #{@nama_opd} - #{@tahun}" do %>
+    <div class="cetak d-grid gap-3">
+      <%= link_to cetak_iku_opd_indikators_path(tahun: @tahun, kode_opd: @kode_opd),
+                  class:"m-3 btn btn-outline-danger",
+                  target: "_blank", rel: "noopener" do %>
+        <span class="far fa-file-pdf me-2"></span>
+        Cetak PDF IKU SAKIP
+      <% end %>
+    </div>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col">Aksi</th>
+            <th class="border text-center" scope="col">Rumus Perhitungan</th>
+            <th class="border text-center" scope="col">Sumber Data</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+            <th class="border" scope="col">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @iku_opd.each.with_index(1) do |indikator, no_iku| %>
+            <%= render 'row_iku_sakip', indikator: indikator, no_iku: no_iku, tahun: @tahun_bener %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

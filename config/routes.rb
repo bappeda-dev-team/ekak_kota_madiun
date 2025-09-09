@@ -129,6 +129,7 @@ Rails.application.routes.draw do
       get :kegiatan_renja_opd
       get :subkegiatan_renja_opd
       get :iku_opd
+      get :iku_sakip
       get :cetak_iku_opd
       get :lppd_outcome
       get :lppd_output
