@@ -6,11 +6,15 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "IKU SAKIP #{@nama_opd} - #{@tahun}" do %>
     <div class="cetak d-grid gap-3">
-      <%= link_to cetak_iku_sakip_indikators_path(tahun: @tahun, kode_opd: @kode_opd),
-                  class:"m-3 btn btn-outline-danger",
-                  target: "_blank", rel: "noopener" do %>
-        <span class="far fa-file-pdf me-2"></span>
-        Cetak PDF IKU SAKIP
+      <%= link_to request_tte_iku_sakip_indikators_path,remote: true,
+                  data: {
+                    controller: 'form-modal',
+                    action: 'ajax:complete->form-modal#success:prevent',
+                    bs_toggle: 'modal',
+                    bs_target: '#medium-modal'
+                  }, class: "btn btn-sm btn-outline-danger" do %>
+        <i class="far fa-file-pdf me-2"></i>
+        <span>Cetak PDF IKU SAKIP</span>
       <% end %>
     </div>
     <div class="table-responsive mb-5">
@@ -52,3 +56,5 @@
     </div>
   <% end %>
 <% end %>
+
+<%= render 'shared/medium_modal' %>

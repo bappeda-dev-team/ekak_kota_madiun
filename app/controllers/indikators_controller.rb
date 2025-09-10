@@ -200,9 +200,24 @@ class IndikatorsController < ApplicationController
                .to_h { |ts| [ts, ts.indikators] }
   end
 
+  def request_tte_iku_sakip
+    @user = current_user
+    @kode_opd = cookies[:opd]
+    @tahun = cookies[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    nip_kepala_fix = @opd.nip_kepala_fix_plt
+
+    @kepala_opd = User.find_by(nik: nip_kepala_fix)
+    client = Api::SandiDataClient.new(@kepala_opd.nama, @kepala_opd.nik, '')
+    @nik_asli = client.decrypt_nik
+
+    render layout: false
+  end
+
   def cetak_iku_sakip
     @tahun = params[:tahun]
     @kode_opd = params[:kode_opd]
+    @passphrase = params[:passphrase]
 
     @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
 
@@ -233,7 +248,7 @@ class IndikatorsController < ApplicationController
       end
       format.pdf do
         render pdf: "#{@title}_#{@nama_opd}",
-               dispotition: 'inline',
+               dispotition: 'attachment',
                orientation: 'Landscape',
                page_size: 'Legal',
                layout: 'pdf_baru.html.erb',

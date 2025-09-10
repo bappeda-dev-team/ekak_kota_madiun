@@ -9,11 +9,11 @@ export default class extends Controller {
     if (type == "password") {
       target.setAttribute("type", "text");
       e.currentTarget.dataset.formTypeParam = "text";
-      e.currentTarget.firstElementChild.className = "far fa-eye-slash";
+      e.currentTarget.firstElementChild.className = "far fa-eye";
     } else {
       target.setAttribute("type", "password");
       e.currentTarget.dataset.formTypeParam = "password";
-      e.currentTarget.firstElementChild.className = "far fa-eye";
+      e.currentTarget.firstElementChild.className = "far fa-eye-slash";
     }
   }
 

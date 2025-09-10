@@ -130,8 +130,9 @@ Rails.application.routes.draw do
       get :subkegiatan_renja_opd
       get :iku_opd
       get :iku_sakip
+      get :request_tte_iku_sakip
+      post :cetak_iku_sakip
       get :cetak_iku_opd
-      get :cetak_iku_sakip
       get :lppd_outcome
       get :lppd_output
       get :spm_outcome
