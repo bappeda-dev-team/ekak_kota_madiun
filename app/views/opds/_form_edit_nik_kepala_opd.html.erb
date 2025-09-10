@@ -19,11 +19,12 @@
     </p>
   </div>
   <div class="field">
+    <% nik_invalid = !is_nik_valid && !nik_asli.blank? %>
     <%= form.label :nik, "NIK", {class: "form-label"} %>
-    <%= form.text_field :nik_enc, {class: "form-control #{nik_valid ? '' : 'is-invalid'}", value: kepala_opd.nik_pegawai, placeholder: 'NIK KEPALA OPD'} %>
-    <% unless nik_valid %>
+    <%= form.text_field :nik_enc, {class: "form-control #{nik_invalid ? 'is-invalid' : ''}", value: nik_asli, placeholder: 'NIK KEPALA OPD'} %>
+    <% if nik_invalid %>
       <div class="invalid-feedback">
-        NIP TIDAK VALID
+        NIK TIDAK VALID
       </div>
     <% end %>
   </div>

@@ -237,9 +237,9 @@ class OpdsController < ApplicationController
 
     @kepala_opd = User.find_by(nik: nip_kepala_fix)
     client = Api::SandiDataClient.new(@kepala_opd.nama, @kepala_opd.nik, '')
-    nik_asli = client.decrypt_nik
+    @nik_asli = client.decrypt_nik
 
-    @nik_valid = valid_nik?(nik_asli)
+    @is_nik_valid = valid_nik?(@nik_asli)
     render layout: false
   end
 
@@ -248,20 +248,24 @@ class OpdsController < ApplicationController
     nip_kepala_fix = @opd.nip_kepala_fix_plt
 
     kepala_opd = User.find_by(nik: nip_kepala_fix)
-    nik_asli = params[:user][:nik_enc]
+    @nik_asli = params[:user][:nik_enc]
+
+    @is_nik_valid = valid_nik?(@nik_asli)
 
     respond_to do |format|
-      if valid_nik?(nik_asli)
+      if @is_nik_valid
         # lempar ke background job
-        EncryptNikJob.perform_async(kepala_opd.nama, kepala_opd.nip, nik_asli)
+        EncryptNikJob.perform_async(kepala_opd.nama, kepala_opd.nip, @nik_asli)
         format.json do
-          render json: { resText: "Permintaan enkripsi sedang diproses" }
+          render json: { resText: "NIK Kepala OPD berhasil disimpan" }
         end
       else
         format.json do
           render json: { resText: "NIK tidak valid",
                          html_content: html_content({ kepala_opd: kepala_opd,
-                                                      opd: @opd, nik_valid: false },
+                                                      opd: @opd,
+                                                      is_nik_valid: @is_nik_valid,
+                                                      nik_asli: @nik_asli },
                                                     partial: 'opds/form_edit_nik_kepala_opd.html.erb') },
                  status: :unprocessable_entity
         end
@@ -272,7 +276,7 @@ class OpdsController < ApplicationController
   private
 
   def valid_nik?(nik)
-    return false unless nik =~ /\A\d{16}\z/
+    return false unless nik =~ /\A\d{16}\z/ || nik.blank?
 
     tanggal = nik[6..7].to_i
     bulan   = nik[8..9].to_i

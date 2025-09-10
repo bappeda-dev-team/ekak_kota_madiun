@@ -7,12 +7,16 @@ module Api
     require 'openssl'
 
     URL = ENV.fetch("KOMINFO_ENCRYPT_URL")
-    CERT_FILE = Rails.root.join(ENV.fetch("KOMINFO_CERT_FILE"))
-    KEY_FILE  = Rails.root.join(ENV.fetch("KOMINFO_KEY_FILE"))
+    CERT_FILE = ENV.fetch("KOMINFO_CERT_FILE")
+    KEY_FILE  = ENV.fetch("KOMINFO_KEY_FILE")
 
     H = HTTP.accept(:json)
 
-    attr_accessor :nama, :nip,:nik_asli
+    CTX = OpenSSL::SSL::SSLContext.new
+    CTX.cert = OpenSSL::X509::Certificate.new(File.read(CERT_FILE))
+    CTX.key  = OpenSSL::PKey.read(File.read(KEY_FILE))
+
+    attr_accessor :nama, :nip, :nik_asli
 
     def initialize(nama, nip, nik_asli)
       @nama = nama
@@ -21,40 +25,36 @@ module Api
     end
 
     def encrypt_nik
-      ctx = OpenSSL::SSL::SSLContext.new
-      ctx.cert = OpenSSL::X509::Certificate.new(File.read(CERT_FILE))
-      ctx.key  = OpenSSL::PKey.read(File.read(KEY_FILE))
-
-        payload = {
+      payload = {
         "Plaintext" => [
-            { "Text" => @nik_asli }
+          { "Text" => @nik_asli }
         ]
-        }
-      request = H.post("#{URL}/seal", json:payload, ssl_context: ctx)
+      }
+      request = H.post("#{URL}/seal", json: payload, ssl_context: CTX)
 
       update_detail_pegawai(request)
     end
 
     def decrypt_nik
-      ctx = OpenSSL::SSL::SSLContext.new
-      ctx.cert = OpenSSL::X509::Certificate.new(File.read(CERT_FILE))
-      ctx.key  = OpenSSL::PKey.read(File.read(KEY_FILE))
+      return '' if @nip.blank?
 
       nik_enc = DetailPegawai.find_by(nip: @nip).nik_enc
 
-        payload = {
+      payload = {
         "Ciphertext" => [
-            { "Text" => nik_enc }
+          { "Text" => nik_enc }
         ]
-        }
-      request = H.post("#{URL}/unseal", json:payload, ssl_context: ctx)
-      get_nik_asli(request)
-    end
+      }
+      response = H.post("#{URL}/unseal", json: payload, ssl_context: CTX)
 
-    def get_nik_asli(response)
+      # resp data
       data = JSON.parse(response.body)
       data['Plaintext'][0]['text']
+    rescue NoMethodError
+      ''
     end
+
+    private
 
     def update_detail_pegawai(response)
       data = JSON.parse(response.body)
@@ -62,11 +62,11 @@ module Api
 
       DetailPegawai.upsert(
         {
-            nama: @nama,
-            nip: @nip,
-            nik_enc: nik_enc,
-            updated_at: Time.current,
-            created_at: Time.current
+          nama: @nama,
+          nip: @nip,
+          nik_enc: nik_enc,
+          updated_at: Time.current,
+          created_at: Time.current
         },
         unique_by: :index_detail_pegawais_on_nip
       )
