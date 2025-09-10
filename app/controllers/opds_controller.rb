@@ -231,7 +231,60 @@ class OpdsController < ApplicationController
     render partial: 'form_edit_full', locals: { opd: @opd }
   end
 
+  def edit_nik_kepala
+    @opd = Opd.find(params[:id])
+    nip_kepala_fix = @opd.nip_kepala_fix_plt
+
+    @kepala_opd = User.find_by(nik: nip_kepala_fix)
+    client = Api::SandiDataClient.new(@kepala_opd.nama, @kepala_opd.nik, '')
+    nik_asli = client.decrypt_nik
+
+    @nik_valid = valid_nik?(nik_asli)
+    render layout: false
+  end
+
+  def update_nik_kepala
+    @opd = Opd.find(params[:id])
+    nip_kepala_fix = @opd.nip_kepala_fix_plt
+
+    kepala_opd = User.find_by(nik: nip_kepala_fix)
+    nik_asli = params[:user][:nik_enc]
+
+    respond_to do |format|
+      if valid_nik?(nik_asli)
+        # lempar ke background job
+        EncryptNikJob.perform_async(kepala_opd.nama, kepala_opd.nip, nik_asli)
+        format.json do
+          render json: { resText: "Permintaan enkripsi sedang diproses" }
+        end
+      else
+        format.json do
+          render json: { resText: "NIK tidak valid",
+                         html_content: html_content({ kepala_opd: kepala_opd,
+                                                      opd: @opd, nik_valid: false },
+                                                    partial: 'opds/form_edit_nik_kepala_opd.html.erb') },
+                 status: :unprocessable_entity
+        end
+      end
+    end
+  end
+
   private
+
+  def valid_nik?(nik)
+    return false unless nik =~ /\A\d{16}\z/
+
+    tanggal = nik[6..7].to_i
+    bulan   = nik[8..9].to_i
+    tahun   = nik[10..11].to_i
+    tanggal -= 40 if tanggal > 40
+
+    begin
+      Date.valid_date?(2000 + tahun, bulan, tanggal)
+    rescue StandardError
+      false
+    end
+  end
 
   def set_opd
     @opd = Opd.find(params[:id])

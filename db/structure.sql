@@ -919,6 +919,39 @@ ALTER SEQUENCE public.data_dukungs_id_seq OWNED BY public.data_dukungs.id;
 
 
 --
+-- Name: detail_pegawais; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.detail_pegawais (
+    id bigint NOT NULL,
+    nama character varying,
+    nip character varying NOT NULL,
+    nik_enc character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: detail_pegawais_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.detail_pegawais_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: detail_pegawais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.detail_pegawais_id_seq OWNED BY public.detail_pegawais.id;
+
+
+--
 -- Name: domains; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4709,6 +4742,13 @@ ALTER TABLE ONLY public.data_dukungs ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: detail_pegawais id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.detail_pegawais ALTER COLUMN id SET DEFAULT nextval('public.detail_pegawais_id_seq'::regclass);
+
+
+--
 -- Name: domains id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5528,6 +5568,14 @@ ALTER TABLE ONLY public.dasar_hukums
 
 ALTER TABLE ONLY public.data_dukungs
     ADD CONSTRAINT data_dukungs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: detail_pegawais detail_pegawais_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.detail_pegawais
+    ADD CONSTRAINT detail_pegawais_pkey PRIMARY KEY (id);
 
 
 --
@@ -6389,6 +6437,13 @@ CREATE INDEX index_crosscuttings_on_strategi_id ON public.crosscuttings USING bt
 --
 
 CREATE INDEX index_data_dukungs_on_data_dukungable ON public.data_dukungs USING btree (data_dukungable_type, data_dukungable_id);
+
+
+--
+-- Name: index_detail_pegawais_on_nip; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_detail_pegawais_on_nip ON public.detail_pegawais USING btree (nip);
 
 
 --
@@ -7775,6 +7830,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250527075336'),
 ('20250623041724'),
 ('20250623045126'),
-('20250630020002');
+('20250630020002'),
+('20250910012149'),
+('20250910024532');
 
 

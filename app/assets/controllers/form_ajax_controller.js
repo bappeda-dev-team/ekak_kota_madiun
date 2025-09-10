@@ -146,6 +146,7 @@ export default class extends ApplicationController {
     const { resText, html_content } = JSON.parse(message.response);
     if (status == "Unprocessable Entity") {
       this.partialAttacher("form-modal-body", html_content);
+      this.sweetalertStatus(resText, status);
     } else if (status == "Internal Server Error") {
       this.errorContainerTarget.classList.remove("d-none");
       this.errorContainerTarget.innerHTML = html_content;

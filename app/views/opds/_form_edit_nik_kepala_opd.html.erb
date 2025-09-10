@@ -1,0 +1,33 @@
+<%= form_with(model: kepala_opd, local: false,
+              url: update_nik_kepala_opd_path(opd),
+              method: :patch,
+              data: {
+                controller: 'form-ajax',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <div class="field">
+    <%= form.label :nip, "NIP", {class: "form-label"} %>
+    <p class="form-control disabled">
+      <%= kepala_opd.nik %>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :nama, {class: "form-label"} %>
+    <p class="form-control disabled">
+      <%= kepala_opd.nama %>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :nik, "NIK", {class: "form-label"} %>
+    <%= form.text_field :nik_enc, {class: "form-control #{nik_valid ? '' : 'is-invalid'}", value: kepala_opd.nik_pegawai, placeholder: 'NIK KEPALA OPD'} %>
+    <% unless nik_valid %>
+      <div class="invalid-feedback">
+        NIP TIDAK VALID
+      </div>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

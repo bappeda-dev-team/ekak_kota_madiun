@@ -802,6 +802,8 @@ Rails.application.routes.draw do
       get :buat_strategi
       post :simpan_strategi
       get :edit_full
+      get :edit_nik_kepala
+      patch :update_nik_kepala
     end
   end
   resources :program_kegiatans do

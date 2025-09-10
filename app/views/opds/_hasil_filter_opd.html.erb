@@ -14,10 +14,7 @@
         <thead class="thead-light">
           <tr>
             <th>K/L</th>
-            <th>OPD</th>
-            <th>Kode OPD</th>
-            <th>Urusan</th>
-            <th>Bidang Urusan</th>
+            <th>INFO OPD</th>
             <th>Nama Kepala OPD</th>
             <th>NIP Kepala OPD</th>
             <th>Pangkat Kepala OPD</th>
@@ -26,7 +23,58 @@
         </thead>
         <tbody>
           <% opds.each do |opd| %>
-            <%= render 'opds/row_table_opd', opd: opd %>
+            <tr id="<%= dom_id(opd) %>">
+              <div class="cek">
+                <td><%= opd.lembaga %></td>
+                <td class="text-wrap">
+                  <p>NAMA OPD: <%= opd.nama_opd %></p>
+                  <p>KODE OPD: <%= opd.kode_unik_opd %></p>
+                  <p>URUSAN
+                    <ul>
+                      <% opd.list_urusans.each do |urusan| %>
+                        <li>(<%= urusan[0] %>) <%= urusan[1] %></li>
+                      <% end %>
+                    </ul>
+                  </p>
+                  <p>BIDANG URUSAN
+                    <ul>
+                      <% opd.list_bidang_urusans.each do |bidang_urusan| %>
+                        <li>(<%= bidang_urusan[0] %>) <%= bidang_urusan[1] %></li>
+                      <% end %>
+                    </ul>
+                  </p>
+                </td>
+                <td><%= opd.nama_kepala %></td>
+                <td><%= opd.nip_kepala %></td>
+                <td><%= opd.pangkat_kepala %></td>
+                <td>
+                  <% unless guest? %>
+                    <div class="d-grid gap-2">
+                      <%= link_to edit_full_opd_path(opd), remote: true,
+                                  data: { controller: 'form-modal',
+                                    action: 'ajax:complete->form-modal#success:prevent',
+                                    bs_toggle: 'modal',
+                                    bs_target: '#form-modal'
+                                  },
+                                  class: 'btn btn-sm btn-outline-info' do %>
+                        <i class="fas fa-edit me-2"></i>
+                        Edit
+                      <% end %>
+                      <%= link_to edit_nik_kepala_opd_path(opd), remote: true,
+                                  data: { controller: 'form-modal',
+                                    action: 'ajax:complete->form-modal#success:prevent',
+                                    bs_toggle: 'modal',
+                                    bs_target: '#form-modal'
+                                  },
+                                  class: 'btn btn-sm btn-outline-primary' do %>
+                        <i class="fas fa-edit me-2"></i>
+                        Input NIK Kepala OPD
+                      <% end %>
+                    </div>
+                  <% end %>
+                </td>
+              </div>
+            </tr>
           <% end %>
         </tbody>
       </table>

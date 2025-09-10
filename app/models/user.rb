@@ -54,6 +54,8 @@ class User < ApplicationRecord
   has_many :inovasis, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :jabatan_users, foreign_key: 'nip_asn', primary_key: 'nik'
 
+  has_one :detail_pegawai, primary_key: 'nik', foreign_key: 'nip'
+
   has_and_belongs_to_many :indikators do
     def by_strategi_id(strategi_id)
       where(indikators_users: { strategi_id: strategi_id })
@@ -96,6 +98,13 @@ class User < ApplicationRecord
 
   def to_s
     nama
+  end
+
+  def nik_pegawai
+    client = Api::SandiDataClient.new(nama, nik, '')
+    client.decrypt_nik
+  rescue NoMethodError
+    ''
   end
 
   def super_admin?
