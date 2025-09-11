@@ -193,6 +193,8 @@ class IndikatorsController < ApplicationController
 
     tujuan_opd = opd.tujuan_opds
                     .by_periode(@tahun_bener)
+                    .uniq(&:tujuan)
+
     sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
     iku_opd = tujuan_opd + sasaran_opd
     @iku_opd = iku_opd
