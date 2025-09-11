@@ -52,6 +52,7 @@ module Api
 
         tte_document.update!(
           status: :signed,
+          error_message: '',
           tte_doc_url: Rails.application.routes.url_helpers.rails_blob_url(
             tte_document.tte_doc_file, only_path: true
           )
