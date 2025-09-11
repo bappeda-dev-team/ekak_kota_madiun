@@ -19,12 +19,10 @@ module Api
     end
 
     def generate_tte_docs
-      file_pdf = Rails.application.routes.url_helpers.rails_blob_url(
-        tte_document.doc_file, only_path: false
-      )
+      file_io = StringIO.new(tte_document.doc_file.download)
 
       form_data = {
-        file: file_pdf,
+        file: HTTP::FormData::File.new(file_io, filename: "document.pdf", content_type: "application/pdf"),
         nik: nik,
         passphrase: passphrase,
         tampilan: "invisible"
