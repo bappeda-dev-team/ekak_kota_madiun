@@ -185,6 +185,7 @@ class IndikatorsController < ApplicationController
 
     @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
 
+    @doc_tte = TteDocument.where(kode_opd: @kode_opd, tahun: @tahun_bener).last
     pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
 
     opd = pokin_opd.opd
@@ -198,63 +199,6 @@ class IndikatorsController < ApplicationController
                .select { |ts| ts.indikators.present? }
                .sort_by(&:id)
                .to_h { |ts| [ts, ts.indikators] }
-  end
-
-  def request_tte_iku_sakip
-    @user = current_user
-    @kode_opd = cookies[:opd]
-    @tahun = cookies[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    nip_kepala_fix = @opd.nip_kepala_fix_plt
-
-    @kepala_opd = User.find_by(nik: nip_kepala_fix)
-    client = Api::SandiDataClient.new(@kepala_opd.nama, @kepala_opd.nik, '')
-    @nik_asli = client.decrypt_nik
-
-    render layout: false
-  end
-
-  def cetak_iku_sakip
-    @tahun = params[:tahun]
-    @kode_opd = params[:kode_opd]
-    @passphrase = params[:passphrase]
-
-    @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-
-    pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
-
-    opd = pokin_opd.opd
-    @nama_opd = opd.nama_opd
-    @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
-    @nama_kepala_opd = opd.nama_kepala
-    @nip_kepala_opd = opd.nip_kepala_fix_plt
-    @pangkat_kepala_opd = opd.pangkat_kepala
-
-    tujuan_opd = opd.tujuan_opds
-                    .by_periode(@tahun_bener)
-    sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
-    iku_opd = tujuan_opd + sasaran_opd
-
-    @iku_opd = iku_opd
-               .map { |ts| [ts, ts.indikators.shown] }
-               .select { |_, indikators| indikators.present? }
-               .to_h
-
-    @title = 'IKU SAKIP OPD'
-
-    respond_to do |format|
-      format.html do
-        render template: 'indikators/cetak_iku_sakip', layout: 'print.html.erb'
-      end
-      format.pdf do
-        render pdf: "#{@title}_#{@nama_opd}",
-               dispotition: 'attachment',
-               orientation: 'Landscape',
-               page_size: 'Legal',
-               layout: 'pdf_baru.html.erb',
-               template: 'indikators/cetak_iku_sakip.html.erb'
-      end
-    end
   end
 
   # TODO: change to IkuOpdQueries

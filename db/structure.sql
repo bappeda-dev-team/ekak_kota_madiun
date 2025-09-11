@@ -4336,6 +4336,43 @@ ALTER SEQUENCE public.tims_id_seq OWNED BY public.tims.id;
 
 
 --
+-- Name: tte_documents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tte_documents (
+    id bigint NOT NULL,
+    status character varying DEFAULT 'diproses'::character varying,
+    doc_url character varying,
+    tte_doc_url character varying,
+    error_message character varying,
+    kode_opd character varying,
+    tahun character varying NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tte_documents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tte_documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tte_documents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tte_documents_id_seq OWNED BY public.tte_documents.id;
+
+
+--
 -- Name: tujuan_kota; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -5337,6 +5374,13 @@ ALTER TABLE ONLY public.tims ALTER COLUMN id SET DEFAULT nextval('public.tims_id
 
 
 --
+-- Name: tte_documents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tte_documents ALTER COLUMN id SET DEFAULT nextval('public.tte_documents_id_seq'::regclass);
+
+
+--
 -- Name: tujuan_kota id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -6259,6 +6303,14 @@ ALTER TABLE ONLY public.tims
 
 
 --
+-- Name: tte_documents tte_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tte_documents
+    ADD CONSTRAINT tte_documents_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tujuan_kota tujuan_kota_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6993,6 +7045,13 @@ CREATE INDEX index_tims_on_opd_id ON public.tims USING btree (opd_id);
 
 
 --
+-- Name: index_tte_documents_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tte_documents_on_user_id ON public.tte_documents USING btree (user_id);
+
+
+--
 -- Name: index_tujuan_kota_on_id_tujuan; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7304,6 +7363,14 @@ ALTER TABLE ONLY public.sasarans
 
 ALTER TABLE ONLY public.tims
     ADD CONSTRAINT fk_rails_7ef52d4072 FOREIGN KEY (inovasi_tim_id) REFERENCES public.inovasi_tims(id);
+
+
+--
+-- Name: tte_documents fk_rails_8027965d42; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tte_documents
+    ADD CONSTRAINT fk_rails_8027965d42 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -7832,6 +7899,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250623045126'),
 ('20250630020002'),
 ('20250910012149'),
-('20250910024532');
+('20250910024532'),
+('20250911011818');
 
 

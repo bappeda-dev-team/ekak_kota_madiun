@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @tte_document.status %>
+</p>
+
+<p>
+  <strong>Tte doc url:</strong>
+  <%= @tte_document.tte_doc_url %>
+</p>
+
+<p>
+  <strong>Error message:</strong>
+  <%= @tte_document.error_message %>
+</p>
+
+<p>
+  <strong>Kode opd:</strong>
+  <%= @tte_document.kode_opd %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tte_document.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_tte_document_path(@tte_document) %> |
+<%= link_to 'Back', tte_documents_path %>

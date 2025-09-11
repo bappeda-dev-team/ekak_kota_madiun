@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :tte_documents
   resources :bpmn_spbes do
     member do
       get :tambah_catatan
@@ -130,8 +131,6 @@ Rails.application.routes.draw do
       get :subkegiatan_renja_opd
       get :iku_opd
       get :iku_sakip
-      get :request_tte_iku_sakip
-      post :cetak_iku_sakip
       get :cetak_iku_opd
       get :lppd_outcome
       get :lppd_output

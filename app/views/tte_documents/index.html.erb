@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tte Documents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Tte doc url</th>
+      <th>Error message</th>
+      <th>Kode opd</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tte_documents.each do |tte_document| %>
+      <tr>
+        <td><%= tte_document.status %></td>
+        <td><%= tte_document.tte_doc_url %></td>
+        <td><%= tte_document.error_message %></td>
+        <td><%= tte_document.kode_opd %></td>
+        <td><%= tte_document.user_id %></td>
+        <td><%= link_to 'Show', tte_document %></td>
+        <td><%= link_to 'Edit', edit_tte_document_path(tte_document) %></td>
+        <td><%= link_to 'Destroy', tte_document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tte Document', new_tte_document_path %>

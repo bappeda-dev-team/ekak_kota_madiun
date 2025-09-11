@@ -176,6 +176,13 @@ class Opd < ApplicationRecord
     nip_kepala.match?(/(-plt)/) ? nip_kepala.gsub!(/(-plt)/, '') : nip_kepala
   end
 
+  # TODO check with test
+  def user_kepala_opd
+    return unless nip_kepala_fix_plt
+
+    User.find_by(nik: nip_kepala_fix_plt)
+  end
+
   def jabatan_kepala_tanpa_opd
     jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
   rescue NoMethodError

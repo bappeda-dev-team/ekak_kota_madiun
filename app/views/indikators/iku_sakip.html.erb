@@ -6,15 +6,36 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "IKU SAKIP #{@nama_opd} - #{@tahun}" do %>
     <div class="cetak d-grid gap-3">
-      <%= link_to request_tte_iku_sakip_indikators_path,remote: true,
+      <div class='p-3 border border-1 border-primary align-middle'>
+        STATUS TTE: <span class="badge badge-lg bg-info"><%= @doc_tte&.status || 'belum ada tte' %></span>
+        <% if @doc_tte&.status == 'failed' %>
+          <%= @doc_tte.error_message %>
+        <% end %>
+      </div>
+      <%= link_to new_tte_document_path,remote: true,
                   data: {
                     controller: 'form-modal',
                     action: 'ajax:complete->form-modal#success:prevent',
                     bs_toggle: 'modal',
                     bs_target: '#medium-modal'
-                  }, class: "btn btn-sm btn-outline-danger" do %>
-        <i class="far fa-file-pdf me-2"></i>
-        <span>Cetak PDF IKU SAKIP</span>
+                  }, class: "btn btn-sm btn-info mb-3" do %>
+        <i class="fas fa-pencil-alt me-2"></i>
+        <span>REQUEST TTE IKU SAKIP OPD</span>
+      <% end %>
+      <% if @doc_tte %>
+        <hr />
+        <%= link_to @doc_tte.doc_url,
+                    class: 'btn btn-sm btn-outline-secondary' do %>
+          <i class="far fa-file-pdf me-2"></i>
+          <span>DOWNLOAD PDF IKU</span>
+        <% end %>
+        <% if @doc_tte.status == 'signed' %>
+          <%= link_to @doc_tte.tte_doc_url,
+                      class: 'btn btn-sm btn-outline-primary' do %>
+            <i class="far fa-file-pdf me-2"></i>
+            <span>DOWNLOAD PDF IKU TTE SAKIP</span>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
     <div class="table-responsive mb-5">

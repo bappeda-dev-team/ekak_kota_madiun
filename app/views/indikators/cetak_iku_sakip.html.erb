@@ -33,12 +33,40 @@
                 <td rowspan="<%= rowspan %>" class="<%= [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>"><%= ts.to_s %></td>
 
                 <% indikator = indikators.first %>
-                <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan %>
+                <% class_is_hidden = indikator.is_hidden ? 'bg-gray-300' : 'bg-white' %>
+                <% class_indikator = [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>
+
+                <td class="<%= class_indikator %>"><%= indikator || '-' %></td>
+                <% if indikator.class.name == 'IndikatorSasaran' %>
+                    <td class="<%= class_indikator %>"><%= indikator.target %></td>
+                    <td class="<%= class_indikator %>"><%= indikator.satuan %></td>
+                <% else %>
+                    <% target = indikator.targets.find_by(tahun: @tahun_bener) %>
+                    <td class="<%= class_indikator %>"><%= target.target %></td>
+                    <td class="<%= class_indikator %>"><%= target.satuan %></td>
+                <% end %>
+                <td class="<%= class_indikator %>"><%= indikator&.rumus_perhitungan || '-' %></td>
+                <td class="<%= class_indikator %>"><%= indikator&.sumber_data || '-' %></td>
+                <td class="<%= class_indikator %>"><%= indikator&.keterangan %></td>
             </tr>
 
             <% indikators.drop(1).each do |indikator| %>
                 <tr id="<%= dom_id(indikator) %>" data-controller="row">
-                    <%= render 'col_iku_sakip', indikator: indikator, tahun: @tahun_bener, class_is_tujuan: class_is_tujuan  %>
+                    <% class_is_hidden = indikator.is_hidden ? 'bg-gray-300' : 'bg-white' %>
+                    <% class_indikator = [class_is_tujuan, class_is_hidden, "text-wrap"].join(' ') %>
+
+                    <td class="<%= class_indikator %>"><%= indikator || '-' %></td>
+                    <% if indikator.class.name == 'IndikatorSasaran' %>
+                        <td class="<%= class_indikator %>"><%= indikator.target %></td>
+                        <td class="<%= class_indikator %>"><%= indikator.satuan %></td>
+                    <% else %>
+                        <% target = indikator.targets.find_by(tahun: @tahun_bener) %>
+                        <td class="<%= class_indikator %>"><%= target.target %></td>
+                        <td class="<%= class_indikator %>"><%= target.satuan %></td>
+                    <% end %>
+                    <td class="<%= class_indikator %>"><%= indikator&.rumus_perhitungan || '-' %></td>
+                    <td class="<%= class_indikator %>"><%= indikator&.sumber_data || '-' %></td>
+                    <td class="<%= class_indikator %>"><%= indikator&.keterangan %></td>
                 </tr>
             <% end %>
         <% end %>

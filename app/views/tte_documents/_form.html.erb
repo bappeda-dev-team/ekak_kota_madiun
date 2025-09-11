@@ -1,0 +1,59 @@
+<%= form_with(model: tte_document, local: false,
+              data: {
+                controller: 'form form-ajax',
+                form_ajax_with_modal_value: true,
+                form_ajax_type_param: '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <% if tte_document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tte_document.errors.count, "error") %> prohibited this tte_document from being saved:</h2>
+
+      <ul>
+        <% tte_document.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :kode_opd %>
+    <%= form.hidden_field :user_id %>
+    <%= form.hidden_field :tahun %>
+    <%= form.hidden_field :nik, value: @nik_asli %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nip, "NIP", {class: "form-label"} %>
+    <p class="form-control disabled">
+      <%= @kepala_opd.nik %>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :nama, {class: "form-label"} %>
+    <p class="form-control disabled">
+      <%= @kepala_opd.nama %>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :nik, "NIK", {class: "form-label"} %>
+    <p class="form-control disabled">
+      <%=  @nik_asli %>
+    </p>
+  </div>
+  <div class="form-group mb-4">
+    <label for="passphrase">Passphrase Kepala OPD</label>
+    <div class="input-group">
+      <%= form.password_field :passphrase, class: "form-control", id: "passphrase", required: true %>
+      <span class="input-group-text togglePassword" data-action="click->form#toggleVisible" data-form-type-param="password">
+        <i class="far fa-eye-slash" style="cursor: pointer"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Request TTE" %>
+  </div>
+<% end %>
