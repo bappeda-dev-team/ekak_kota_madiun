@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  doc_url       :string
 #  error_message :string
+#  id_dokumen    :string
 #  kode_opd      :string
 #  status        :string           default("diproses")
 #  tahun         :string           not null

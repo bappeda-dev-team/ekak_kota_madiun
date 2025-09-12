@@ -4349,7 +4349,8 @@ CREATE TABLE public.tte_documents (
     tahun character varying NOT NULL,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    id_dokumen character varying
 );
 
 
@@ -7900,6 +7901,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250630020002'),
 ('20250910012149'),
 ('20250910024532'),
-('20250911011818');
+('20250911011818'),
+('20250912040840');
 
 
