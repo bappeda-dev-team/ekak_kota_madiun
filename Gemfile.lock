@@ -226,7 +226,6 @@ GEM
     llhttp-ffi (0.5.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
-    logger (1.7.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -239,8 +238,6 @@ GEM
     matrix (0.4.2)
     memoist (0.16.2)
     method_source (1.1.0)
-    mini_magick (5.3.1)
-      logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.6)
     minitest (5.22.3)
@@ -280,7 +277,6 @@ GEM
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
       version_gem (~> 1.1)
-    observer (0.1.2)
     oj (3.16.3)
       bigdecimal (>= 3.0)
     online_migrations (0.16.1)
@@ -303,7 +299,6 @@ GEM
       ttfunk
     pg (1.5.8)
     pg (1.5.8-x64-mingw32)
-    pkg-config (1.6.4)
     prawn (2.5.0)
       matrix (~> 0.4)
       pdf-core (~> 0.10.0)
@@ -403,9 +398,6 @@ GEM
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.2.6)
-    rmagick (6.1.4)
-      observer (~> 0.1)
-      pkg-config (~> 1.4)
     rolify (6.0.1)
     rqrcode (3.1.0)
       chunky_png (~> 1.0)
@@ -606,7 +598,6 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.3)
   memoist
-  mini_magick
   oauth2
   oj
   online_migrations
@@ -627,9 +618,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_performance
   redis
-  rmagick
   rolify (~> 6.0)
-  rqrcode
   rspec-core
   rspec-rails (~> 6.1.0)
   rubocop-rails
