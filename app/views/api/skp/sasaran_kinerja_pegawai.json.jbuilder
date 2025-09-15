@@ -35,6 +35,8 @@ json.data do
       json.id_indikator indikator_sasaran.id
       json.id_sasaran indikator_sasaran.sasaran_id
       json.indikator indikator_sasaran.indikator_kinerja
+      json.sumber_data indikator_sasaran.sumber_data
+      json.rumus_perhitungan indikator_sasaran.rumus_perhitungan
       json.target indikator_sasaran.target
       json.satuan indikator_sasaran.satuan
     end
