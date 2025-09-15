@@ -115,3 +115,8 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
+
+Rails.application.routes.default_url_options = {
+  host: "kak.madiunkota.go.id",
+  protocol: "https"
+}
