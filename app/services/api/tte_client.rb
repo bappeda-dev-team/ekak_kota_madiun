@@ -32,7 +32,7 @@ module Api
       request = H.basic_auth(user: USERNAME, pass: PASSWORD)
                  .post("#{URL}/api/sign/pdf", form: form_data)
 
-      parse_response_noqr(request)
+      parse_response(request)
     end
 
     private
@@ -134,47 +134,43 @@ module Api
     end
 
     def add_qr_and_footer(pdf_binary, qrcode_content)
-      # 1. generate QR di Tempfile
-      qr_tempfile = Tempfile.new(['qr', '.pdf'])
-      Prawn::Document.generate(qr_tempfile.path, page_size: 'LEGAL', page_layout: :landscape) do
-        qrcode = RQRCode::QRCode.new(qrcode_content)
-        png = qrcode.as_png(fill: "white",
-                            module_px_size: 6,
-                            resize_exactly_to: false,
-                            size: 120).to_s
-        # pojok kanan bawah, sesuaikan koordinat
-        image StringIO.new(png), at: [500, 150], width: 150
-      end
+      # 1. load dokumen signed (TTE) dalam mode incremental
+      doc = HexaPDF::Document.new(io: StringIO.new(pdf_binary))
 
-      # 2. parse QR PDF
-      qr_pdf = CombinePDF.load(qr_tempfile.path)
+      # 2. generate QR ke image IO
+      qrcode = RQRCode::QRCode.new(qrcode_content)
+      png_data = qrcode.as_png(
+        fill: 'white',
+        module_px_size: 6,
+        size: 120
+      ).to_s
+      qr_io = StringIO.new(png_data)
 
-      # 3. parse PDF asli
-      pdf = CombinePDF.parse(pdf_binary)
+      # 3. embed QR image
+      qr_image = doc.images.add(qr_io)
 
-      # 4. tambahkan footer ke semua halaman
+      # 4. siapkan footer text
       footer_text = "Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik\n" \
                     "yang diterbitkan oleh Balai Besar Sertifikasi Elektronik (BSrE), Badan Siber dan Sandi Negara (BSSN)"
-      pdf.pages.each do |page|
-        page.textbox(
-          footer_text,
-          height: 50,
-          width: 400,
-          y: 5,
-          x: 150,
-          font_size: 8,
-          align: :center
-        )
+
+      tl = HexaPDF::Layout::TextLayouter.new
+
+      doc.pages.each_with_index do |page, idx|
+        canvas = page.canvas(type: :overlay) # gunakan overlay agar tidak overwrite konten lama
+
+        # footer
+        canvas.font("Helvetica", size: 8)
+        canvas.text(footer_text, at: [100, 30])
+
+        tl.style.text_align(:center).text_valign(:bottom)
+        # hanya halaman terakhir yang ditempeli QR
+        canvas.image(qr_image, at: [page.box.width - 470, 100], width: 120) if idx == doc.pages.count - 1
       end
 
-      # 5. merge QR hanya ke halaman terakhir
-      last_page = pdf.pages.last
-      last_page << qr_pdf.pages[0]
-
-      # 6. simpan final PDF ke Tempfile
+      # 5. tulis ulang sebagai incremental update
       final_tempfile = Tempfile.new(['tte_signed', '.pdf'])
       final_tempfile.binmode
-      final_tempfile.write(pdf.to_pdf)
+      doc.write(final_tempfile, incremental: true) # <--- penting!
       final_tempfile.rewind
 
       final_tempfile

@@ -12,26 +12,30 @@
           <%= @doc_tte.error_message %>
         <% end %>
       </div>
-      <%= link_to new_tte_document_path,remote: true,
-                  data: {
-                    controller: 'form-modal',
-                    action: 'ajax:complete->form-modal#success:prevent',
-                    bs_toggle: 'modal',
-                    bs_target: '#medium-modal'
-                  }, class: "btn btn-sm btn-info mb-3" do %>
-        <i class="fas fa-pencil-alt me-2"></i>
-        <span>REQUEST TTE IKU SAKIP OPD</span>
+      <% unless @doc_tte&.status == 'diproses' || @doc_tte&.status == 'pending' %>
+        <%= link_to new_tte_document_path,remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'ajax:complete->form-modal#success:prevent',
+                      bs_toggle: 'modal',
+                      bs_target: '#medium-modal'
+                    }, class: "btn btn-sm btn-info mb-3" do %>
+          <i class="fas fa-pencil-alt me-2"></i>
+          <span>REQUEST TTE IKU SAKIP OPD</span>
+        <% end %>
       <% end %>
       <% if @doc_tte %>
         <hr />
         <%= link_to @doc_tte.doc_url,
-                    class: 'btn btn-sm btn-outline-secondary' do %>
+                    class: 'btn btn-sm btn-outline-secondary',
+                    target: "_blank", rel: "noopener" do %>
           <i class="far fa-file-pdf me-2"></i>
           <span>DOWNLOAD PDF IKU</span>
         <% end %>
         <% if @doc_tte.status == 'signed' %>
           <%= link_to @doc_tte.tte_doc_url,
-                      class: 'btn btn-sm btn-outline-primary' do %>
+                      class: 'btn btn-sm btn-outline-primary',
+                      target: "_blank", rel: "noopener" do %>
             <i class="far fa-file-pdf me-2"></i>
             <span>DOWNLOAD PDF IKU TTE SAKIP</span>
           <% end %>
