@@ -63,7 +63,7 @@ class DaftarResiko
   def sasarans_filter(tahun_sasaran, sasarans)
     sasarans.dengan_rincian.where(tahun: tahun_sasaran)
             .where.not(nip_asn: [nil, ""])
-            .select { |sas| sas.deleted_at.blank? }
+            .select { |sas| sas.deleted_at.blank? && !sas.user.has_role?(:non_aktif) }
   end
 
   def daftar_resiko_opd
