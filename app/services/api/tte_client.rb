@@ -32,13 +32,51 @@ module Api
       request = H.basic_auth(user: USERNAME, pass: PASSWORD)
                  .post("#{URL}/api/sign/pdf", form: form_data)
 
-      parse_response(request)
+      parse_response_noqr(request)
     end
 
     private
 
     def tte_document
       @tte_document ||= TteDocument.find(tte_id)
+    end
+
+    def parse_response_noqr(response)
+      if response.code == 200
+        data = JSON.parse(response.body)
+
+        # 1. decode PDF dari base64
+        pdf_binary = Base64.decode64(data["base64_signed_file"])
+
+        # 2. attach sementara ke ActiveStorage agar bisa generate URL
+        tte_document.tte_doc_file.attach(
+          io: StringIO.new(pdf_binary),
+          filename: "tte_signed_iku_sakip_opd_#{tte_document.kode_opd}.pdf",
+          content_type: "application/pdf"
+        )
+
+        # 6. update record
+        tte_document.update!(
+          status: :signed,
+          error_message: '',
+          id_dokumen: data['id_dokumen'],
+          tte_doc_url: Rails.application.routes.url_helpers.rails_blob_url(
+            tte_document.tte_doc_file, only_path: true
+          )
+        )
+      else
+        resp = begin
+          JSON.parse(response.body)
+        rescue StandardError
+          {}
+        end
+        tte_document.update!(
+          status: :failed,
+          error_message: resp["error"] || "Gagal memproses TTE"
+        )
+      end
+
+      tte_document
     end
 
     def parse_response(response)
