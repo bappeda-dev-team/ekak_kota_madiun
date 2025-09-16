@@ -1,5 +1,19 @@
-<% if @nik_asli.present? && @nik_valid_for_tte.present? %>
-    <%= render 'form', tte_document: @tte_document %>
+<% if @nik_asli.blank? %>
+    <div class="p-3">
+        <div class="row align-items-center border border-primary border-collapse">
+            <div class="col-auto">
+                <i class="far fa-lightbulb"></i>
+            </div>
+            <div class="col text-wrap border-start border-primary p-3">
+                <div class="row p-2">
+                    NIK KEPALA OPD BELUM DIINPUT.
+                </div>
+                <div class="row">
+                    <%= link_to "KLIK DISINI UNTUK INPUT", info_opds_path, class: "text-info underline"  %>
+                </div>
+            </div>
+        </div>
+    </div>
 <% elsif !@nik_valid_for_tte %>
     <div class="p-3">
         <div class="row align-items-center border border-primary border-collapse">
@@ -17,19 +31,5 @@
         </div>
     </div>
 <% else %>
-    <div class="p-3">
-        <div class="row align-items-center border border-primary border-collapse">
-            <div class="col-auto">
-                <i class="far fa-lightbulb"></i>
-            </div>
-            <div class="col text-wrap border-start border-primary p-3">
-                <div class="row p-2">
-                    NIK KEPALA OPD BELUM DIINPUT.
-                </div>
-                <div class="row">
-                    <%= link_to "KLIK DISINI UNTUK INPUT", info_opds_path, class: "text-info underline"  %>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%= render 'form', tte_document: @tte_document %>
 <% end %>
