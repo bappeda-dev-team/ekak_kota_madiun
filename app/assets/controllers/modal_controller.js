@@ -5,6 +5,12 @@ export default class extends Controller {
     this.makeDraggable();
   }
 
+  closeModal() {
+    const target = 'form-modal-body'
+    const element = document.getElementById(target)
+    element.innerHTML = ''
+  }
+
   makeScrollable() {
     const scrollElement = document.querySelector(".modal-open");
     scrollElement.style.overflow = "auto";

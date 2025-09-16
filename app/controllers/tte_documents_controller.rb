@@ -16,6 +16,7 @@ class TteDocumentsController < ApplicationController
     client = Api::SandiDataClient.new(@kepala_opd.nama, @kepala_opd.nik, '')
     @nik_asli = client.decrypt_nik
     @tte_document = TteDocument.new(tahun: @tahun, kode_opd: @kode_opd, user_id: @kepala_opd.id)
+    @nik_valid_for_tte = Api::TteClient.new(@nik_asli, '', '').validate_user
 
     render layout: false
   end
@@ -45,6 +46,7 @@ class TteDocumentsController < ApplicationController
           }
         end
       else
+        @nik_valid_for_tte = Api::TteClient.new(@nik_asli, '', '').validate_user
         format.json do
           render json: {
                    resText: "Gagal membuat dokumen TTE",

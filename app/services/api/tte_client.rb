@@ -18,6 +18,13 @@ module Api
       @tte_id     = tte_id
     end
 
+    def validate_user
+      response = H.basic_auth(user: USERNAME, pass: PASSWORD)
+                  .get("#{URL}/api/user/status/#{@nik}")
+
+      response.code == 200 && JSON.parse(response)['status'] == 'ISSUE'
+    end
+
     def generate_tte_docs
       file_io = StringIO.new(tte_document.doc_file.download)
 
