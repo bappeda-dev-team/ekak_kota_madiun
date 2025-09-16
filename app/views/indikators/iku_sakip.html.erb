@@ -24,7 +24,7 @@
           <span>REQUEST TTE IKU SAKIP OPD</span>
         <% end %>
       <% end %>
-      <% if @doc_tte.status == 'signed' %>
+      <% if @doc_tte&.status == 'signed' %>
         <%= link_to @doc_tte.tte_doc_url,
                     class: 'btn btn-sm btn-outline-primary',
                     target: "_blank", rel: "noopener" do %>
