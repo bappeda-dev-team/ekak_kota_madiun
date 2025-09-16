@@ -1,5 +1,5 @@
 class TteDocumentsController < ApplicationController
-  before_action :set_tte_document, only: %i[show edit update destroy status]
+  before_action :set_tte_document, only: %i[show edit update destroy status download]
   before_action :set_user_opd_tahun, only: %i[new]
 
   # GET /tte_documents or /tte_documents.json
@@ -12,6 +12,15 @@ class TteDocumentsController < ApplicationController
 
   def status
     render partial: "tte_documents/status", locals: { tte_document: @tte_document }
+  end
+
+  def download
+    if @tte_document.tte_doc_file.attached?
+      # Bisa pakai send_data (stream) atau redirect ke blob
+      redirect_to @tte_document.tte_doc_url
+    else
+      render plain: "File belum tersedia", status: :not_found
+    end
   end
 
   # GET /tte_documents/new

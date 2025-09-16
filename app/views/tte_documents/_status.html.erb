@@ -1,28 +1,33 @@
-<div class="d-grid gap-3">
-    <div class='p-3 border border-1 border-primary align-middle'>
-        STATUS TTE: <span class="badge badge-lg bg-info"><%= tte_document&.status || 'belum ada tte' %></span>
-        <% if tte_document&.status == 'failed' %>
-            <%= tte_document.error_message %>
+<% url = tte_document.present? ? status_tte_document_url(tte_document) : ''  %>
+<div data-controller="polling"
+     data-polling-status-value="<%= tte_document&.status %>"
+     data-polling-url-value="<%= url %>">
+    <div class="d-grid gap-3">
+        <div class='p-3 border border-1 border-primary align-middle' data-polling-status-value="<%= tte_document&.status %>">
+            STATUS TTE: <span class="badge badge-lg bg-info"><%= tte_document&.status || 'belum ada tte' %></span>
+            <% if tte_document&.status == 'failed' %>
+                <%= tte_document.error_message %>
+            <% end %>
+        </div>
+        <% unless tte_document&.status == 'diproses' || tte_document&.status == 'pending' %>
+            <%= link_to new_tte_document_path,remote: true,
+                        data: {
+                            controller: 'form-modal',
+                            action: 'ajax:complete->form-modal#success:prevent',
+                            bs_toggle: 'modal',
+                            bs_target: '#medium-modal'
+                        }, class: "btn btn-sm btn-info mb-3" do %>
+                <i class="fas fa-pencil-alt me-2"></i>
+                <span>REQUEST TTE IKU SAKIP OPD</span>
+            <% end %>
+        <% end %>
+        <% if tte_document&.status == 'signed' %>
+            <%= link_to tte_document.tte_doc_url,
+                        class: 'btn btn-sm btn-outline-primary',
+                        target: "_blank", rel: "noopener" do %>
+                <i class="far fa-file-pdf me-2"></i>
+                <span>DOWNLOAD PDF IKU TTE SAKIP</span>
+            <% end %>
         <% end %>
     </div>
-    <% unless tte_document&.status == 'diproses' || tte_document&.status == 'pending' %>
-        <%= link_to new_tte_document_path,remote: true,
-                    data: {
-                        controller: 'form-modal',
-                        action: 'ajax:complete->form-modal#success:prevent',
-                        bs_toggle: 'modal',
-                        bs_target: '#medium-modal'
-                    }, class: "btn btn-sm btn-info mb-3" do %>
-            <i class="fas fa-pencil-alt me-2"></i>
-            <span>REQUEST TTE IKU SAKIP OPD</span>
-        <% end %>
-    <% end %>
-    <% if tte_document&.status == 'signed' %>
-        <%= link_to tte_document.tte_doc_url,
-                    class: 'btn btn-sm btn-outline-primary',
-                    target: "_blank", rel: "noopener" do %>
-            <i class="far fa-file-pdf me-2"></i>
-            <span>DOWNLOAD PDF IKU TTE SAKIP</span>
-        <% end %>
-    <% end %>
 </div>

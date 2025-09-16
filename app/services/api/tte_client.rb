@@ -2,6 +2,8 @@
 
 module Api
   class TteClient
+    include Rails.application.routes.url_helpers
+
     require "http"
 
     URL      = ENV.fetch("KOMINFO_TTE_URL")
@@ -25,21 +27,33 @@ module Api
       response.code == 200 && JSON.parse(response)['status'] == 'ISSUE'
     end
 
-    def generate_tte_docs
+    def prepare_docs
       file_io = StringIO.new(tte_document.doc_file.download)
+      add_footer(file_io)
+    end
+
+    def generate_tte_docs
+      file_io = prepare_docs
 
       form_data = {
         file: HTTP::FormData::File.new(file_io, filename: "document.pdf", content_type: "application/pdf"),
         nik: nik,
         passphrase: passphrase,
-        tampilan: "invisible",
+        tampilan: "visible",
+        image: "false",
+        halaman: "terakhir",
+        linkQR: download_tte_document_url(@tte_id),
+        xAxis: "50",
+        yAxis: "50",
+        width: "100",
+        height: "100",
         jenis_response: "BASE64"
       }
 
       request = H.basic_auth(user: USERNAME, pass: PASSWORD)
                  .post("#{URL}/api/sign/pdf", form: form_data)
 
-      parse_response(request)
+      parse_response_noqr(request)
     end
 
     private
@@ -140,44 +154,29 @@ module Api
       tte_document
     end
 
-    def add_qr_and_footer(pdf_binary, qrcode_content)
+    def add_footer(pdf_binary)
       # 1. load dokumen signed (TTE) dalam mode incremental
-      doc = HexaPDF::Document.new(io: StringIO.new(pdf_binary))
-
-      # 2. generate QR ke image IO
-      qrcode = RQRCode::QRCode.new(qrcode_content)
-      png_data = qrcode.as_png(
-        fill: 'white',
-        module_px_size: 6,
-        size: 120
-      ).to_s
-      qr_io = StringIO.new(png_data)
-
-      # 3. embed QR image
-      qr_image = doc.images.add(qr_io)
+      doc = HexaPDF::Document.new(io: pdf_binary)
 
       # 4. siapkan footer text
-      footer_text = "Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik\n" \
-                    "yang diterbitkan oleh Balai Besar Sertifikasi Elektronik (BSrE), Badan Siber dan Sandi Negara (BSSN)"
+      footer_text = "Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh Balai Besar Sertifikasi Elektronik (BSrE), Badan Siber dan Sandi Negara (BSSN)"
 
       tl = HexaPDF::Layout::TextLayouter.new
 
-      doc.pages.each_with_index do |page, idx|
+      doc.pages.each do |page|
         canvas = page.canvas(type: :overlay) # gunakan overlay agar tidak overwrite konten lama
 
         # footer
         canvas.font("Helvetica", size: 8)
-        canvas.text(footer_text, at: [100, 30])
+        canvas.text(footer_text, at: [50, 30])
 
         tl.style.text_align(:center).text_valign(:bottom)
-        # hanya halaman terakhir yang ditempeli QR
-        canvas.image(qr_image, at: [page.box.width - 470, 100], width: 120) if idx == doc.pages.count - 1
       end
 
       # 5. tulis ulang sebagai incremental update
       final_tempfile = Tempfile.new(['tte_signed', '.pdf'])
       final_tempfile.binmode
-      doc.write(final_tempfile, incremental: true) # <--- penting!
+      doc.write(final_tempfile, incremental: true)
       final_tempfile.rewind
 
       final_tempfile

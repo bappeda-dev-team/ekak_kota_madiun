@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :tte_documents do
     member do
       get :status
+      get :download
     end
   end
   resources :bpmn_spbes do

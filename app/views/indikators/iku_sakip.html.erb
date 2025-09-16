@@ -5,18 +5,9 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "IKU SAKIP #{@nama_opd} - #{@tahun}" do %>
-    <% if @doc_tte&.status == 'diproses' || @doc_tte&.status == 'pending' %>
-      <div class="polling-tte"
-           data-controller="polling"
-           data-polling-status-value="<%= @doc_tte&.status %>"
-           data-polling-url-value="<%= status_tte_document_url(@doc_tte) %>">
-        <%= render 'tte_documents/status', tte_document: @doc_tte %>
-      </div>
-    <% else %>
-      <div class="cetak-tte">
-        <%= render 'tte_documents/status', tte_document: @doc_tte %>
-      </div>
-    <% end %>
+    <div class="cetak-tte">
+      <%= render 'tte_documents/status', tte_document: @doc_tte %>
+    </div>
     <div class="table-responsive mb-5">
       <table class="table align-items-center">
         <thead class="thead-tujuan">
