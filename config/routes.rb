@@ -8,7 +8,11 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
-  resources :tte_documents
+  resources :tte_documents do
+    member do
+      get :status
+    end
+  end
   resources :bpmn_spbes do
     member do
       get :tambah_catatan

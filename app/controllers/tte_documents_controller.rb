@@ -1,5 +1,5 @@
 class TteDocumentsController < ApplicationController
-  before_action :set_tte_document, only: %i[show edit update destroy]
+  before_action :set_tte_document, only: %i[show edit update destroy status]
   before_action :set_user_opd_tahun, only: %i[new]
 
   # GET /tte_documents or /tte_documents.json
@@ -9,6 +9,10 @@ class TteDocumentsController < ApplicationController
 
   # GET /tte_documents/1 or /tte_documents/1.json
   def show; end
+
+  def status
+    render partial: "tte_documents/status", locals: { tte_document: @tte_document }
+  end
 
   # GET /tte_documents/new
   def new
