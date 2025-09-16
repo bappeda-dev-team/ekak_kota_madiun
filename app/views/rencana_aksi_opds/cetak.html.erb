@@ -35,12 +35,13 @@
         </tr>
       </thead>
       <% @sasaran_opds.each.with_index(1) do |sasaran, i| %>
+        <% renaksi_size = sasaran.rencana_aksi_opds.size %>
         <tbody id="<%= dom_id(sasaran) %>">
           <tr>
-            <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= i %></td>
-            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+            <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran, renaksi_size) %>"><%= i %></td>
+            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran, renaksi_size) %>"><%= sasaran.sasaran_kinerja %></td>
             <% if sasaran.indikator_sasarans.any? %>
-              <%= indikator_rencana_aksi_opd(sasaran) %>
+              <%= indikator_rencana_aksi_opd(sasaran, renaksi_size) %>
             <% else %>
               <td class="" colspan="3">
                 <p class="alert alert-danger">
@@ -63,7 +64,7 @@
               </td>
             <% end %>
           </tr>
-          <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
+          <% row_indikator_rencana_aksi_opd(sasaran, renaksi_size).each do |indikator| %>
             <%= indikator %>
           <% end %>
           <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
