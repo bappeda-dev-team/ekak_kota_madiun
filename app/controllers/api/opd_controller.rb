@@ -28,7 +28,9 @@ module Api
 
     def tujuan_opd
       @opd = Opd.find_by!(kode_unik_opd: params[:kode_opd])
-      @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators])
+      @tahun = params[:tahun]
+      @tahun_bener = /murni|perubahan/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
+      @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators]).by_periode(@tahun_bener).uniq(&:tujuan)
     rescue ActiveRecord::RecordNotFound
       @error = "Opd tidak ditemukan"
       render json: { message: "terjadi kesalahan", errors: @error }.to_json,

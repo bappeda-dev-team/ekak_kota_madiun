@@ -4,6 +4,7 @@ json.results do
   json.data do
     json.kode_opd @opd.kode_unik_opd
     json.nama_opd @opd.nama_opd
+    json.tahun @tahun_bener
     json.tujuan_opd @tujuan_opds do |tujuan|
       json.id_tujuan tujuan.id_tujuan
       json.tujuan tujuan.tujuan
@@ -14,7 +15,7 @@ json.results do
         json.indikator indikator.indikator || '-'
         json.rumus_perhitungan indikator.rumus_perhitungan || '-'
         json.sumber_data indikator.sumber_data || '-'
-        json.target_tujuan(indikator.targets.order(tahun: :asc)) do |target|
+        json.target_tujuan(indikator.targets.filter { |tar| tar.tahun == @tahun_bener }.sort_by(&:tahun)) do |target|
           json.id_indikator target.indikator_id
           json.id_target target.id
           json.tahun target.tahun
