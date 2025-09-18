@@ -970,6 +970,7 @@ Rails.application.routes.draw do
       post :tujuan_kota
       post :sasaran_kota
       get :renaksi_opd
+      get :cek_perubahan
     end
     namespace :skp_client do
       post :sync_jabatan

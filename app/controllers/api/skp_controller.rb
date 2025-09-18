@@ -13,6 +13,14 @@ module Api
       @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
     end
 
+    def cek_perubahan
+      @nip = params[:nip]
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      attr_user = UserAttrInSkp.new(user: @user, tahun: @tahun)
+      @response = attr_user.cari_perubahan
+    end
+
     def indikator_sasaran_kinerja_pegawai
       id_sasaran = params[:id_sasaran]
       @nip = params[:nip]
