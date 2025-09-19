@@ -23,8 +23,8 @@ class UserAttrInSkp
         tahun_sasaran: ss.tahun,
         sasaran_kinerja: ss.sasaran_kinerja,
         ada_perubahan: update_dibulan_ini?(ss.updated_at),
-        dibuat: ss.created_at,
-        update_terakhir: ss.updated_at,
+        dibuat: format_tanggal(ss.created_at),
+        update_terakhir: format_tanggal(ss.updated_at),
         terakhir_diubah: terakhir_update(ss.updated_at),
         indikator_sasaran: perubahan_indikator(ss) }
     end
@@ -40,8 +40,8 @@ class UserAttrInSkp
         rumus_perhitungan: ind.rumus_perhitungan,
         target: ind.target,
         satuan: ind.satuan,
-        dibuat: ind.created_at,
-        update_terakhir: ind.updated_at,
+        dibuat: format_tanggal(ind.created_at),
+        update_terakhir: format_tanggal(ind.updated_at),
         terakhir_diubah: terakhir_update(ind.updated_at) }
     end
   end
@@ -58,7 +58,7 @@ class UserAttrInSkp
   end
 
   def format_tanggal(tanggal)
-    tanggal.strftime("%d %B %Y %H:%M:%S")
+    tanggal.strftime("%Y-%m-%d %H:%M:%S")
   end
 
   def terakhir_update(waktu_dibuat)
