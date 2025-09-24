@@ -672,6 +672,16 @@ class Sasaran < ApplicationRecord
     sasaran_milik == 'spbe' ? anggaran : total_anggaran
   end
 
+  def strategi_checker
+    if strategi&.strategi_dihapus?
+      false
+    else
+      strategi.strategi_atasan.present?
+    end
+  rescue NoMethodError
+    false
+  end
+
   def strategi_atasan
     if strategi&.strategi_dihapus?
       "Pohon sudah dihapus, edit rekin untuk perbaiki"

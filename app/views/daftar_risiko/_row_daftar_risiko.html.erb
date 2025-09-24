@@ -36,6 +36,15 @@
     </td>
     <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.nama_pemilik %></td>
     <td class="text-wrap border <%= strategi_valid_style(show_sasaran.strategi_sasaran) %>" rowspan="<%= row_indikator %>">
+      <% if show_sasaran.strategi_checker %>
+        <b>Nama Atasan:</b>
+        <ul>
+          <% show_sasaran.strategi_atasan.nama_dari_sasarans&.each do |nama| %>
+            <li><%= nama %></li>
+          <% end %>
+        </ul>
+        <hr/>
+      <% end %>
       <b>Pokin Atasan: <%= show_sasaran.strategi_atasan %></b>
       <hr/>
       Pokin: <%= show_sasaran.strategi_sasaran %>
@@ -74,10 +83,10 @@
             <% end %>
             <%= render 'daftar_risiko/tombol_verifikasi', show_sasaran: show_sasaran, nomor: nomor, laporan: laporan %>
           <% end %>
-          <%= link_to show_pokin_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",
+          <%= link_to hasil_cascading_laporans_path, target: "_blank", rel: "nofollow",
                       class: "btn btn-sm btn-primary" do %>
             <i class="fas fa-tree me-2"></i>
-            <span>Pohon Kinerja</span>
+            <span>Cascading OPD</span>
           <% end %>
           <%= link_to input_rtp_sasaran_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan, butuh_verifikasi: show_sasaran.butuh_verifikasi),
                       remote: true, class: 'btn btn-sm btn-info',

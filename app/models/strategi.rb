@@ -119,6 +119,11 @@ class Strategi < ApplicationRecord
   # def satuan
   #   indikator_sasarans.first.satuan
   # end
+  def nama_dari_sasarans
+    sasarans.flat_map(&:nama_pemilik).uniq
+  rescue NoMethodError
+    []
+  end
 
   def nama
     user&.nama
