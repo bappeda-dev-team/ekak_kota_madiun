@@ -10,7 +10,8 @@ set :branch, ENV['BRANCH'] if ENV['BRANCH']
 # Default deploy_to directory is /var/www/my_app_name
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
-       'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+       'vendor/bundle', '.bundle', 'public/system', 'public/uploads',
+       'storage'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
