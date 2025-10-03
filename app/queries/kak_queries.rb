@@ -13,7 +13,8 @@ class KakQueries
     if user.nil?
       @opd.users.eselon4
     else
-      @opd.users.where(id: user.id)
+      # @opd.users.where(id: user.id)
+      @opd.users_jabatans.select { |u| u.id == user.id }
     end
   end
 
@@ -23,7 +24,14 @@ class KakQueries
 
   def sasarans
     users_eselon4.map do |user|
-      user.sasarans.includes(%i[indikator_sasarans]).where(tahun: @tahun, keterangan: nil)
+      sasaran_user = user.sasarans.includes(%i[indikator_sasarans]).where(tahun: @tahun, keterangan: nil)
+      sasaran_user.select do |sas|
+        if sas.strategi?
+          sas.strategi.opd_id == @opd.id.to_s
+        else
+          true
+        end
+      end
     end.flatten
   end
 

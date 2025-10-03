@@ -10,7 +10,10 @@ class SasaransController < ApplicationController
   # GET /sasarans or /sasarans.json
   def index
     @tahun = cookies[:tahun]
-    kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
+    # ganti get opd ke opd terpilih (dropdown)
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd) || current_user.opd
+    kak = KakQueries.new(opd: @opd, tahun: @tahun, user: @user)
     @sasarans = kak.sasarans
   end
 
