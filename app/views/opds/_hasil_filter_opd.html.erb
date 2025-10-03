@@ -44,7 +44,7 @@
                     </ul>
                   </p>
                 </td>
-                <td><%= opd.nama_kepala %></td>
+                <td><%= opd.kepala_is_plt? ? '(plt)' : '' %> <%= opd.nama_kepala %></td>
                 <td><%= opd.nip_kepala %></td>
                 <td><%= opd.pangkat_kepala %></td>
                 <td>

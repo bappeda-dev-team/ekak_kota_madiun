@@ -176,7 +176,16 @@ class Opd < ApplicationRecord
     nip_kepala.match?(/(-plt)/) ? nip_kepala.gsub!(/(-plt)/, '') : nip_kepala
   end
 
-  # TODO check with test
+  def kepala_is_plt?
+    jabatan = User.find_by(nik: nip_kepala.delete(" \t\r\n")).jabatan
+    jabatans = User.find_by(nik: nip_kepala.delete(" \t\r\n")).jabatan_users
+
+    jabatans.any? { |jab| jab.nama_jabatan == jabatan && jab.status == 'plt' }
+  rescue NoMethodError
+    false
+  end
+
+  # TODO: check with test
   def user_kepala_opd
     return unless nip_kepala_fix_plt
 
@@ -184,7 +193,8 @@ class Opd < ApplicationRecord
   end
 
   def jabatan_kepala_tanpa_opd
-    jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
+    jabatan = jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
+    "plt-#{jabatan}" if kepala_is_plt?
   rescue NoMethodError
     'Kepala'
   end
