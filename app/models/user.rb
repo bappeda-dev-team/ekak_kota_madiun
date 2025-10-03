@@ -524,10 +524,11 @@ class User < ApplicationRecord
   # list opd dalam default dan jabatan
   # untuk menampung opd plt
   def all_kode_opd
+    default_kode_opd = [kode_opd]
     if jabatan_users.aktif.any?
-      jabatan_users.map { |jab| jab.opd.kode_opd }
+      jabatan_users.map { |jab| jab.opd.kode_opd } + default_kode_opd
     else
-      [kode_opd]
+      default_kode_opd
     end
   end
 
