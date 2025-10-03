@@ -193,8 +193,8 @@ class Opd < ApplicationRecord
   end
 
   def jabatan_kepala_tanpa_opd
-    jabatan = jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
-    "plt-#{jabatan}" if kepala_is_plt?
+    jabatan = jabatan_kepala&.gsub(/(?<=kepala).+/i, '') || 'Kepala'
+    kepala_is_plt? ? "plt-#{jabatan.strip}" : jabatan.strip
   rescue NoMethodError
     'Kepala'
   end
