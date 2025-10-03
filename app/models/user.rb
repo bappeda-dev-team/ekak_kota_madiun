@@ -229,16 +229,34 @@ class User < ApplicationRecord
     }
   end
 
+  def sasaran_untuk_dashboard(tahun, opd_id)
+    sasarans.includes(%i[strategi
+                         user
+                         tahapans
+                         program_kegiatan
+                         indikator_sasarans])
+            .where(tahun: tahun)
+            .order(nip_asn: :asc)
+            # filter by current opd aktif
+            .dengan_strategi
+            .select do |sas|
+      if sas.strategi?
+        sas.strategi.opd_id == opd_id
+      else
+        true
+      end
+    end
+  end
+
   def sasarans_tahun(tahun)
-    sasarans
-      .includes(%i[strategi
-                   user
-                   tahapans
-                   program_kegiatan
-                   indikator_sasarans])
-      .where(tahun: tahun)
-      .order(nip_asn: :asc)
-      .dengan_strategi
+    sasarans.includes(%i[strategi
+                         user
+                         tahapans
+                         program_kegiatan
+                         indikator_sasarans])
+            .where(tahun: tahun)
+            .order(nip_asn: :asc)
+            .dengan_strategi
   end
 
   def subkegiatan_sasarans_tahun(tahun)

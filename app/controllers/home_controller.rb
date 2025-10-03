@@ -6,6 +6,7 @@ class HomeController < ApplicationController
 
     return unless current_user.has_role?(:asn)
 
-    @sasarans = current_user.sasarans_tahun(@tahun)
+    @opd_id = Opd.find_by(kode_unik_opd: @opd).id.to_s
+    @sasarans = current_user.sasaran_untuk_dashboard(@tahun, @opd_id)
   end
 end
