@@ -43,8 +43,8 @@ module Api
         image: "false",
         halaman: "terakhir",
         linkQR: download_tte_document_url(@tte_id),
-        xAxis: "50",
-        yAxis: "50",
+        xAxis: "1400",
+        yAxis: "150",
         width: "100",
         height: "100",
         jenis_response: "BASE64"
