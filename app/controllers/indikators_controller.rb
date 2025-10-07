@@ -187,7 +187,7 @@ class IndikatorsController < ApplicationController
 
     @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
 
-    @doc_tte = TteDocument.where(kode_opd: @kode_opd, tahun: @tahun_bener).last
+    @doc_tte = TteDocument.where(kode_opd: @kode_opd, tahun: @tahun).last
     pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
 
     opd = pokin_opd.opd
