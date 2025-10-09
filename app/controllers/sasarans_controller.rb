@@ -631,23 +631,25 @@ class SasaransController < ApplicationController
     #     .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
     #     .select { |ss| select_sasaran_valid(ss) }
     # end
-    if @opd.kode_unik_opd.in? %w[7.01.0.00.0.00.01.0000 7.01.0.00.0.00.02.0000 7.01.0.00.0.00.03.0000]
-      strategis_ids = @opd.strategis.eselon34_bytahun(@tahun).pluck(:id)
-      @sasarans = Sasaran
-                  .includes(:indikator_sasarans)
-                  .joins(:tahapans)
-                  .where(tahun: @tahun, strategi_id: strategis_ids)
-                  .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
-                  .distinct
-    else
-      strategis_ids = @opd.strategis.eselon4_bytahun(@tahun).pluck(:id)
-      @sasarans = Sasaran
-                  .includes(:indikator_sasarans)
-                  .joins(:tahapans)
-                  .where(tahun: @tahun, strategi_id: strategis_ids)
-                  .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
-                  .distinct
-                  .select(&:manrisk_diverifikasi?)
+    strategis_ids = if @opd.kode_unik_opd.in? %w[7.01.0.00.0.00.01.0000 7.01.0.00.0.00.02.0000 7.01.0.00.0.00.03.0000]
+                      @opd.strategis.eselon34_bytahun(@tahun).pluck(:id)
+                    else
+                      @opd.strategis.eselon4_bytahun(@tahun).pluck(:id)
+                    end
+
+    @sasarans = Sasaran
+                .includes(:indikator_sasarans)
+                .joins(:tahapans)
+                .where(tahun: @tahun, strategi_id: strategis_ids)
+                .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
+                .distinct
+                .select do |sasaran|
+      role = sasaran.strategi&.role
+      if role == "eselon_4"
+        sasaran.manrisk_diverifikasi?
+      else
+        true # eselon_3 → selalu lolos
+      end
     end
 
     return unless params[:item]
