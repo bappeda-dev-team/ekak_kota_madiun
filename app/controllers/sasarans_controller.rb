@@ -631,7 +631,11 @@ class SasaransController < ApplicationController
     #     .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
     #     .select { |ss| select_sasaran_valid(ss) }
     # end
-    strategis_ids = @opd.strategis.eselon4_bytahun(@tahun).pluck(:id)
+    strategis_ids = if @opd.kode_unik_opd.in? %w[7.01.0.00.0.00.01.0000 7.01.0.00.0.00.02.0000 7.01.0.00.0.00.03.0000]
+                      @opd.strategis.eselon34_bytahun(@tahun).pluck(:id)
+                    else
+                      @opd.strategis.eselon4_bytahun(@tahun).pluck(:id)
+                    end
 
     @sasarans = Sasaran
                 .includes(:indikator_sasarans)
