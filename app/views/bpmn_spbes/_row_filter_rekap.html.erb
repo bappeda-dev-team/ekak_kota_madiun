@@ -11,6 +11,18 @@
                 <%= bpmn_spbe.keterangan %>
             </div>
             <%= render(EditButtonComponent.new(path: tambah_catatan_bpmn_spbe_path(bpmn_spbe))) %>
+            <%= render ModalButtonComponent.new(path: upload_file_laporan_bpmn_spbe_path(bpmn_spbe),
+                                                style: 'btn btn-sm btn-outline-primary',
+                                                icon: 'fas fa-upload me-2',
+                                                title: 'Upload BPMN') %>
+            <% if bpmn_spbe.file_bpmn.attached? %>
+                <%= link_to rails_blob_path(bpmn_spbe.file_bpmn, disposition: "attachment"),
+                            class: 'btn btn-sm btn-outline-danger',
+                            target: "_blank", rel: "noopener" do %>
+                    <i class="far fa-file-pdf me-2"></i>
+                    <span>Download BPMN</span>
+                <% end %>
+            <% end %>
         </div>
     </td>
 </tr>

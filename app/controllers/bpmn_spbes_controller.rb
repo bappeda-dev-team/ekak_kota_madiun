@@ -1,7 +1,7 @@
 class BpmnSpbesController < ApplicationController
   before_action :set_bpmn_spbe, only: %i[show edit update destroy]
   before_action :set_tahun_opd, only: %i[index pilih]
-  layout false, only: %i[new edit tambah_catatan upload_file]
+  layout false, only: %i[new edit tambah_catatan upload_file upload_file_laporan]
 
   # GET /bpmn_spbes or /bpmn_spbes.json
   def index
@@ -115,6 +115,10 @@ class BpmnSpbesController < ApplicationController
 
   def upload_file
     @sasaran = Sasaran.find(params[:sasaran_id])
+    @bpmn_spbe = BpmnSpbe.find(params[:id])
+  end
+
+  def upload_file_laporan
     @bpmn_spbe = BpmnSpbe.find(params[:id])
   end
 
