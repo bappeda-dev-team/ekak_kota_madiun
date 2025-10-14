@@ -1,21 +1,59 @@
 <%= render 'shared/card_layout_subtitle', title: "Rekap BPMN SPBE",
            sub_title: @opd, sub_title_2: @tahun do %>
-  <div class="cetak d-grid gap-3">
-  </div>
-  <div class="table-responsive">
-    <table class="table align-items-center table-bordered counter">
-      <thead class="thead-light">
-        <tr>
-          <th class="border text-center" scope="col">No</th>
-          <th class="border text-center" scope="col">BPMN SPBE</th>
-          <th class="border text-center" scope="col">OPD Pembuat</th>
-          <th class="border text-center" scope="col">Keterangan</th>
-          <th class="border text-center" scope="col">Catatan</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render collection: @bpmn_spbes, partial: 'bpmn_spbes/row_filter_rekap', as: :bpmn_spbe %>
-      </tbody>
-    </table>
-  </div>
+    <div class="cetak d-grid gap-3">
+    </div>
+    <div class="table-responsive">
+        <table class="table align-items-center table-bordered counter">
+            <thead class="thead-light">
+                <tr>
+                    <th class="border text-center" scope="col">No</th>
+                    <th class="border text-center" scope="col">BPMN SPBE</th>
+                    <th class="border text-center" scope="col">OPD Pembuat</th>
+                    <th class="border text-center" scope="col">Keterangan</th>
+                    <th class="border text-center" scope="col">Catatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= render collection: @bpmn_spbes, partial: 'bpmn_spbes/row_filter_rekap', as: :bpmn_spbe %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-items-center table-bordered counter caption-top">
+            <caption class="waktu-renaksi">
+                <strong>Rekap BPMN SPBE - <%= @opd %> <%= @tahun %></strong>
+            </caption>
+            <thead class="thead-light">
+                <tr>
+                    <th class="border text-center" scope="col">No</th>
+                    <th class="border text-center" scope="col">Keterangan</th>
+                    <th class="border text-center" scope="col">Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% rekap = hitung_jumlah_bpmn(@bpmn_spbes) %>
+                <tr>
+                    <td class="border text-center" scope="col"></td>
+                    <td class="border" scope="col">Jumlah BPMN yang bisa digunakan OPD lain</td>
+                    <td class="border text-center" scope="col"><%= rekap[:bisa_digunakan_opd_lain] %></td>
+                </tr>
+                <tr>
+                    <td class="border text-center" scope="col"></td>
+                    <td class="border" scope="col">Jumlah BPMN yang harus disusun (tidak bisa digunakan OPD lain)</td>
+                    <td class="border text-center" scope="col"><%= rekap[:harus_disusun] %></td>
+                </tr>
+                <tr>
+                    <td class="border text-center" scope="col"></td>
+                    <td class="border" scope="col">Jumlah BPMN yang sudah disusun</td>
+                    <td class="border text-center" scope="col"><%= rekap[:sudah_disusun] %></td>
+                </tr>
+                <tr>
+                    <td class="border text-center" scope="col"></td>
+                    <td class="border" scope="col">Jumlah BPMN yang sudah belum disusun</td>
+                    <td class="border text-center" scope="col"><%= rekap[:belum_disusun] %></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 <% end %>
