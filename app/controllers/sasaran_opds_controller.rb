@@ -6,6 +6,9 @@ class SasaranOpdsController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun_sebelum = tahun_bener.to_i - 1
+    @file_skp = @opd.file_skp_opd_tahun(@tahun_sebelum)
     @sasaran_opds = @opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }
   end
 

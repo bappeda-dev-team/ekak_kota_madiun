@@ -1,7 +1,11 @@
+\restrict W49lA4mAMYWHScfFfRwcvobuumuxeRT1Yht12x0jrogb3Tuktz73oidKuoCsmYG
+
+-- Dumped from database version 16.8
+-- Dumped by pg_dump version 16.10 (Homebrew)
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -1022,6 +1026,38 @@ ALTER SEQUENCE public.external_urls_id_seq OWNED BY public.external_urls.id;
 
 
 --
+-- Name: file_skp_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.file_skp_opds (
+    id bigint NOT NULL,
+    kode_unik_opd character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: file_skp_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.file_skp_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: file_skp_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.file_skp_opds_id_seq OWNED BY public.file_skp_opds.id;
+
+
+--
 -- Name: genders; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2023,6 +2059,44 @@ CREATE SEQUENCE public.mandatoris_id_seq
 --
 
 ALTER SEQUENCE public.mandatoris_id_seq OWNED BY public.mandatoris.id;
+
+
+--
+-- Name: manrisks_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.manrisks_opds (
+    id bigint NOT NULL,
+    kode_opd character varying,
+    tahun character varying,
+    id_rencana character varying NOT NULL,
+    masalah character varying,
+    sebab_masalah character varying,
+    risiko character varying,
+    kode_risiko character varying,
+    pagu integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: manrisks_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.manrisks_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: manrisks_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.manrisks_opds_id_seq OWNED BY public.manrisks_opds.id;
 
 
 --
@@ -4801,6 +4875,13 @@ ALTER TABLE ONLY public.external_urls ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: file_skp_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.file_skp_opds ALTER COLUMN id SET DEFAULT nextval('public.file_skp_opds_id_seq'::regclass);
+
+
+--
 -- Name: genders id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4987,6 +5068,13 @@ ALTER TABLE ONLY public.lembagas ALTER COLUMN id SET DEFAULT nextval('public.lem
 --
 
 ALTER TABLE ONLY public.mandatoris ALTER COLUMN id SET DEFAULT nextval('public.mandatoris_id_seq'::regclass);
+
+
+--
+-- Name: manrisks_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manrisks_opds ALTER COLUMN id SET DEFAULT nextval('public.manrisks_opds_id_seq'::regclass);
 
 
 --
@@ -5640,6 +5728,14 @@ ALTER TABLE ONLY public.external_urls
 
 
 --
+-- Name: file_skp_opds file_skp_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.file_skp_opds
+    ADD CONSTRAINT file_skp_opds_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: genders genders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5853,6 +5949,14 @@ ALTER TABLE ONLY public.lembagas
 
 ALTER TABLE ONLY public.mandatoris
     ADD CONSTRAINT mandatoris_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: manrisks_opds manrisks_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manrisks_opds
+    ADD CONSTRAINT manrisks_opds_pkey PRIMARY KEY (id);
 
 
 --
@@ -6668,6 +6772,13 @@ CREATE INDEX index_mandatoris_on_status ON public.mandatoris USING btree (status
 
 
 --
+-- Name: index_manrisks_opds_on_id_rencana; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_manrisks_opds_on_id_rencana ON public.manrisks_opds USING btree (id_rencana);
+
+
+--
 -- Name: index_master_bidang_urusans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7351,6 +7462,14 @@ ALTER TABLE ONLY public.rencana_aksi_opds
 
 
 --
+-- Name: manrisks_opds fk_rails_72368e1117; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manrisks_opds
+    ADD CONSTRAINT fk_rails_72368e1117 FOREIGN KEY (id_rencana) REFERENCES public.sasarans(id_rencana);
+
+
+--
 -- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -7505,6 +7624,8 @@ ALTER TABLE ONLY public.rincians
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict W49lA4mAMYWHScfFfRwcvobuumuxeRT1Yht12x0jrogb3Tuktz73oidKuoCsmYG
 
 SET search_path TO "$user", public;
 
@@ -7902,6 +8023,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250910012149'),
 ('20250910024532'),
 ('20250911011818'),
-('20250912040840');
+('20250912040840'),
+('20250929033306'),
+('20251014042855');
 
 

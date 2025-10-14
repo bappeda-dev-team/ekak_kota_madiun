@@ -273,7 +273,50 @@ class OpdsController < ApplicationController
     end
   end
 
+  def list_file_skp
+    @opd = Opd.find(params[:id])
+    @kode_opd = @opd.kode_unik_opd
+    tahun = cookies[:tahun]
+    tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
+    @file_skp = @opd.file_skp_opds
+
+    render partial: "sasaran_opds/file_skp_opds"
+  end
+
+  # form
+  def upload_file_skp
+    @opd = Opd.find(params[:id])
+    @kode_opd = @opd.kode_unik_opd
+    tahun = cookies[:tahun]
+    tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
+    @tahun = tahun_bener.to_i - 1
+    @opd_upload = @opd.file_skp_opds.new(tahun: @tahun, kode_unik_opd: @kode_opd)
+    render layout: false
+  end
+
+  def save_upload_file_skp
+    @opd = Opd.find(params[:id])
+    @opd_upload = @opd.file_skp_opds.new(upload_params)
+
+    respond_to do |format|
+      if @opd_upload.save
+        format.json do
+          render json: { resText: "File Berhasil diupload" }
+        end
+      else
+        format.json do
+          render json: { resText: "Terjadi Kesalahan",
+                 status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   private
+
+  def upload_params
+    params.require(:file_skp_opd).permit(:tahun, :kode_unik_opd, :file_skp)
+  end
 
   def valid_nik?(nik)
     return false unless nik =~ /\A\d{16}\z/ || nik.blank?

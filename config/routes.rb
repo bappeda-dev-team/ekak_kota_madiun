@@ -809,6 +809,9 @@ Rails.application.routes.draw do
       get :edit_full
       get :edit_nik_kepala
       patch :update_nik_kepala
+      get :list_file_skp
+      get :upload_file_skp
+      post :save_upload_file_skp
     end
   end
   resources :program_kegiatans do

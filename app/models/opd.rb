@@ -94,6 +94,8 @@ class Opd < ApplicationRecord
                                 where(terpilih: true)
                               }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'AkarMasalah'
 
+  has_many :file_skp_opds, foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd', dependent: :destroy
+
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
   default_scope { where(is_kota: false) }
@@ -563,6 +565,10 @@ class Opd < ApplicationRecord
 
   def opd_setda?
     kode_unik_opd == '4.01.0.00.0.00.01.0000'
+  end
+
+  def file_skp_opd_tahun(tahun)
+    file_skp_opds.where(tahun: tahun)
   end
 
   # get all setda whatever in which bagian

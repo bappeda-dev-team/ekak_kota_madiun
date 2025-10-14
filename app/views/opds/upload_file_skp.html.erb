@@ -1,0 +1,17 @@
+<%= form_with model: [@opd, @opd_upload], url: save_upload_file_skp_opd_path(@opd), local: false, multipart: true,
+              data: {
+                controller: 'form-ajax',
+                action: 'ajax:complete->form-ajax#processAjax'
+              } do |f| %>
+  <div class="mb-3">
+    <%= f.hidden_field :tahun %>
+    <%= f.hidden_field :kode_unik_opd %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :file_skp, class: 'form-label' %>
+    <%= f.file_field :file_skp, class: "form-control", accept: "application/pdf" %>
+  </div>
+
+  <%= f.submit "Upload", class: "btn btn-primary" %>
+<% end %>

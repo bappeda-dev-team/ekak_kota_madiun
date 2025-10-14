@@ -1,0 +1,32 @@
+<div class="table-responsive">
+    <h5>File SKP <%= @opd %></h5>
+    <table class="table align-items-center">
+        <thead class="thead-light">
+            <tr>
+                <th class="border text-center" scope="col">Nama File</th>
+                <th class="border text-center" scope="col">Tahun</th>
+                <th class="border text-center" scope="col">File</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @file_skp.each do |fskp| %>
+                <tr>
+                    <td class="border text-center"><%= fskp.file_skp.filename %></td>
+                    <td class="border text-center"><%= fskp.tahun %></td>
+                    <td class="border text-center">
+                        <% if fskp.file_skp.attached? %>
+                            <%= link_to rails_blob_path(fskp.file_skp, disposition: "attachment"),
+                                        class: "btn btn-sm btn-outline-primary",
+                                        target: "_blank", rel: "noopener" do %>
+                                <i class="far fa-file-pdf me-2"></i>
+                                Unduh PDF
+                            <% end %>
+                        <% else %>
+                            <span class="text-muted">Belum ada file</span>
+                        <% end %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
