@@ -1,0 +1,29 @@
+<%= form_with model: bpmn_spbe, local: false, multipart: true,
+              data: {
+                  controller: 'form-ajax',
+                  form_ajax_target_param: dom_id(sasaran),
+                  form_ajax_type_param: '',
+                  action: 'ajax:complete->form-ajax#processAjax'
+              } do |f| %>
+    <% if bpmn_spbe.errors.any? %>
+        <div id="error_explanation">
+            <h2>Terdapat <%= pluralize(bpmn_spbe.errors.count, "error") %>:</h2>
+
+            <ul>
+                <% bpmn_spbe.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <div class="mb-3">
+        <%= hidden_field_tag :sasaran_id, sasaran.id %>
+        <%= f.label :file_bpmn, class: 'form-label' %>
+        <%= f.file_field :file_bpmn, class: "form-control", accept: "application/pdf" %>
+        <span class="small text-danger">
+            <i>* upload file pdf</i>
+        </span>
+    </div>
+
+    <%= f.submit "Upload", class: "btn btn-primary" %>
+<% end %>

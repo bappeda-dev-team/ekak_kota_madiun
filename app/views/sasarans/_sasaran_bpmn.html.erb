@@ -1,22 +1,27 @@
 <tr class="renaksi-opd skip" id="<%= dom_id(sasaran) %>">
-  <td class="text-wrap"><%= sasaran %></td>
-  <td class="text-wrap"><%= sasaran.nama_nip_pemilik %></td>
-  <td class="text-wrap" style="width: 200px;">
-    <div class="d-grid gap-2">
-      <div class="text-center"><%= sasaran.bpmn_spbe %></div>
-      <% if sasaran.bpmn_spbe.present? %>
-        <%= render ModalButtonComponent.new(path: edit_bpmn_spbe_path(sasaran.bpmn_spbe, sasaran_id: sasaran),
-                                            style: 'btn btn-sm btn-outline-info w-100',
-                                            title: 'Edit') %>
-      <% end %>
-    </div>
-  </td>
-  <td class="p-3">
-    <div class="d-grid gap-3">
-      <%= render ModalButtonComponent.new(path: tambah_bpmn_sasaran_path(sasaran, tahun: @tahun, kode_opd: @kode_opd),
-                                          icon: 'fas fa-crosshairs me-2',
-                                          title: 'Pilih BPMN',
-                                          style: 'btn btn-sm btn-outline-primary w-100') %>
-    </div>
-  </td>
+    <td class="text-wrap"><%= sasaran %></td>
+    <td class="text-wrap"><%= sasaran.nama_nip_pemilik %></td>
+    <td class="">
+        <div class="text-center"><%= sasaran.bpmn_spbe %></div>
+        <hr />
+        <div class="d-flex gap-2 p-3">
+            <% if sasaran.bpmn_spbe.present? %>
+                <%= render ModalButtonComponent.new(path: upload_file_bpmn_spbe_path(sasaran.bpmn_spbe, sasaran_id: sasaran),
+                                                    style: 'btn btn-sm btn-outline-primary w-50',
+                                                    icon: 'fas fa-upload me-2',
+                                                    title: 'Upload BPMN') %>
+                <%= render ModalButtonComponent.new(path: edit_bpmn_spbe_path(sasaran.bpmn_spbe, sasaran_id: sasaran),
+                                                    style: 'btn btn-sm btn-outline-info w-50',
+                                                    title: 'Edit') %>
+            <% end %>
+        </div>
+    </td>
+    <td class="p-3">
+        <div class="d-grid gap-3">
+            <%= render ModalButtonComponent.new(path: tambah_bpmn_sasaran_path(sasaran, tahun: @tahun, kode_opd: @kode_opd),
+                                                icon: 'fas fa-crosshairs me-2',
+                                                title: 'Pilih BPMN',
+                                                style: 'btn btn-sm btn-outline-primary w-100') %>
+        </div>
+    </td>
 </tr>

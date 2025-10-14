@@ -14,15 +14,16 @@ class FileSkpOpd < ApplicationRecord
 
   validates :kode_unik_opd, presence: true
   validates :tahun, presence: true
+  validate :file_is_pdf
 
   private
 
   def file_is_pdf
     return unless file_skp.attached?
 
-    if file.blob.content_type != "application/pdf"
+    if file_skp.blob.content_type != "application/pdf"
       errors.add(:file_skp, "harus berupa file PDF")
-      file.purge # opsional: hapus file yang salah tipe
+      file_skp.purge
     end
   end
 end

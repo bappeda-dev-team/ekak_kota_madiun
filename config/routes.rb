@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     member do
       get :tambah_catatan
       patch :simpan_catatan
+      get :upload_file
     end
     collection do
       get :pilih

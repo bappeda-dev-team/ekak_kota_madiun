@@ -1,7 +1,7 @@
 class BpmnSpbesController < ApplicationController
   before_action :set_bpmn_spbe, only: %i[show edit update destroy]
   before_action :set_tahun_opd, only: %i[index pilih]
-  layout false, only: %i[new edit tambah_catatan]
+  layout false, only: %i[new edit tambah_catatan upload_file]
 
   # GET /bpmn_spbes or /bpmn_spbes.json
   def index
@@ -113,6 +113,11 @@ class BpmnSpbesController < ApplicationController
     end
   end
 
+  def upload_file
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @bpmn_spbe = BpmnSpbe.find(params[:id])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -127,6 +132,6 @@ class BpmnSpbesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def bpmn_spbe_params
-    params.require(:bpmn_spbe).permit(:nama_bpmn, :kode_opd, :tahun, :keterangan, :dapat_digunakan_pd_lain)
+    params.require(:bpmn_spbe).permit(:nama_bpmn, :kode_opd, :tahun, :keterangan, :dapat_digunakan_pd_lain, :file_bpmn)
   end
 end

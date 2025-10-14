@@ -14,8 +14,22 @@
 class BpmnSpbe < ApplicationRecord
   has_many :sasarans
   has_one :opd, foreign_key: :kode_unik_opd, primary_key: :kode_opd
+  has_one_attached :file_bpmn
+
+  validate :file_is_pdf
 
   def to_s
     nama_bpmn
+  end
+
+  private
+
+  def file_is_pdf
+    return unless file_bpmn.attached?
+
+    if file_bpmn.blob.content_type != "application/pdf"
+      errors.add(:file_bpmn, "harus berupa file PDF")
+      file_bpmn.purge
+    end
   end
 end
