@@ -3,7 +3,7 @@ module BpmnSpbesHelper
     bisa_digunakan = bpmn_spbes.count { |b| b.dapat_digunakan_pd_lain }
     harus_disusun = bpmn_spbes.count { |b| !b.dapat_digunakan_pd_lain }
 
-    sudah_disusun = bpmn_spbes.count { |b| b.file_bpmn.attached? }
+    sudah_disusun = bpmn_spbes.count { |b| b.file_bpmn.attached? && !b.dapat_digunakan_pd_lain }
     belum_disusun = harus_disusun - sudah_disusun
 
     {
