@@ -145,7 +145,7 @@ class UsulansController < ApplicationController
                                   params)
                              .results
 
-    @total_pagu = @inovasis.map(&:total_pagu_usulans).compact.sum
+    @total_pagu = @inovasis.map { |ino| ino.total_pagu_usulans_tahun(@tahun) }.compact.sum
 
     render partial: 'usulans/filter_inovasi'
   end

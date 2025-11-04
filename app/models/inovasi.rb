@@ -153,7 +153,7 @@ class Inovasi < ApplicationRecord
       end
     else
       all_usulans.filter do |usulan|
-        usulan.opd.id == opd_kolab
+        usulan.opd&.id == opd_kolab
       end
     end
   end
@@ -256,6 +256,13 @@ class Inovasi < ApplicationRecord
 
   def total_pagu_usulans
     all_usulans.sum(&:pagu_rekin)
+  end
+
+  def total_pagu_usulans_tahun(tahun)
+    usulans.where(tahun: tahun)
+           .includes(:opd, sasaran: %i[user opd strategi program_kegiatan])
+           .select(&:with_sasaran?)
+           .sum(&:pagu_rekin)
   end
 
   def pengambil_pertama
