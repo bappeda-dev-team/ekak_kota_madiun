@@ -6,6 +6,13 @@
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
+
+
+Rails.start();
+Turbolinks.start();
+ActiveStorage.start();
+
+
 import "../javascript/channels";
 import "../javascript/sweetalert/sweetalert";
 import "../javascript/datatables/simple-datatables";
@@ -30,10 +37,6 @@ import "treeflex/dist/css/treeflex.css";
 
 // images
 require.context("../images", true);
-
-Rails.start();
-Turbolinks.start();
-ActiveStorage.start();
 
 window.$ = window.jQuery = jQuery;
 window.bootstrap = require("bootstrap");
