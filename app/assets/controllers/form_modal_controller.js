@@ -51,11 +51,13 @@ export default class extends Controller {
         const target = 'form-modal-body'
         const element = document.getElementById(target)
 
+        console.log('event')
+        console.log(event)
         console.log('event-detail')
         console.log(event.detail)
         console.log(status)
 
-        if (status == 'OK') {
+        if (status == 'OK' || status === 200) {
             const html = xhr.response
             element.innerHTML = html
         }
