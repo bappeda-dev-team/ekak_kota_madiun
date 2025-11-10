@@ -57,7 +57,7 @@ export default class extends Controller {
         console.log(event.detail)
         console.log(status)
 
-        if (status == 'OK' || status === 200) {
+        if (status == 'OK' || xhr.status === 200) {
             const html = xhr.response
             element.innerHTML = html
         }
