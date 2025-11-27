@@ -2,186 +2,186 @@ import { Controller } from "stimulus";
 import Swal from "sweetalert2";
 
 export default class extends Controller {
-  static targets = ["form", "hide"];
-  static values = {
-    element: String,
-  };
+    static targets = ["form", "hide"];
+    static values = {
+        element: String,
+    };
 
-  editCol(event) {
-    const [xhr, status] = event.detail;
-    const targetCol = this.element;
+    editCol(event) {
+        const [xhr, status] = event.detail;
+        const targetCol = this.element;
 
-    if (
-      status == "OK" &&
-      targetCol != null &&
-      typeof targetCol != "undefined"
-    ) {
-      const html = xhr.response;
-      const rows = this.hideTargets;
+        if (
+            (status == "OK" || xhr.status === 200) &&
+            targetCol != null &&
+            typeof targetCol != "undefined"
+        ) {
+            const html = xhr.response;
+            const rows = this.hideTargets;
 
-      rows.forEach((row) => {
-        row.classList.add("d-none");
-      });
-      targetCol.insertAdjacentHTML("beforeend", html);
-    } else {
-      this.sweetalertStatus(status.text, status);
+            rows.forEach((row) => {
+                row.classList.add("d-none");
+            });
+            targetCol.insertAdjacentHTML("beforeend", html);
+        } else {
+            this.sweetalertStatus(status.text, status);
+        }
     }
-  }
 
-  colProcessAjax(event) {
-    const [message, status] = event.detail;
-    const { resText, html_content } = JSON.parse(message.response);
-    const targetRow = this.element;
+    colProcessAjax(event) {
+        const [message, status] = event.detail;
+        const { resText, html_content } = JSON.parse(message.response);
+        const targetRow = this.element;
 
-    if (status == "OK") {
-      this.sweetalertStatus(resText, status);
-      targetRow.innerHTML = html_content;
-    } else {
-      this.sweetalertStatus(resText, status);
+        if (status == "OK" || xhr.status === 200) {
+            this.sweetalertStatus(resText, status);
+            targetRow.innerHTML = html_content;
+        } else {
+            this.sweetalertStatus(resText, status);
+        }
     }
-  }
 
-  colBatal() {
-    const rows = this.formTargets;
-    rows.forEach((row) => {
-      row.remove();
-    });
-    const revealRows = this.hideTargets;
-    revealRows.forEach((row) => {
-      row.classList.remove("d-none");
-    });
-  }
-
-  addRow(e) {
-    const [xhr, status] = e.detail;
-    const targetRow = document.getElementById(this.elementValue);
-
-    if (
-      status == "OK" &&
-      targetRow != null &&
-      typeof targetRow != "undefined"
-    ) {
-      const html = xhr.response;
-      targetRow.insertAdjacentHTML("beforeend", html);
-    } else {
-      this.sweetalertStatus(status.text, status);
+    colBatal() {
+        const rows = this.formTargets;
+        rows.forEach((row) => {
+            row.remove();
+        });
+        const revealRows = this.hideTargets;
+        revealRows.forEach((row) => {
+            row.classList.remove("d-none");
+        });
     }
-  }
 
-  editRow(e) {
-    const [xhr, status] = e.detail;
-    const targetRow = this.element;
+    addRow(e) {
+        const [xhr, status] = e.detail;
+        const targetRow = document.getElementById(this.elementValue);
 
-    if (
-      status == "OK" &&
-      targetRow != null &&
-      typeof targetRow != "undefined"
-    ) {
-      const html = xhr.response;
-      targetRow.classList.add("d-none");
-      targetRow.insertAdjacentHTML("afterend", html);
-    } else {
-      console.log({ status });
+        if (
+            (status == "OK" || xhr.status === 200) &&
+            targetRow != null &&
+            typeof targetRow != "undefined"
+        ) {
+            const html = xhr.response;
+            targetRow.insertAdjacentHTML("beforeend", html);
+        } else {
+            this.sweetalertStatus(status.text, status);
+        }
     }
-  }
 
-  deleteRow(e) {
-    const [message, status] = e.detail;
-    const { resText } = JSON.parse(message.response);
-    const targetRow = this.element;
-    const parentTable = targetRow.parentElement;
+    editRow(e) {
+        const [xhr, status] = e.detail;
+        const targetRow = this.element;
 
-    if (
-      status == "OK" &&
-      targetRow != null &&
-      typeof targetRow != "undefined"
-    ) {
-      targetRow.remove();
-      this.updateRowNumbers(parentTable);
-      this.sweetalertStatus(resText, status);
-    } else {
-      console.log({ status });
-      this.sweetalertStatus(resText, status);
+        if (
+            (status == "OK" || xhr.status === 200) &&
+            targetRow != null &&
+            typeof targetRow != "undefined"
+        ) {
+            const html = xhr.response;
+            targetRow.classList.add("d-none");
+            targetRow.insertAdjacentHTML("afterend", html);
+        } else {
+            console.log({ status });
+        }
     }
-  }
 
-  // get all number rows from 'parent element' target
-  // to scope the selector within 'parent element'
-  // and not disturb counter in other table
-  updateRowNumbers(parent) {
-    const rows = parent.querySelectorAll(".row-number");
-    rows.forEach((row, index) => {
-      row.textContent = index + 1; // Update nomor sesuai dengan urutan baru
-    });
-  }
+    deleteRow(e) {
+        const [message, status] = e.detail;
+        const { resText } = JSON.parse(message.response);
+        const targetRow = this.element;
+        const parentTable = targetRow.parentElement;
 
-  batal() {
-    const targetRow = this.element;
-
-    if (targetRow.previousElementSibling != null) {
-      targetRow.previousElementSibling.classList.remove("d-none");
+        if (
+            (status == "OK" || xhr.status === 200) &&
+            targetRow != null &&
+            typeof targetRow != "undefined"
+        ) {
+            targetRow.remove();
+            this.updateRowNumbers(parentTable);
+            this.sweetalertStatus(resText, status);
+        } else {
+            console.log({ status });
+            this.sweetalertStatus(resText, status);
+        }
     }
-    targetRow.remove();
-  }
 
-  processAjax(event) {
-    const [message, status] = event.detail;
-    const { resText, html_content } = JSON.parse(message.response);
-    const targetRow = this.element;
-
-    if (status == "OK") {
-      targetRow.outerHTML = html_content;
-      this.animateBackground(targetRow);
-    } else {
-      this.sweetalertStatus(resText, status);
+    // get all number rows from 'parent element' target
+    // to scope the selector within 'parent element'
+    // and not disturb counter in other table
+    updateRowNumbers(parent) {
+        const rows = parent.querySelectorAll(".row-number");
+        rows.forEach((row, index) => {
+            row.textContent = index + 1; // Update nomor sesuai dengan urutan baru
+        });
     }
-  }
 
-  animateBackground(target) {
-    target.animate(
-      [
-        {
-          //from
-          backgroundColor: "rgba(242, 245, 169, 1)",
-        },
-        {
-          //to
-          backgroundColor: "rgba(242, 245, 169, 0.8)",
-        },
-      ],
-      10000,
-    );
-  }
+    batal() {
+        const targetRow = this.element;
 
-  sweetalertStatus(text, status) {
-    if (status == "Accepted") {
-      Swal.fire({
-        title: "Sukses",
-        text: text,
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-    } else if (status == "OK") {
-      Swal.fire({
-        title: "Sukses",
-        text: text,
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-    } else if (status == "Created") {
-      Swal.fire({
-        title: "Sukses",
-        text: text,
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-    } else {
-      Swal.fire({
-        title: "Gagal",
-        text: text,
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
+        if (targetRow.previousElementSibling != null) {
+            targetRow.previousElementSibling.classList.remove("d-none");
+        }
+        targetRow.remove();
     }
-  }
+
+    processAjax(event) {
+        const [message, status] = event.detail;
+        const { resText, html_content } = JSON.parse(message.response);
+        const targetRow = this.element;
+
+        if (status == "OK" || xhr.status === 200) {
+            targetRow.outerHTML = html_content;
+            this.animateBackground(targetRow);
+        } else {
+            this.sweetalertStatus(resText, status);
+        }
+    }
+
+    animateBackground(target) {
+        target.animate(
+            [
+                {
+                    //from
+                    backgroundColor: "rgba(242, 245, 169, 1)",
+                },
+                {
+                    //to
+                    backgroundColor: "rgba(242, 245, 169, 0.8)",
+                },
+            ],
+            10000,
+        );
+    }
+
+    sweetalertStatus(text, status) {
+        if (status == "Accepted") {
+            Swal.fire({
+                title: "Sukses",
+                text: text,
+                icon: "success",
+                confirmButtonText: "Ok",
+            });
+        } else if (status == "OK") {
+            Swal.fire({
+                title: "Sukses",
+                text: text,
+                icon: "success",
+                confirmButtonText: "Ok",
+            });
+        } else if (status == "Created") {
+            Swal.fire({
+                title: "Sukses",
+                text: text,
+                icon: "success",
+                confirmButtonText: "Ok",
+            });
+        } else {
+            Swal.fire({
+                title: "Gagal",
+                text: text,
+                icon: "error",
+                confirmButtonText: "Ok",
+            });
+        }
+    }
 }

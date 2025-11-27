@@ -82,7 +82,7 @@ export default class extends ApplicationController {
         const [xhr, status] = e.detail;
         const target = this.dahanTarget;
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             const html = xhr.response;
             target.insertAdjacentHTML("beforeend", html);
         } else {
@@ -126,7 +126,7 @@ export default class extends ApplicationController {
         const [xhr, status] = e.detail;
         const target = document.getElementById(e.params.id);
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             const html = xhr.response;
             target.insertAdjacentHTML("beforeend", html);
         } else {
@@ -139,7 +139,7 @@ export default class extends ApplicationController {
         const [xhr, status] = e.detail;
         const target = document.getElementById(e.params.id);
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             const html = xhr.response;
             target.insertAdjacentHTML("beforeend", html);
         } else {
@@ -153,7 +153,7 @@ export default class extends ApplicationController {
         const parent = e.currentTarget.closest("li");
         const target = parent.querySelector("ul");
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             const html = xhr.response;
             target.insertAdjacentHTML("beforeend", html);
         } else {
@@ -310,7 +310,7 @@ export default class extends ApplicationController {
 
         const target = e.target.closest(".pohon").parentElement;
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             super.sweetAlertSuccess(resText);
             target.innerHTML = html_content;
         } else {
@@ -326,7 +326,7 @@ export default class extends ApplicationController {
         const text = results.resText;
         const html = results.attachmentPartial;
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             super.sweetAlertSuccess(text);
             target.innerHTML = html;
         } else {
@@ -345,7 +345,7 @@ export default class extends ApplicationController {
         const html = results.attachmentPartial;
         super.modalHider();
 
-        if (status == "OK") {
+        if (status == "OK" || xhr.status === 200) {
             super.sweetAlertSuccess(text);
             target.innerHTML = html;
         } else {
