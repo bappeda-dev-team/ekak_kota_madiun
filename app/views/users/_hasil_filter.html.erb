@@ -43,10 +43,10 @@
             <td class="text-gray-900 text-wrap" scope="row">
               <% if user.jabatan_users.any? %>
                 <% user.jabatan_users.each do |jab| %>
-                  <strong><%= jab.details %></strong>
+                  <strong><%= jab&.details %></strong>
                 <% end %>
               <% else %>
-                <strong><%= user.jabatan %></strong>
+                <strong><%= user&.jabatan %></strong>
               <% end %>
             </td>
             <td class="fw-bolder text-gray-500 border" id="<%= the_dom %>">
