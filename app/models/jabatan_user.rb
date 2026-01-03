@@ -30,7 +30,7 @@ class JabatanUser < ApplicationRecord
   end
 
   def nama_jabatan
-    jabatan_tahun.nama_jabatan
+    jabatan_tahun&.nama_jabatan
   end
 
   def bulan_tahun
