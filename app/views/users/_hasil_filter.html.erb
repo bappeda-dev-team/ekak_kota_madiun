@@ -6,6 +6,18 @@
     </div>
     <% unless guest? %>
       <div class="col-auto text-end">
+        <%= link_to "Tambah User",
+        new_user_path(kode_opd: kode_opd),
+        remote: true,
+        data: {
+            controller: 'form-modal',
+            action: 'ajax:complete->form-modal#success:prevent',
+            bs_toggle: 'modal',
+            bs_target: '#form-modal'
+        },
+        class: "btn btn-sm btn-info" %>
+      </div>
+      <div class="col-auto text-end">
         <% if current_user.has_role? :super_admin %>
           <% bulan=Date.today.month %>
           <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: tahun_fix(@tahun), bulan: bulan), remote: true, data:

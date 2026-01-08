@@ -12,6 +12,18 @@ module UsersHelper
     end
   end
 
+  def dropdown_opd_admin(kode_opd)
+    if kode_opd.blank?
+      Opd.includes(:lembaga).all.collect { |o| [o.nama_lembaga_opd, o.kode_opd] }
+    else
+      Opd.includes(:lembaga).where(kode_unik_opd: kode_opd).collect { |o| [o.nama_lembaga_opd, o.kode_opd] }
+    end
+  end
+
+  def dropdown_lembaga
+    Lembaga.where(id: 1).collect {|n| [n.nama_lembaga, n.id]}
+  end
+
   def subkegiatan_data(kode_sub_giat)
     ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat)
   end

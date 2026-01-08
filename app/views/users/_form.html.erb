@@ -18,20 +18,24 @@
   <% end %>
   <div class="field">
     <%= form.label :instansi, class: "form-label" %>
-    <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]},
+    <%= form.select :lembaga_id,
+     dropdown_lembaga,
      {include_blank: true},
-     {data: {"placeholder": "Pilih Lembaga",
-             controller: 'dropdown'
+     {data: {placeholder: "Pilih Lembaga",
+             controller: 'dropdown',
+        dropdown_parent_value: '#form-modal'
      }, required: true} %>
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, Opd.includes(:lembaga).all.collect { |o| [o.nama_lembaga_opd, o.kode_opd] }, {include_blank: true},
+    <%= form.select :kode_opd,
+     dropdown_opd_admin(@kode_opd),
+     {include_blank: true},
      {class: "form-control",
-      data: { "placeholder": "Pilih Opd",
+      data: { placeholder: "Pilih Opd",
         controller: 'dropdown',
         dropdown_parent_value: '#form-modal'
-     }} %>
+     }, required: true} %>
   </div>
   <div class="field">
     <%= form.label :nama, class: "form-label" %>

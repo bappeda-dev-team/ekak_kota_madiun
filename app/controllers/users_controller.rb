@@ -60,6 +60,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    @kode_opd = params[:kode_opd]
     @user = User.new
   end
 
