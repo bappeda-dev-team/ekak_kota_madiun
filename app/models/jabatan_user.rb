@@ -22,7 +22,10 @@ class JabatanUser < ApplicationRecord
   STATUS_JABATAN_USER = %w[aktif pensiun plt].freeze
 
   def jabatan_tahun
-    jabatan&.class&.where(id_jabatan: id_jabatan, tahun: tahun).first
+    jabatans_by_id = jabatan&.class&.where(id_jabatan: id_jabatan)
+    jabatans_by_id.last
+  rescue NoMethodError
+    '-'
   end
 
   def details
