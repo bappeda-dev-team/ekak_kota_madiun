@@ -146,10 +146,10 @@ export default class extends ApplicationController {
         // event.preventDefault();
         const [message, status] = event.detail;
         const { resText, html_content } = JSON.parse(message.response);
-        if (status == "Unprocessable Entity") {
+        if (status == "Unprocessable Entity" || xhr.status === 400) {
             this.partialAttacher("form-modal-body", html_content);
             this.sweetalertStatus(resText, status);
-        } else if (status == "Internal Server Error") {
+        } else if (status == "Internal Server Error" || xhr.status === 500) {
             this.errorContainerTarget.classList.remove("d-none");
             this.errorContainerTarget.innerHTML = html_content;
         } else {
